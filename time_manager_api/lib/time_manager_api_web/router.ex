@@ -11,6 +11,7 @@ defmodule TimeManagerApiWeb.Router do
     resources "/clocks", ClockController, except: [:new, :edit]
     resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
 
+    get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByUser
 
   end
 

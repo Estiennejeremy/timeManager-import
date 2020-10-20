@@ -40,10 +40,14 @@ defmodule TimeManagerApiWeb.WorkingtimeController do
     render(conn, "index.json", workingtimes: workingtime)
   end
 
-
   def show(conn, %{"id" => id}) do
     workingtime = Workingtimes.get_workingtime!(id)
     render(conn, "show.json", workingtime: workingtime)
+  end
+
+  def getWorkingtimeByUser(conn, %{"userID" => userID, "workingtimeID" => workingtimeID}) do
+    workingtimes = Workingtimes.get_workingtime_by_user(userID,workingtimeID)
+    render(conn, "show.json", workingtime: workingtimes)
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
@@ -61,4 +65,5 @@ defmodule TimeManagerApiWeb.WorkingtimeController do
       send_resp(conn, :no_content, "")
     end
   end
+  
 end

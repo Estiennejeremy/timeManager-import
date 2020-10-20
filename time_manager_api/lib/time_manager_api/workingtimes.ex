@@ -49,6 +49,10 @@ defmodule TimeManagerApi.Workingtimes do
     Repo.all(from w in Workingtime, where: w.end <= ^endtime and w.user_id == ^id)
   end
 
+  def get_workingtime_by_user(userId, workingtimeId) do
+    Repo.get_by(Workingtime, [id: workingtimeId, user_id: userId])
+  end
+
   @doc """
   Creates a workingtime.
 
