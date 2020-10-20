@@ -10,6 +10,8 @@ defmodule TimeManagerApiWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/clocks", ClockController, except: [:new, :edit]
     resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
+    
+    post "/clocks/:id", ClockController, :post_clock_with_user
 
     get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByUser
 
