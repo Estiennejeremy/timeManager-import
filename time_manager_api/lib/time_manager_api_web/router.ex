@@ -8,9 +8,9 @@ defmodule TimeManagerApiWeb.Router do
   scope "/api", TimeManagerApiWeb do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
-    resources "/clocks", ClockController, except: [:new, :edit]
     resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
-    
+    #resources "/clocks", ClockController, except: [:new, :edit]
+    get "/clocks/:user_id", ClockController, :show_usersID
     post "/clocks/:id", ClockController, :post_clock_with_user
 
     get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByUser

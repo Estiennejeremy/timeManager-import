@@ -15,6 +15,12 @@ defmodule TimeManagerApi.Clocks do
     |> Repo.insert()
   end
 
+  def get_AllUserId(id) do
+    Clock
+    |> where(user_id: ^id)
+    |> Repo.all()
+  end
+
   @doc """
   Returns the list of clocks.
 

@@ -29,6 +29,11 @@ defmodule TimeManagerApiWeb.ClockController do
     end
   end
 
+  def show_usersID(conn, %{"user_id" => user_id}) do
+    clocks = Clocks.get_AllUserId(user_id)
+    render(conn, "index.json", clocks: clocks)
+  end
+
   def show(conn, %{"id" => id}) do
     clock = Clocks.get_clock!(id)
     render(conn, "show.json", clock: clock)
