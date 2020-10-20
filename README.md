@@ -1,4 +1,5 @@
 # TimeManager
+![Elixir CI](https://github.com/Lucashw68/TimeManager/workflows/Elixir%20CI/badge.svg)
 
 # Init:
 
