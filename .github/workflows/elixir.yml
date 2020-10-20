@@ -2,9 +2,9 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ Docker ]
+    branches: [ main ]
   pull_request:
-    branches: [ Docker ]
+    branches: [ main ]
 
 jobs:
   build:
