@@ -29,7 +29,3 @@ jobs:
       run: |-
             cd time_manager_api 
             docker-compose build
-    - name: Run tests
-      run: |-
-            cd time_manager_api 
-            mix test
