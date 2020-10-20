@@ -21,6 +21,24 @@ defmodule TimeManagerApi.Users do
     Repo.all(User)
   end
 
+  def list_users_by_email_username(email, username) do
+    User
+    |> where(email: ^email, username: ^username)
+    |> Repo.all()
+  end
+
+  def list_users_by_username(username) do
+    User
+    |> where(username: ^username)
+    |> Repo.all()
+  end
+
+  def list_users_by_email(email) do
+    User
+    |> where(email: ^email)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single user.
 
