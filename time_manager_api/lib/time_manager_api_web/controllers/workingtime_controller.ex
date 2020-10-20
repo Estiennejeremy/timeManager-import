@@ -19,6 +19,27 @@ defmodule TimeManagerApiWeb.WorkingtimeController do
       |> render("show.json", workingtime: workingtime)
     end
   end
+  
+  def show(conn, %{"id" => id, "start" => start, "end" => endtime}) do
+    workingtime = Workingtimes.get_workingtime_by_start_to_end(id, conn.query_params["start"], conn.query_params["end"])
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
+  def show(conn, %{"id" => id, "end" => endtime}) do
+    workingtime = Workingtimes.get_workingtime_by_end(id, conn.query_params["end"])
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
+  def show(conn, %{"id" => id, "start" => start}) do
+    workingtime = Workingtimes.get_workingtime_by_start(id, conn.query_params["start"])
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
+  def show(conn, %{"id" => id, "end" => endtime}) do
+    workingtime = Workingtimes.get_workingtime_by_end(id, conn.query_params["end"])
+    render(conn, "index.json", workingtimes: workingtime)
+  end
+
 
   def show(conn, %{"id" => id}) do
     workingtime = Workingtimes.get_workingtime!(id)
