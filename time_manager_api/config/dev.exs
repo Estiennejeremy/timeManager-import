@@ -1,12 +1,12 @@
 use Mix.Config
 
+database_url = System.get_env("DATABASE_URL")
+
 # Configure your database
 config :time_manager_api, TimeManagerApi.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "time_manager_api_dev",
-  hostname: "localhost",
+  url: database_url,
   show_sensitive_data_on_connection_error: true,
+  pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
 # For development, we disable any cache and enable
