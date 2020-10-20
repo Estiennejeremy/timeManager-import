@@ -20,6 +20,15 @@ defmodule TimeManagerApiWeb.ClockController do
     end
   end
 
+  def post_clock_with_user(conn, %{"id" => id, "clock" => clock_params} ) do
+    with {:ok, %Clock{} = clock} <- Clocks.create_clock_with_user(clock_params, id) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.clock_path(conn, :show, clock))
+      |> render("show.json", clock: clock)
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     clock = Clocks.get_clock!(id)
     render(conn, "show.json", clock: clock)

@@ -8,6 +8,13 @@ defmodule TimeManagerApi.Clocks do
 
   alias TimeManagerApi.Clocks.Clock
 
+  def create_clock_with_user(attrs \\ %{}, id) do
+    %Clock{}
+    |> Clock.changeset(attrs)
+    |> Clock.changeset(%{user_id: id})
+    |> Repo.insert()
+  end
+
   @doc """
   Returns the list of clocks.
 
