@@ -26,10 +26,10 @@ jobs:
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
-        run:|-
+      run: |-
             cd time_manager_api 
             docker-compose build
     - name: Run tests
-        run:|-
+      run: |-
             cd time_manager_api 
             mix test
