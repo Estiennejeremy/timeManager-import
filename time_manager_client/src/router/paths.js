@@ -8,11 +8,12 @@ export default [
   {
     path: "/",
     name: "Home",
-    view: "WorkingTimes",
+    view: "Home",
     icon: "mdi-home",
     group: "top",
     public: true,
-    show: true
+    show: true,
+    parameters: []
   },
 
   // =========================================================================
@@ -26,7 +27,8 @@ export default [
     icon: "mdi-home",
     group: "top",
     public: true,
-    show: true
+    show: true,
+    parameters: ["userId"]
   },
 
   // =========================================================================
@@ -40,7 +42,8 @@ export default [
     icon: "mdi-information",
     group: "top",
     public: true,
-    show: true
+    show: true,
+    parameters: ["userId"]
   },
 
   // =========================================================================
@@ -54,7 +57,8 @@ export default [
     icon: "mdi-information",
     group: "top",
     public: true,
-    show: true
+    show: true,
+    parameters: ["userId", "workingTimeId"]
   },
 
   // =========================================================================
@@ -68,7 +72,8 @@ export default [
     icon: "mdi-information",
     group: "top",
     public: true,
-    show: true
+    show: true,
+    parameters: ["userId"]
   },
 
   {
@@ -78,6 +83,7 @@ export default [
     icon: "mdi-information",
     group: "top",
     public: true,
-    show: true
+    show: true,
+    parameters: []
   }
 ];

@@ -10,8 +10,8 @@ module.exports = {
     plugins: [new BundleAnalyzerPlugin()],
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.common.js',
-        'jquery': 'jquery/src/jquery.js'
+        vue$: "vue/dist/vue.common.js",
+        jquery: "jquery/src/jquery.js"
       }
     }
   },

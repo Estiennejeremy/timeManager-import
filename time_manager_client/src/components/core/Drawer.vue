@@ -33,7 +33,7 @@
         <v-list-item
           v-for="(item, i) in topPaths"
           active-class="border"
-          :to="item.path"
+          :to="item.parameters.length > 0 ? '' : item.path"
           class="my-4"
           :key="i"
         >

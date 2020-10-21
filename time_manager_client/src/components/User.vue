@@ -3,13 +3,18 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 import AccountService from "@/services/AccountService";
 export default {
   name: "User",
 
-  data: () => ({}),
+  data: () => ({
+    title: null
+  }),
 
   methods: {
+    ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
+
     async createUser() {
       try {
         const res = await AccountService.createUser();
@@ -45,6 +50,10 @@ export default {
         console.log(err);
       }
     }
+  },
+
+  computed: {
+    ...mapState("user", ["id", "email", "username"])
   }
 };
 </script>

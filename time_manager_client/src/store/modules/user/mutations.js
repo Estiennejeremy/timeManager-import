@@ -1,7 +1,9 @@
 import { set, execute } from "@/utils/vuex";
 
 export default {
-  setUser: set("user"),
+  setId: set("id"),
+  setEmail: set("email"),
+  setUsername: set("username"),
   setToken: execute("token"),
   toggleLogged: set("isUserLoggedIn")
 };

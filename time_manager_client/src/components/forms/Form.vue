@@ -67,13 +67,15 @@
 <script>
 import InputsTextField from "@/components/forms/inputs/TextField.vue";
 import ActionsButton from "@/components/forms/actions/Button.vue";
+import InputsDate from "@/components/forms/inputs/Date.vue";
 import { mapState } from "vuex";
 export default {
   name: "Form",
 
   components: {
     InputsTextField,
-    ActionsButton
+    ActionsButton,
+    InputsDate
   },
 
   props: {

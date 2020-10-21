@@ -1,5 +1,7 @@
 export default {
-  user: null,
+  id: null,
+  email: null,
+  username: null,
   token: null,
   isUserLoggedIn: false
 };

@@ -20,9 +20,10 @@
     <v-col :cols="$props.cols">
       <div class="text-center">
         <h3
-          :style="titleColor"
+          :style="!selected ? titleColor : titleSelectedColor"
           class="text-center text-uppercase font-weight-light title"
-          @click="responsive ? $emit('button-after') : ''"
+          :class="this.$props.button ? 'button' : ''"
+          @click="$emit('button-center')"
         >
           {{ $props.title }}
         </h3>
@@ -79,6 +80,10 @@ export default {
     button: {
       type: Boolean,
       default: false
+    },
+    selected: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -101,6 +106,10 @@ export default {
 
     titleColor() {
       return "background-color: " + this.color + ";";
+    },
+
+    titleSelectedColor() {
+      return "background-color: darkcyan;";
     }
   },
 

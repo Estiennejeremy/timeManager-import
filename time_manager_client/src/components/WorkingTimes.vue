@@ -19,14 +19,16 @@ export default {
     workingTimes: [],
     headers: [
       { text: "Debut", value: "start" },
-      { text: "Fin", value: "end" },
-    ],
+      { text: "Fin", value: "end" }
+    ]
   }),
 
   mounted() {
     WorkingTimesService.getWorkingTimes(1)
-      .then((res) => { this.workingTimes = res.data.data; })
-      .catch((err) => console.log(err));
-  },
+      .then(res => {
+        this.workingTimes = res.data.data;
+      })
+      .catch(err => console.log(err));
+  }
 };
 </script>
