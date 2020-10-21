@@ -1,5 +1,12 @@
 <template>
-  <v-container id="workingTimes"> </v-container>
+  <v-container id="workingTimes">
+    <v-data-table
+      :headers="headers"
+      :items="workingTimes"
+      :items-per-page="10"
+      class="elevation-1"
+    ></v-data-table>
+  </v-container>
 </template>
 
 <script>
@@ -9,16 +16,21 @@ export default {
 
   data: () => ({
     userId: null,
-    workingTimes: {}
+    workingTimes: [],
+    headers: [
+      { text: "Employé", value: "user_id" },
+      { text: "Debut", value: "start" },
+      { text: "Fin", value: "end" },
+    ],
   }),
 
-  async getWorkingTimes() {
-    try {
-      const res = await WorkingTimesService.getWorkingTimes();
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  mounted() {
+    WorkingTimesService.getWorkingTimes(1)
+      .then((res) => {
+        console.log(res.data.data);
+        this.workingTimes = res.data.data;
+      })
+      .catch((err) => console.log(err));
+  },
 };
 </script>
