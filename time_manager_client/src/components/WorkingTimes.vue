@@ -18,7 +18,6 @@ export default {
     userId: null,
     workingTimes: [],
     headers: [
-      { text: "Employé", value: "user_id" },
       { text: "Debut", value: "start" },
       { text: "Fin", value: "end" },
     ],
