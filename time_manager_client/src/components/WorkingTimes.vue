@@ -1,27 +1,37 @@
 <template>
   <v-container id="workingTimes">
-    <v-data-table
-      :headers="headers"
-      :items="workingTimes"
-      :items-per-page="10"
-      class="elevation-1"
-    ></v-data-table>
+      <working-time
+        v-for="(item, index) in workingTimes"
+        :key="index"
+        :data="item"
+      />
+
   </v-container>
 </template>
 
 <script>
+import WorkingTime from "@/components/WorkingTime.vue";
 import WorkingTimesService from "@/services/WorkingTimesService";
 export default {
   name: "WorkingTimes",
 
   data: () => ({
     userId: null,
-    workingTimes: [],
+    workingTimes: [
+      {
+        start: "start",
+        end: "end"
+      }
+    ],
     headers: [
       { text: "Debut", value: "start" },
       { text: "Fin", value: "end" }
     ]
   }),
+
+  components: {
+    WorkingTime
+  },
 
   mounted() {
     WorkingTimesService.getWorkingTimes(1)
