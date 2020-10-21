@@ -2,13 +2,13 @@
 
 export default [
   // =========================================================================
-  // HOMEPAGE
+  // HOME
   // =========================================================================
 
   {
     path: "/",
     name: "Home",
-    view: "Home",
+    view: "WorkingTimes",
     icon: "mdi-home",
     group: "top",
     public: true,
@@ -16,13 +16,27 @@ export default [
   },
 
   // =========================================================================
-  // ABOUT PAGE
+  // WORKING-TIMES
   // =========================================================================
 
   {
-    path: "/about",
-    name: "About",
-    view: "About",
+    path: "/workingTimes/:userId",
+    name: "WorkingTimes",
+    view: "WorkingTimes",
+    icon: "mdi-home",
+    group: "top",
+    public: true,
+    show: true
+  },
+
+  // =========================================================================
+  // WORKING-TIME CREATE
+  // =========================================================================
+
+  {
+    path: "/workingTime/:userId",
+    name: "WT Creation",
+    view: "WorkingTime",
     icon: "mdi-information",
     group: "top",
     public: true,
@@ -30,56 +44,38 @@ export default [
   },
 
   // =========================================================================
-  // LOGIN
+  // WORKING-TIME UPDATE/DELETE
   // =========================================================================
 
   {
-    path: "/login",
-    name: "Login",
-    view: "Login",
-    icon: "mdi-account-circle",
-    group: "bottom",
-    public: true,
-    show: true
-  },
-
-  // =========================================================================
-  // REGISTER
-  // =========================================================================
-
-  {
-    path: "/register",
-    name: "Register",
-    view: "Register",
-    icon: "mdi-account-plus",
-    group: "bottom",
-    public: true,
-    show: true
-  },
-
-  // =========================================================================
-  // USER PROFILE
-  // =========================================================================
-
-  {
-    path: "/account",
-    name: "My account",
-    view: "Account",
-    icon: "mdi-account",
+    path: "/workingTime/:userId/:workingTimeId",
+    name: "WT Update",
+    view: "WorkingTime",
+    icon: "mdi-information",
     group: "top",
-    public: false,
+    public: true,
     show: true
   },
 
   // =========================================================================
-  // SETTINGS OF THE APPLICATION
+  // CHART MANAGER
   // =========================================================================
 
   {
-    path: "/settings",
-    name: "Settings",
-    view: "Settings",
-    icon: "mdi-settings",
+    path: "/chartManager/:userId",
+    name: "ChartManager",
+    view: "ChartManager",
+    icon: "mdi-information",
+    group: "top",
+    public: true,
+    show: true
+  },
+
+  {
+    path: "/chartManager/",
+    name: "ChartManager",
+    view: "ChartManager",
+    icon: "mdi-information",
     group: "top",
     public: true,
     show: true

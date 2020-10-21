@@ -7,7 +7,7 @@ function route(path, view, name) {
   return {
     name: name || view,
     path,
-    component: resovle => import(`@/views/${view}.vue`).then(resovle)
+    component: resovle => import(`@/components/${view}.vue`).then(resovle)
   };
 }
 
@@ -24,7 +24,7 @@ const router = new VueRouter({
   mode: "history",
   routes: paths
     .map(path => route(path.path, path.view, path.name))
-    .concat([{ path: "*", redirect: "/login" }]),
+    .concat([{ path: "*", redirect: "/" }]),
   scrollBehavior
 });
 

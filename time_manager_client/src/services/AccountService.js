@@ -1,35 +1,23 @@
 import Api from "@/services/Api";
 
 export default {
-  email(credentials) {
-    return Api().get("/account/email", {
-      headers: {
-        Authorization: `Bearer ${credentials}`
-      }
-    });
+  createUser() {
+    return Api().post("/users");
   },
 
-  getName(credentials) {
-    return Api().get("/account/name", {
-      headers: {
-        Authorization: `Bearer ${credentials}`
-      }
-    });
+  updateUser(id) {
+    return Api().put(`/users/${id}`);
   },
 
-  getRole(credentials) {
-    return Api().get("/account/role", {
-      headers: {
-        Authorization: `Bearer ${credentials}`
-      }
-    });
+  getUser(id) {
+    return Api().get(`/users/${id}`);
   },
 
-  updateRole(credentials, role) {
-    return Api().get("/account/role", role, {
-      headers: {
-        Authorization: `Bearer ${credentials}`
-      }
-    });
+  getUsers() {
+    return Api().get("/users");
+  },
+
+  deleteUser(id) {
+    return Api().delete(`/users/${id}`);
   }
 };

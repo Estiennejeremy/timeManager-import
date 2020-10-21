@@ -4,7 +4,7 @@ import VuexPersist from "vuex-persist";
 
 import modules from "./modules";
 const vuexPersist = new VuexPersist({
-  key: "TemplateClientVue",
+  key: "TimeManager",
   storage: localStorage
 });
 
