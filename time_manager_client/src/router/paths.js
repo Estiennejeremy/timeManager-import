@@ -22,6 +22,7 @@ export default [
 
   {
     path: "/workingTimes/:userId",
+    url: "/workingTimes/",
     name: "WorkingTimes",
     view: "WorkingTimes",
     icon: "mdi-home",
@@ -37,6 +38,7 @@ export default [
 
   {
     path: "/workingTime/:userId",
+    url: "/workingTime/",
     name: "WT Creation",
     view: "WorkingTime",
     icon: "mdi-information",
