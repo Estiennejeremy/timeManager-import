@@ -25,10 +25,7 @@ export default {
 
   mounted() {
     WorkingTimesService.getWorkingTimes(1)
-      .then((res) => {
-        console.log(res.data.data);
-        this.workingTimes = res.data.data;
-      })
+      .then((res) => { this.workingTimes = res.data.data; })
       .catch((err) => console.log(err));
   },
 };
