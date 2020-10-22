@@ -48,7 +48,7 @@ export default {
 
   methods: {
     createWorkingTime() {
-      this.$router.push(`/workingTime/1`);
+      this.$router.push(`/workingTime/${JSON.parse(window.localStorage.TimeManager).route.params.userId}`);
     },
   },
 };

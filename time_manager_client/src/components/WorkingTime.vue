@@ -25,7 +25,7 @@
 </template>
 
 <script>
-// import WorkingTimesService from "@/services/WorkingTimesService";
+import WorkingTimesService from "@/services/WorkingTimesService";
 export default {
   name: "WorkingTime",
 
@@ -58,11 +58,11 @@ export default {
 
   methods: {
     updateWorkingTime() {
-      this.$router.push(`/workingTime/1/${this.workingTime.id}`)
+      this.$router.push(`/workingTime/${JSON.parse(window.localStorage.TimeManager).route.params.userId}/${this.workingTime.id}`)
     },
 
     deleteWorkingTime() {
-      console.log("delete")
+      WorkingTimesService.deleteWorkingTime(this.workingTime.id)
     },
   },
 };
