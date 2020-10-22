@@ -5,8 +5,8 @@ export default {
         return Api().post("/workingtimes", { "workingtime": workingtime });
     },
 
-    updateWorkingTime(id) {
-        return Api().put(`/workingtimes/${id}`);
+    updateWorkingTime(id, workingtime) {
+        return Api().put(`/workingtimes/${id}`, { "workingtime": workingtime });
     },
 
     deleteWorkingTime(id) {

@@ -102,6 +102,15 @@ export default {
         this.$emit("model", val);
       }
     }
+  },
+
+  watch: {
+    'this.$props.modelProps': {
+      deep: true,
+      handler(newVal, oldVal) {
+        console.log(newVal, oldVal)
+      }
+    }
   }
 };
 </script>
