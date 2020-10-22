@@ -20,7 +20,7 @@
         width="128"
         src="https://img.icons8.com/plasticine/2x/telegram-app.png"
       >
-        <span class="text-uppercase avatar-text centered-bottom">Template</span>
+        <span class="text-uppercase avatar-text centered-bottom">Timeger</span>
       </v-img>
     </span>
 
