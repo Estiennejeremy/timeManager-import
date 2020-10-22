@@ -33,7 +33,7 @@
         <v-list-item
           v-for="(item, i) in topPaths"
           active-class="border"
-          :to="item.parameters.length > 0 ? item.path : item.path"
+          :to="item.parameters.length === 1 ? item.url + id : item.path"
           class="my-4"
           :key="i"
         >
@@ -130,7 +130,7 @@ export default {
 
   computed: {
     ...mapState("app", ["image", "color"]),
-    ...mapState("user", ["isUserLoggedIn"]),
+    ...mapState("user", ["id", "isUserLoggedIn"]),
 
     topPaths() {
       return Paths.filter(path =>
