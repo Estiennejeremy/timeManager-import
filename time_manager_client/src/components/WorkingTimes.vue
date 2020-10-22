@@ -1,11 +1,25 @@
 <template>
   <v-container id="workingTimes">
-      <working-time
-        v-for="(item, index) in workingTimes"
-        :key="index"
-        :data="item"
-      />
+    <working-time
+      v-for="(item, index) in workingTimes"
+      :key="index"
+      :data="item"
+    />
 
+    <v-fab-transition>
+      <v-btn
+        fab
+        large
+        blue
+        fixed
+        bottom
+        right
+        @click="createWorkingTime()"
+        class="v-btn--example"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-container>
 </template>
 
@@ -17,28 +31,25 @@ export default {
 
   data: () => ({
     userId: null,
-    workingTimes: [
-      {
-        start: "start",
-        end: "end"
-      }
-    ],
-    headers: [
-      { text: "Debut", value: "start" },
-      { text: "Fin", value: "end" }
-    ]
+    workingTimes: [],
   }),
 
   components: {
-    WorkingTime
+    WorkingTime,
   },
 
   mounted() {
     WorkingTimesService.getWorkingTimes(1)
-      .then(res => {
+      .then((res) => {
         this.workingTimes = res.data.data;
       })
-      .catch(err => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  },
+
+  methods: {
+    createWorkingTime() {
+      this.$router.push(`/workingTime/1`);
+    },
+  },
 };
 </script>
