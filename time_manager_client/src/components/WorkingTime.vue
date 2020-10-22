@@ -37,6 +37,7 @@ export default {
     },
   }),
 
+  // Mounted
   mounted() {
     if (this.$props.data === null) {
       this.workingTime = {
