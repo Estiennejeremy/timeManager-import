@@ -9,6 +9,7 @@
     :grid="grid"
     grid-text-weight="bold"
     :resize="resize"
+    :smooth="smooth"
   >
   </line-chart>
 </template>
@@ -43,6 +44,10 @@ export default {
     grid: {
       type: Boolean,
       default: false
+    },
+    smooth: {
+      type: Boolean,
+      default: true
     }
   }
 };

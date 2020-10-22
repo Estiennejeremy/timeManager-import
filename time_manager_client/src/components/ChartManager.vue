@@ -47,7 +47,7 @@ export default {
   data: () => ({
     selected: "donut",
     resize: false,
-    grid: false,
+    grid: true,
     chartsTypes: ["donut", "bar", "chart-line", "chart-area"]
   }),
 

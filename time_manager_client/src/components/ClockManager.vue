@@ -1,6 +1,5 @@
 <template>
   <span id="clockManager">
-    <h1>{{ startDateTime }}</h1>
     <material-spa
       :titlePrimary="clockIn ? 'Work in progress' : 'Not clocked in yet'"
     >

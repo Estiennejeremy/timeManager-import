@@ -9,6 +9,7 @@
     :grid="gridValue"
     grid-text-weight="bold"
     :resize="resize"
+    :smooth="smooth"
   >
   </area-chart>
 </template>
@@ -44,6 +45,10 @@ export default {
     grid: {
       type: Boolean,
       default: false
+    },
+    smooth: {
+      type: Boolean,
+      default: true
     }
   },
 
