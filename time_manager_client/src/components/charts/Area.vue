@@ -6,9 +6,9 @@
     xkey="year"
     ykeys='["a", "b"]'
     line-colors='[ "#FF6384", "#36A2EB" ]'
-    grid="true"
+    :grid="gridValue"
     grid-text-weight="bold"
-    resize="true"
+    :resize="resize"
   >
   </area-chart>
 </template>
@@ -19,6 +19,7 @@ export default {
   name: "Area",
 
   data: () => ({
+    gridValue: false,
     areaData: [
       { year: "2013", a: 10, b: 5 },
       { year: "2014", a: 40, b: 15 },
@@ -35,6 +36,20 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    resize: {
+      type: Boolean,
+      default: false
+    },
+    grid: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  watch: {
+    grid: function(newval) {
+      console.log(newval);
     }
   }
 };

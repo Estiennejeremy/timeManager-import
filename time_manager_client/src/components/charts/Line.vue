@@ -6,9 +6,9 @@
     xkey="year"
     ykeys='["a", "b"]'
     line-colors='[ "#FF6384", "#36A2EB" ]'
-    grid="true"
+    :grid="grid"
     grid-text-weight="bold"
-    resize="true"
+    :resize="resize"
   >
   </line-chart>
 </template>
@@ -35,6 +35,14 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    resize: {
+      type: Boolean,
+      default: false
+    },
+    grid: {
+      type: Boolean,
+      default: false
     }
   }
 };

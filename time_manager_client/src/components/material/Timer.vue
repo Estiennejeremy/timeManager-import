@@ -13,7 +13,7 @@
         size="256"
         :style="'border: 20px solid ' + color + ';background: white;'"
       >
-        <v-tooltip nudge-top="100" bottom v-if="!running && startedAt === null">
+        <v-tooltip nudge-top="100" bottom v-if="!running">
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               v-bind="attrs"
@@ -29,9 +29,16 @@
           <span class="display-1">Clock in</span>
         </v-tooltip>
 
-        <span v-else class="display-3 black--text noselect">{{
-          formatTime || hover
-        }}</span>
+        <span v-else class="display-3 black--text noselect">
+          <v-icon
+            id="playavatar"
+            color="#424242"
+            size="256"
+            @click="endTimer()"
+          >
+            mdi-pause
+          </v-icon>
+        </span>
       </v-avatar>
     </v-card>
   </material-offset>
@@ -39,7 +46,7 @@
 
 <script>
 import MaterialOffset from "@/components/material/Offset.vue";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Timer",
@@ -59,49 +66,22 @@ export default {
   data: () => ({
     responsive: false,
     interval: null,
+    running: false,
     timer: 0
   }),
 
   methods: {
-    ...mapMutations("timer", ["setRunning", "setEnded", "setStartedAt"]),
-
     launchTimer() {
-      this.setRunning(true);
-      this.setStartedAt(new Date());
-      this.$emit("launch");
-      this.timer = this.duration;
-      this.runTimer();
+      this.$emit("clockin", {
+        active: true,
+        date: new Date().toISOString().substr(0, 10)
+      });
+      this.running = true;
     },
 
-    resumeTimer() {
-      let diff = Math.abs(new Date() - new Date(this.startedAt)) / 1000;
-
-      if (this.duration - diff > 0) {
-        this.timer = this.duration - diff;
-        this.runTimer();
-      } else {
-        this.timer = 0;
-        this.setEnded(true);
-        this.$emit("end");
-      }
-    },
-
-    pauseTimer() {
+    endTimer() {
+      this.$emit("clockin", false);
       this.running = false;
-      clearInterval(this.interval);
-    },
-
-    runTimer() {
-      this.interval = setInterval(() => {
-        if (this.timer > 0) {
-          this.timer -= 1;
-        } else {
-          this.$emit("end");
-          this.setRunning(false);
-          this.setEnded(true);
-          clearInterval(this.interval);
-        }
-      }, 1000);
     },
 
     onResponsiveInverted() {
@@ -114,21 +94,10 @@ export default {
   },
 
   computed: {
-    ...mapState("app", ["color"]),
-    ...mapState("timer", ["running", "duration", "startedAt", "ended"]),
-
-    formatTime() {
-      let measuredTime = new Date(null);
-      measuredTime.setSeconds(this.timer); // specify value of SECONDS
-      let MHSTime = measuredTime.toISOString().substr(14, 5);
-      return MHSTime;
-    }
+    ...mapState("app", ["color"])
   },
 
   mounted() {
-    if (this.running && !this.ended) {
-      this.resumeTimer();
-    }
     this.onResponsiveInverted();
     window.addEventListener("resize", this.onResponsiveInverted);
   },
@@ -186,24 +155,19 @@ export default {
 @keyframes glow {
   0% {
     filter: hue-rotate(10deg);
-    /* transform: rotate(0deg); */
   }
   25% {
     filter: hue-rotate(20deg);
-    /* transform: rotate(45deg); */
   }
   50% {
     filter: hue-rotate(30deg);
-    /* transform: rotate(90deg); */
   }
   75% {
     filter: hue-rotate(45deg);
-    /* transform: rotate(135deg); */
     transform: scale(1.05);
   }
   100% {
     filter: hue-rotate(90deg);
-    /* transform: rotate(180deg); */
     transform: scale(1.1);
   }
 }

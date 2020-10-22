@@ -1,12 +1,12 @@
 import Api from "@/services/Api";
 
 export default {
-  createUser() {
-    return Api().post("/users");
+  createUser(user) {
+    return Api().post("/users", { user: user });
   },
 
-  updateUser(id) {
-    return Api().put(`/users/${id}`);
+  updateUser(user, id) {
+    return Api().put(`/users/${id}`, { user: user });
   },
 
   getUser(id) {

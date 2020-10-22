@@ -1,11 +1,11 @@
 import Api from "@/services/Api";
 
 export default {
-  getClock() {
-    return Api().get("/clocks/");
+  getClock(id) {
+    return Api().get(`/clocks/${id}`);
   },
 
-  updateClock() {
-    return Api().get("/clocks/");
+  updateClock(clock, id) {
+    return Api().post(`/clocks/${id}`, { clock: clock });
   }
 };

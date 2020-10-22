@@ -5,10 +5,10 @@
     :data="barData"
     xkey="year"
     ykeys='["and", "ios", "win"]'
-    grid="true"
+    :grid="grid"
     grid-text-weight="bold"
     bar-colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]'
-    resize="true"
+    :resize="resize"
   >
   </bar-chart>
 </template>
@@ -35,6 +35,14 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    resize: {
+      type: Boolean,
+      default: false
+    },
+    grid: {
+      type: Boolean,
+      default: false
     }
   }
 };

@@ -82,7 +82,7 @@
         <material-form
           :config="configCreate"
           @update:config="config = $event"
-          @validate="createUser()"
+          @validate="createUser(), (createDialog = false)"
         />
 
         <v-card-actions>
@@ -102,7 +102,7 @@
         <material-form
           :config="configEdit"
           @update:config="config = $event"
-          @validate="updateUser()"
+          @validate="updateUser(), (editDialog = false)"
         />
 
         <v-card-actions>
@@ -122,7 +122,7 @@
         <material-form
           :config="configDelete"
           @update:config="config = $event"
-          @validate="deleteUser()"
+          @validate="deleteUser(), (deleteDialog = false)"
         />
 
         <v-card-actions>
@@ -296,40 +296,7 @@ export default {
       },
       image: "https://img.icons8.com/plasticine/2x/telegram-app.png",
       icon: "mdi-google-fit",
-      components: [
-        {
-          id: 0,
-          model: null,
-          modelName: "date",
-          name: "inputs-text-date",
-          directive: "config",
-          options: {
-            dark: false,
-            light: true,
-            filled: true,
-            dense: false,
-            shaped: true,
-            outlined: true,
-            label: "Date"
-          }
-        },
-        {
-          id: 1,
-          model: "16:20",
-          modelName: "time",
-          name: "inputs-text-time",
-          directive: "config",
-          options: {
-            dark: false,
-            light: true,
-            filled: true,
-            dense: false,
-            shaped: true,
-            outlined: true,
-            label: "Time"
-          }
-        }
-      ]
+      components: []
     }
   }),
 
@@ -342,7 +309,13 @@ export default {
 
     async createUser() {
       try {
-        const res = await AccountService.createUser();
+        const res = await AccountService.createUser(
+          {
+            email: this.getModel("configCreate", "email"),
+            username: this.getModel("configCreate", "username")
+          },
+          this.id
+        );
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -351,7 +324,13 @@ export default {
 
     async updateUser() {
       try {
-        const res = await AccountService.updateUser();
+        const res = await AccountService.updateUser(
+          {
+            email: this.getModel("configEdit", "email"),
+            username: this.getModel("configEdit", "username")
+          },
+          this.id
+        );
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -360,7 +339,7 @@ export default {
 
     async getUser() {
       try {
-        const res = await AccountService.getUser();
+        const res = await AccountService.getUser(this.id);
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -369,11 +348,18 @@ export default {
 
     async deleteUser() {
       try {
-        const res = await AccountService.deleteUser();
+        const res = await AccountService.deleteUser(this.id);
         console.log(res);
       } catch (err) {
         console.log(err);
       }
+    },
+
+    getModel(configname, name) {
+      let id = this[configname].components.findIndex(
+        item => item.modelName === name
+      );
+      return this[configname].components[id].model;
     }
   },
 

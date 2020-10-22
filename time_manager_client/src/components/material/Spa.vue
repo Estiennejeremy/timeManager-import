@@ -15,7 +15,7 @@
     "
   >
     <v-layout justify-center align-center column pa-5 style="z-index: 20;">
-      <span>
+      <span class="pb-4">
         <slot name="header" />
       </span>
       <div
