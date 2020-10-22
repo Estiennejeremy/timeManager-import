@@ -77,7 +77,7 @@
 
     <!-- Create Dialog -->
 
-    <v-dialog v-model="createDialog" max-width="1000">
+    <v-dialog v-model="createDialog" max-width="1000" class="ontop">
       <v-card color="grey" rounded="pill">
         <material-form
           :config="configCreate"
@@ -97,7 +97,7 @@
 
     <!-- Edit Dialog -->
 
-    <v-dialog v-model="editDialog" max-width="1000">
+    <v-dialog v-model="editDialog" max-width="1000" class="ontop">
       <v-card color="grey" rounded="pill">
         <material-form
           :config="configEdit"
@@ -117,7 +117,7 @@
 
     <!-- Delete Dialog -->
 
-    <v-dialog v-model="deleteDialog" max-width="1000">
+    <v-dialog v-model="deleteDialog" max-width="1000" class="ontop">
       <v-card color="grey" rounded="pill">
         <material-form
           :config="configDelete"
@@ -386,5 +386,8 @@ export default {
 <style>
 .v-dialog {
   box-shadow: none !important;
+}
+.ontop {
+  z-index: 20;
 }
 </style>

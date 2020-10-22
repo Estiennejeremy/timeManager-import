@@ -15,7 +15,7 @@
         <v-avatar tile size="128">
           <v-img src="https://image.flaticon.com/icons/svg/1548/1548784.svg"/>
         </v-avatar>
-      </v-row justify="center" align="center">
+      </v-row>
 
       <v-row justify="center">
         <span class="text-center display-3">

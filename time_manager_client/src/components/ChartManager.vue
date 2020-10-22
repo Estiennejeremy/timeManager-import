@@ -1,12 +1,12 @@
 <template>
   <v-container id="chartManager">
-    <donut-chart
-      id="donut"
-      :data="donutData"
-      colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]'
-      resize="true"
-    >
-    </donut-chart>
+    <donut />
+    <v-divider />
+    <bar />
+    <v-divider />
+    <chart-line />
+    <v-divider />
+    <chart-area />
   </v-container>
 </template>
 
@@ -16,21 +16,23 @@ import jQuery from "jquery";
 
 global.Raphael = Raphael;
 global.jQuery = jQuery;
-import { DonutChart } from "vue-morris";
+
+import Bar from "@/components/charts/Bar.vue";
+import ChartLine from "@/components/charts/Line.vue";
+import ChartArea from "@/components/charts/Area.vue";
+import Donut from "@/components/charts/Donut.vue";
 
 export default {
   name: "ChartManager",
 
   data: () => ({
-    donutData: [
-      { label: "Red", value: 300 },
-      { label: "Blue", value: 50 },
-      { label: "Yellow", value: 100 }
-    ]
   }),
 
   components: {
-    DonutChart
+    Bar,
+    ChartLine,
+    ChartArea,
+    Donut
   }
 };
 </script>
