@@ -19,9 +19,10 @@
       <v-icon>mdi-home</v-icon>
     </v-btn>
 
-    <v-btn fab text to="/settings">
-      <v-icon>mdi-settings</v-icon>
-    </v-btn>
+    <user />
+    <!-- <v-btn fab text @click.stop="userActive = !userActive">
+      <v-icon>mdi-account-circle</v-icon>
+    </v-btn> -->
 
     <v-btn href="https://github.com/" target="_blank" :fab="responsive" text>
       <span v-show="!responsive" class="mr-2">To Github</span>
@@ -32,6 +33,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import User from "@/components/User.vue";
 export default {
   name: "CoreToolbar",
 
@@ -65,6 +67,10 @@ export default {
     $route(val) {
       this.title = val.name;
     }
+  },
+
+  components: {
+    User
   },
 
   mounted() {

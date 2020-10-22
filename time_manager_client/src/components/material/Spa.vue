@@ -15,6 +15,9 @@
     "
   >
     <v-layout justify-center align-center column pa-5 style="z-index: 20;">
+      <span>
+        <slot name="header" />
+      </span>
       <div
         :class="
           !responsive
@@ -48,6 +51,7 @@
 
       <v-btn
         fab
+        v-if="button"
         color="#424242"
         class="mt-5"
         @click="
@@ -76,20 +80,23 @@ export default {
   props: {
     titlePrimary: {
       type: String,
-      default: "HEALTHY MEALS"
+      default: ""
     },
     titleSecond: {
       type: String,
-      default: "FOR YOUR TABLE"
+      default: ""
     },
     subtitle: {
       type: String,
-      default:
-        "Finally be a foodie at home with fresh, chef-prepared meals delivered daily to your door."
+      default: ""
     },
     background: {
       type: String,
       default: "../../assets/background.jpg"
+    },
+    button: {
+      type: Boolean,
+      default: false
     },
     to: {
       type: String,

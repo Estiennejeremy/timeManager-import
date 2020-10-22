@@ -1,12 +1,7 @@
 <template>
   <v-container fluid>
-    <v-row v-if="config.image && config.image.length !== 0" justify="center">
-      <v-avatar size="200">
-        <v-img :src="config.image" />
-      </v-avatar>
-    </v-row>
     <v-row align="center" align-content="center" justify="center">
-      <v-col :cols="responsive ? 12 : 4">
+      <v-col :cols="responsive ? 12 : 6">
         <v-card :color="color" id="form-title">
           <v-card-title id="title"
             ><v-icon class="pr-4" dark large>{{ config.icon }}</v-icon
@@ -34,6 +29,7 @@
                 <component
                   class="mx-2"
                   v-for="(component, id) in config.components"
+                  :modelProps="component.model"
                   :key="id"
                   :is="component.name"
                   :[component.directive]="component.options"
@@ -66,6 +62,8 @@
 
 <script>
 import InputsTextField from "@/components/forms/inputs/TextField.vue";
+import InputsTextDate from "@/components/forms/inputs/TextDate.vue";
+import InputsTextTime from "@/components/forms/inputs/TextTime.vue";
 import ActionsButton from "@/components/forms/actions/Button.vue";
 import InputsDate from "@/components/forms/inputs/Date.vue";
 import { mapState } from "vuex";
@@ -74,6 +72,8 @@ export default {
 
   components: {
     InputsTextField,
+    InputsTextDate,
+    InputsTextTime,
     ActionsButton,
     InputsDate
   },

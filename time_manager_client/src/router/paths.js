@@ -25,7 +25,7 @@ export default [
     url: "/workingTimes/",
     name: "WorkingTimes",
     view: "WorkingTimes",
-    icon: "mdi-home",
+    icon: "mdi-briefcase-outline",
     group: "top",
     public: true,
     show: true,
@@ -39,9 +39,9 @@ export default [
   {
     path: "/workingTime/:userId",
     url: "/workingTime/",
-    name: "WT Creation",
+    name: "WorkingTime",
     view: "WorkingTime",
-    icon: "mdi-information",
+    icon: "mdi-briefcase",
     group: "top",
     public: true,
     show: true,
@@ -56,11 +56,27 @@ export default [
     path: "/workingTime/:userId/:workingTimeId",
     name: "WT Update",
     view: "WorkingTime",
-    icon: "mdi-information",
+    icon: "mdi-briefcase",
+    group: "top",
+    public: true,
+    show: false,
+    parameters: ["userId", "workingTimeId"]
+  },
+
+  // =========================================================================
+  // CLOCK MANAGER
+  // =========================================================================
+
+  {
+    path: "/clock/:userId",
+    url: "/clock/",
+    name: "Clock Manager",
+    view: "ClockManager",
+    icon: "mdi-clock",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId", "workingTimeId"]
+    parameters: ["userId"]
   },
 
   // =========================================================================
@@ -69,23 +85,13 @@ export default [
 
   {
     path: "/chartManager/:userId",
+    url: "/chartManager/",
     name: "ChartManager",
     view: "ChartManager",
-    icon: "mdi-information",
+    icon: "mdi-chart-bar",
     group: "top",
     public: true,
     show: true,
     parameters: ["userId"]
-  },
-
-  {
-    path: "/chartManager/",
-    name: "ChartManager",
-    view: "ChartManager",
-    icon: "mdi-information",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: []
   }
 ];

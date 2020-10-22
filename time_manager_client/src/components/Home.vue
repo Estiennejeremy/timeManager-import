@@ -20,9 +20,9 @@
       @validate="storeUser(getUserFromForm())"
     />
 
-    <v-btn rounded block large dark :color="color" :to="`workingTimes/${id}`">
+    <!-- <v-btn rounded block large dark :color="color" :to="`workingTimes/${id}`">
       WorkingTimes + id
-    </v-btn>
+    </v-btn> -->
   </v-container>
 </template>
 
@@ -48,7 +48,7 @@ export default {
       }
     ],
     config: {
-      title: "Enter UserID",
+      title: "Create Fake User",
       validate: "Store user",
       message: {
         type: null,

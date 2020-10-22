@@ -33,7 +33,7 @@
         <v-list-item
           v-for="(item, i) in topPaths"
           active-class="border"
-          :to="item.parameters.length === 1 ? item.url + id : item.path"
+          :to="handleUrlParams(item)"
           class="my-4"
           :key="i"
         >
@@ -119,6 +119,19 @@ export default {
       }
     },
 
+    handleUrlParams(item) {
+      let url = "";
+      switch (item.parameters.length) {
+        case 1:
+          url = item.url + this.id;
+          break;
+        default:
+          url = item.path;
+          break;
+      }
+      return url;
+    },
+
     logout() {
       if (this.isUserLoggedIn) {
         this.setToken(null);
@@ -136,7 +149,11 @@ export default {
       return Paths.filter(path =>
         this.isUserLoggedIn
           ? path.group === "top" && path.show === true
-          : path.public === true && path.group === "top" && path.show === true
+          : path.public === true &&
+            path.group === "top" &&
+            path.show === true &&
+            (path.parameters.length === 0 ||
+              (path.parameters.length > 0 && this.id !== null))
       );
     },
 
