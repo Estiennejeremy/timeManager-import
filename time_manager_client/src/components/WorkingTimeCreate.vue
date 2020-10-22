@@ -3,7 +3,7 @@
     <material-form
       :config="config"
       @update:config="config = $event"
-      @validate="storeUser(getUserFromForm())"
+      @validate="createWorkingTime(getWorkingTimeFromForm())"
     />
   </v-container>
 </template>
@@ -26,7 +26,7 @@ export default {
       message: {
         type: null,
         text: null,
-        duration: 5000
+        duration: 5000,
       },
       image: "",
       components: [
@@ -48,10 +48,8 @@ export default {
             required: true,
             label: "Start",
             counter: 0,
-            rules: [
-              v => !!v || "Start time is required",
-            ]
-          }
+            rules: [(v) => !!v || "Start time is required"],
+          },
         },
         {
           id: 1,
@@ -71,25 +69,36 @@ export default {
             required: true,
             label: "End",
             counter: 0,
-            rules: [v => !!v || "End time is required"]
-          }
+            rules: [(v) => !!v || "End time is required"],
+          },
         },
-      ]
-    }
+      ],
+    },
   }),
 
   methods: {
-    createWorkingTime() {
-      this.$router.push(
-        `/workingTime/${
-          JSON.parse(window.localStorage.TimeManager).route.params.userId
-        }/${this.workingTime.id}`
+    createWorkingTime(workingtime) {
+      console.log(workingtime);
+    },
+
+    getModel(name) {
+      let id = this.config.components.findIndex(
+        (item) => item.modelName === name
       );
-    }
+      return this.config.components[id].model;
+    },
+
+    getWorkingTimeFromForm() {
+      return {
+        start: this.getModel("start"),
+        end: this.getModel("end"),
+        user_id: JSON.parse(window.localStorage.TimeManager).route.params.userId,
+      };
+    },
   },
 
-   components: {
-    MaterialForm
-  }
+  components: {
+    MaterialForm,
+  },
 };
 </script>
