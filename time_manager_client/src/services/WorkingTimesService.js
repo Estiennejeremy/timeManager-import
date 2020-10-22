@@ -1,8 +1,8 @@
 import Api from "@/services/Api";
 
 export default {
-    createWorkingTime() {
-        return Api().post("/workingtimes");
+    createWorkingTime(workingtime) {
+        return Api().post("/workingtimes", { "workingtime": workingtime });
     },
 
     updateWorkingTime(id) {

@@ -4,6 +4,7 @@
       v-for="(item, index) in workingTimes"
       :key="index"
       :data="item"
+      @refresh="getWorkingTimes()"
     />
 
     <v-fab-transition>
@@ -39,16 +40,26 @@ export default {
   },
 
   mounted() {
-    WorkingTimesService.getWorkingTimes(JSON.parse(window.localStorage.TimeManager).route.params.userId)
-      .then((res) => {
-        this.workingTimes = res.data.data;
-      })
-      .catch((err) => console.log(err));
+    this.getWorkingTimes()
   },
 
   methods: {
     createWorkingTime() {
-      this.$router.push(`/workingTime/${JSON.parse(window.localStorage.TimeManager).route.params.userId}`);
+      this.$router.push(
+        `/workingTime/${
+          JSON.parse(window.localStorage.TimeManager).route.params.userId
+        }`
+      );
+    },
+
+    getWorkingTimes() {
+      return WorkingTimesService.getWorkingTimes(
+        JSON.parse(window.localStorage.TimeManager).route.params.userId
+      )
+        .then((res) => {
+          this.workingTimes = res.data.data;
+        })
+        .catch((err) => console.log(err));
     },
   },
 };

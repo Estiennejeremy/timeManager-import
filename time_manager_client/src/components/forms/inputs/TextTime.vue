@@ -44,7 +44,7 @@ export default {
   name: "TextTime",
 
   data: () => ({
-    modelValue: new Date().getHours() + ":" + new Date().getMinutes(),
+    modelValue: new Date().getHours() + "-" + new Date().getMinutes(),
     responsive: false,
     modal: false
   }),

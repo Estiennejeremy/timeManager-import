@@ -64,6 +64,8 @@ export default {
 
     deleteWorkingTime() {
       WorkingTimesService.deleteWorkingTime(this.workingTime.id)
+      .then(() => this.$emit("refresh"))
+      .catch(() => this.$emit("refresh"))
     },
   },
 };
