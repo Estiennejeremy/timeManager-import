@@ -25,8 +25,7 @@ import Donut from "@/components/charts/Donut.vue";
 export default {
   name: "ChartManager",
 
-  data: () => ({
-  }),
+  data: () => ({}),
 
   components: {
     Bar,

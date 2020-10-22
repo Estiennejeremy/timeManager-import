@@ -23,7 +23,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import MaterialTitle from "@/components/material/Title.vue";
-import AccountService from "@/services/AccountService"
+import AccountService from "@/services/AccountService";
 export default {
   name: "Home",
 
@@ -32,22 +32,22 @@ export default {
       {
         id: 0,
         email: "oui@oui.fr",
-        username: "oui",
+        username: "oui"
       },
       {
         id: 1,
         email: "non@non.fr",
-        username: "non",
-      },
+        username: "non"
+      }
     ]
   }),
 
   mounted() {
     AccountService.getUsers()
-      .then((res) => {
+      .then(res => {
         this.users = res.data.data;
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   },
 
   methods: {
@@ -78,16 +78,16 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
+    }
   },
 
   computed: {
     ...mapState("app", ["color"]),
-    ...mapState("user", ["id", "username", "email"]),
+    ...mapState("user", ["id", "username", "email"])
   },
 
   components: {
-    MaterialTitle,
-  },
+    MaterialTitle
+  }
 };
 </script>

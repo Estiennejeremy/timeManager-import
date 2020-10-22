@@ -1,6 +1,6 @@
 <template>
   <v-container id="workingTimes">
-    <v-row align="center"> 
+    <v-row align="center">
       <v-col cols="3">
         <v-card color="blue">
           <span class="">{{ workingTime.start }}</span>
@@ -33,8 +33,8 @@ export default {
     workingTime: {
       id: null,
       start: null,
-      end: null,
-    },
+      end: null
+    }
   }),
 
   // Mounted
@@ -43,7 +43,7 @@ export default {
       this.workingTime = {
         // api
         start: "azazeaze",
-        end: "erzere",
+        end: "erzere"
       };
     } else {
       this.workingTime = this.$props.data;
@@ -53,20 +53,24 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => null,
-    },
+      default: () => null
+    }
   },
 
   methods: {
     updateWorkingTime() {
-      this.$router.push(`/workingTime/${JSON.parse(window.localStorage.TimeManager).route.params.userId}/${this.workingTime.id}`)
+      this.$router.push(
+        `/workingTime/${
+          JSON.parse(window.localStorage.TimeManager).route.params.userId
+        }/${this.workingTime.id}`
+      );
     },
 
     deleteWorkingTime() {
       WorkingTimesService.deleteWorkingTime(this.workingTime.id)
-      .then(() => this.$emit("refresh"))
-      .catch(() => this.$emit("refresh"))
-    },
-  },
+        .then(() => this.$emit("refresh"))
+        .catch(() => this.$emit("refresh"));
+    }
+  }
 };
 </script>

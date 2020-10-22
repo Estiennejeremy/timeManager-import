@@ -19,7 +19,7 @@ export default {
     workingTime: {
       id: null,
       start: null,
-      end: null,
+      end: null
     },
     config: {
       title: "Update working time",
@@ -27,7 +27,7 @@ export default {
       message: {
         type: null,
         text: null,
-        duration: 5000,
+        duration: 5000
       },
       image: "",
       components: [
@@ -49,8 +49,8 @@ export default {
             required: true,
             label: "Start date",
             counter: 0,
-            rules: [(v) => !!v || "Start time is required"],
-          },
+            rules: [v => !!v || "Start time is required"]
+          }
         },
         {
           id: 1,
@@ -70,8 +70,8 @@ export default {
             required: true,
             label: "Start time",
             counter: 0,
-            rules: [(v) => !!v || "Start time is required"],
-          },
+            rules: [v => !!v || "Start time is required"]
+          }
         },
         {
           id: 2,
@@ -91,8 +91,8 @@ export default {
             required: true,
             label: "End date",
             counter: 0,
-            rules: [(v) => !!v || "End time is required"],
-          },
+            rules: [v => !!v || "End time is required"]
+          }
         },
         {
           id: 3,
@@ -112,11 +112,11 @@ export default {
             required: true,
             label: "End time",
             counter: 0,
-            rules: [(v) => !!v || "End time is required"],
-          },
-        },
-      ],
-    },
+            rules: [v => !!v || "End time is required"]
+          }
+        }
+      ]
+    }
   }),
 
   mounted() {
@@ -129,18 +129,34 @@ export default {
         JSON.parse(window.localStorage.TimeManager).route.params.workingTimeId,
         JSON.parse(window.localStorage.TimeManager).route.params.userId
       )
-        .then((res) => {
+        .then(res => {
           this.workingTime = res.data.data;
-          this.setModel("startDate", new Date(this.workingTime.start).toISOString().substr(0, 10));
-          this.setModel("startTime", new Date(this.workingTime.start).getHours() + ":" + new Date(this.workingTime.start).getMinutes());
-          this.setModel("endDate", new Date(this.workingTime.end).toISOString().substr(0, 10));
-          this.setModel("endTime", new Date(this.workingTime.end).getHours() + ":" + new Date(this.workingTime.end).getMinutes());
+          this.setModel(
+            "startDate",
+            new Date(this.workingTime.start).toISOString().substr(0, 10)
+          );
+          this.setModel(
+            "startTime",
+            new Date(this.workingTime.start).getHours() +
+              ":" +
+              new Date(this.workingTime.start).getMinutes()
+          );
+          this.setModel(
+            "endDate",
+            new Date(this.workingTime.end).toISOString().substr(0, 10)
+          );
+          this.setModel(
+            "endTime",
+            new Date(this.workingTime.end).getHours() +
+              ":" +
+              new Date(this.workingTime.end).getMinutes()
+          );
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
 
     updateWorkingTime(workingtime) {
-      WorkingTimesService.updateWorkingTime(this.workingTime.id,workingtime);
+      WorkingTimesService.updateWorkingTime(this.workingTime.id, workingtime);
       this.$router.push(
         `/workingTimes/${
           JSON.parse(window.localStorage.TimeManager).route.params.userId
@@ -150,14 +166,14 @@ export default {
 
     getModel(name) {
       let id = this.config.components.findIndex(
-        (item) => item.modelName === name
+        item => item.modelName === name
       );
       return this.config.components[id].model;
     },
 
     setModel(name, value) {
       let id = this.config.components.findIndex(
-        (item) => item.modelName === name
+        item => item.modelName === name
       );
       this.config.components[id].model = value;
     },
@@ -166,14 +182,13 @@ export default {
       return {
         start: `${this.getModel("startDate")}T${this.getModel("startTime")}`,
         end: `${this.getModel("endDate")}T${this.getModel("endTime")}`,
-        user_id: JSON.parse(window.localStorage.TimeManager).route.params
-          .userId,
+        user_id: JSON.parse(window.localStorage.TimeManager).route.params.userId
       };
-    },
+    }
   },
 
   components: {
-    MaterialForm,
-  },
+    MaterialForm
+  }
 };
 </script>

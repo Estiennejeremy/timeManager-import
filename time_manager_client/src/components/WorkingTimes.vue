@@ -1,6 +1,5 @@
 <template>
   <v-container id="workingTimes">
-
     <span v-if="workingTimes.length > 0">
       <working-time
         v-for="(item, index) in workingTimes"
@@ -13,7 +12,7 @@
     <span v-else>
       <v-row justify="center" align="center">
         <v-avatar tile size="128">
-          <v-img src="https://image.flaticon.com/icons/svg/1548/1548784.svg"/>
+          <v-img src="https://image.flaticon.com/icons/svg/1548/1548784.svg" />
         </v-avatar>
       </v-row>
 
@@ -49,15 +48,15 @@ export default {
 
   data: () => ({
     userId: null,
-    workingTimes: [],
+    workingTimes: []
   }),
 
   components: {
-    WorkingTime,
+    WorkingTime
   },
 
   mounted() {
-    this.getWorkingTimes()
+    this.getWorkingTimes();
   },
 
   methods: {
@@ -73,11 +72,11 @@ export default {
       return WorkingTimesService.getWorkingTimes(
         JSON.parse(window.localStorage.TimeManager).route.params.userId
       )
-        .then((res) => {
+        .then(res => {
           this.workingTimes = res.data.data;
         })
-        .catch((err) => console.log(err));
-    },
-  },
+        .catch(err => console.log(err));
+    }
+  }
 };
 </script>

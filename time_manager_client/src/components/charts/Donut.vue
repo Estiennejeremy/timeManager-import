@@ -3,7 +3,8 @@
     id="donut"
     :data="donutData"
     colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]'
-    resize="true">
+    resize="true"
+  >
   </donut-chart>
 </template>
 
@@ -30,5 +31,5 @@ export default {
       default: () => []
     }
   }
-}
+};
 </script>

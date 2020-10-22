@@ -105,10 +105,10 @@ export default {
   },
 
   watch: {
-    'this.$props.modelProps': {
+    "this.$props.modelProps": {
       deep: true,
       handler(newVal, oldVal) {
-        console.log(newVal, oldVal)
+        console.log(newVal, oldVal);
       }
     }
   }

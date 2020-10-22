@@ -1,23 +1,23 @@
 import Api from "@/services/Api";
 
 export default {
-    createUser() {
-        return Api().post("/users");
-    },
+  createUser() {
+    return Api().post("/users");
+  },
 
-    updateUser(id) {
-        return Api().put(`/users/${id}`);
-    },
+  updateUser(id) {
+    return Api().put(`/users/${id}`);
+  },
 
-    getUser(id) {
-        return Api().get(`/users/${id}`);
-    },
+  getUser(id) {
+    return Api().get(`/users/${id}`);
+  },
 
-    getUsers() {
-        return Api().get("/users");
-    },
+  getUsers() {
+    return Api().get("/users");
+  },
 
-    deleteUser(id) {
-        return Api().delete(`/users/${id}`);
-    }
+  deleteUser(id) {
+    return Api().delete(`/users/${id}`);
+  }
 };
