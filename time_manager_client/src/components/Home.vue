@@ -23,7 +23,6 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import MaterialTitle from "@/components/material/Title.vue";
-import MaterialForm from "@/components/forms/Form.vue";
 import AccountService from "@/services/AccountService"
 export default {
   name: "Home",
@@ -89,7 +88,6 @@ export default {
 
   components: {
     MaterialTitle,
-    MaterialForm,
   },
 };
 </script>

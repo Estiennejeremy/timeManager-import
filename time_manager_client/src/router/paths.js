@@ -33,6 +33,21 @@ export default [
     },
 
     // =========================================================================
+    // WORKING-TIME UPDATE/DELETE
+    // =========================================================================
+
+    {
+        path: "/workingTime/:userId/:workingTimeId",
+        name: "WT Update",
+        view: "WorkingTimeUpdate",
+        icon: "mdi-briefcase",
+        group: "top",
+        public: true,
+        show: false,
+        parameters: ["userId", "workingTimeId"]
+    },
+
+    // =========================================================================
     // WORKING-TIME CREATE
     // =========================================================================
 
@@ -46,21 +61,6 @@ export default [
         public: true,
         show: true,
         parameters: ["userId"]
-    },
-
-    // =========================================================================
-    // WORKING-TIME UPDATE/DELETE
-    // =========================================================================
-
-    {
-        path: "/workingTime/:userId/:workingTimeId",
-        name: "WT Update",
-        view: "WorkingTimeUpdate",
-        icon: "mdi-briefcase",
-        group: "top",
-        public: true,
-        show: false,
-        parameters: ["userId", "workingTimeId"]
     },
 
     // =========================================================================
