@@ -14,12 +14,6 @@
       </v-col>
     </v-row>
 
-    <material-form
-      :config="config"
-      @update:config="config = $event"
-      @validate="storeUser(getUserFromForm())"
-    />
-
     <!-- <v-btn rounded block large dark :color="color" :to="`workingTimes/${id}`">
       WorkingTimes + id
     </v-btn> -->
@@ -46,84 +40,7 @@ export default {
         email: "non@non.fr",
         username: "non",
       },
-    ],
-    config: {
-      title: "Create Fake User",
-      validate: "Store user",
-      message: {
-        type: null,
-        text: null,
-        duration: 5000,
-      },
-      image: "",
-      components: [
-        {
-          id: 0,
-          model: null,
-          modelName: "email",
-          name: "inputs-text-field",
-          directive: "config",
-          options: {
-            dark: false,
-            light: true,
-            filled: true,
-            dense: false,
-            shaped: true,
-            outlined: true,
-            clearable: true,
-            autocomplete: false,
-            required: true,
-            label: "Email",
-            counter: 0,
-            rules: [
-              (v) => !!v || "Email required",
-              (v) =>
-                (v && v.length > 4) ||
-                "Email must be superior than 4 characters",
-            ],
-          },
-        },
-        {
-          id: 1,
-          model: null,
-          modelName: "username",
-          name: "inputs-text-field",
-          directive: "config",
-          options: {
-            dark: false,
-            light: true,
-            filled: true,
-            dense: false,
-            shaped: true,
-            outlined: true,
-            clearable: true,
-            autocomplete: false,
-            required: true,
-            label: "Username",
-            counter: 0,
-            rules: [(v) => !!v || "Username required"],
-          },
-        },
-        {
-          id: 2,
-          model: null,
-          modelName: "id",
-          name: "inputs-text-field",
-          directive: "config",
-          options: {
-            dark: false,
-            filled: true,
-            shaped: true,
-            autocomplete: false,
-            required: true,
-            label: "UserID",
-            type: "number",
-            counter: 0,
-            rules: [(v) => !!v || "UserID requis"],
-          },
-        },
-      ],
-    },
+    ]
   }),
 
   mounted() {
@@ -154,21 +71,6 @@ export default {
         this.email === user.email
         ? true
         : false;
-    },
-
-    getModel(name) {
-      let id = this.config.components.findIndex(
-        (item) => item.modelName === name
-      );
-      return this.config.components[id].model;
-    },
-
-    getUserFromForm() {
-      return {
-        username: this.getModel("username"),
-        email: this.getModel("email"),
-        id: this.getModel("id"),
-      };
     },
 
     async getUsers() {
