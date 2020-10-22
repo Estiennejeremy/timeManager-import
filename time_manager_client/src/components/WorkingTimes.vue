@@ -39,7 +39,7 @@ export default {
   },
 
   mounted() {
-    WorkingTimesService.getWorkingTimes(1)
+    WorkingTimesService.getWorkingTimes(JSON.parse(window.localStorage.TimeManager).route.params.userId)
       .then((res) => {
         this.workingTimes = res.data.data;
       })

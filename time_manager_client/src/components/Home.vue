@@ -30,7 +30,7 @@
 import { mapState, mapMutations } from "vuex";
 import MaterialTitle from "@/components/material/Title.vue";
 import MaterialForm from "@/components/forms/Form.vue";
-// import AccountService from "@/services/AccountService"
+import AccountService from "@/services/AccountService"
 export default {
   name: "Home",
 
@@ -39,13 +39,13 @@ export default {
       {
         id: 0,
         email: "oui@oui.fr",
-        username: "oui"
+        username: "oui",
       },
       {
         id: 1,
         email: "non@non.fr",
-        username: "non"
-      }
+        username: "non",
+      },
     ],
     config: {
       title: "Enter UserID",
@@ -53,7 +53,7 @@ export default {
       message: {
         type: null,
         text: null,
-        duration: 5000
+        duration: 5000,
       },
       image: "",
       components: [
@@ -76,12 +76,12 @@ export default {
             label: "Email",
             counter: 0,
             rules: [
-              v => !!v || "Email required",
-              v =>
+              (v) => !!v || "Email required",
+              (v) =>
                 (v && v.length > 4) ||
-                "Email must be superior than 4 characters"
-            ]
-          }
+                "Email must be superior than 4 characters",
+            ],
+          },
         },
         {
           id: 1,
@@ -101,8 +101,8 @@ export default {
             required: true,
             label: "Username",
             counter: 0,
-            rules: [v => !!v || "Username required"]
-          }
+            rules: [(v) => !!v || "Username required"],
+          },
         },
         {
           id: 2,
@@ -119,12 +119,20 @@ export default {
             label: "UserID",
             type: "number",
             counter: 0,
-            rules: [v => !!v || "UserID requis"]
-          }
-        }
-      ]
-    }
+            rules: [(v) => !!v || "UserID requis"],
+          },
+        },
+      ],
+    },
   }),
+
+  mounted() {
+    AccountService.getUsers()
+      .then((res) => {
+        this.users = res.data.data;
+      })
+      .catch((err) => console.log(err));
+  },
 
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -150,7 +158,7 @@ export default {
 
     getModel(name) {
       let id = this.config.components.findIndex(
-        item => item.modelName === name
+        (item) => item.modelName === name
       );
       return this.config.components[id].model;
     },
@@ -159,7 +167,7 @@ export default {
       return {
         username: this.getModel("username"),
         email: this.getModel("email"),
-        id: this.getModel("id")
+        id: this.getModel("id"),
       };
     },
 
@@ -169,17 +177,17 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
 
   computed: {
     ...mapState("app", ["color"]),
-    ...mapState("user", ["id", "username", "email"])
+    ...mapState("user", ["id", "username", "email"]),
   },
 
   components: {
     MaterialTitle,
-    MaterialForm
-  }
+    MaterialForm,
+  },
 };
 </script>
