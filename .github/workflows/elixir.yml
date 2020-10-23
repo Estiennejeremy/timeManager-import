@@ -46,4 +46,6 @@ jobs:
         host: 51.75.122.116
         username: timemanager
         password: timemanager
-        script: docker-compose up -d
+        script: |
+          cd TimeManager
+          docker-compose up -d
