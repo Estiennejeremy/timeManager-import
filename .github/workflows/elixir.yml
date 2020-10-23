@@ -19,12 +19,14 @@ jobs:
       with:
         elixir-version: '1.7'
         otp-version: '22.3'
+        
     - name: Restore dependencies cache
       uses: actions/cache@v2
       with:
         path: time_manager_api/deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
+
     - name: Build
       run: docker-compose up -d
 
@@ -34,7 +36,7 @@ jobs:
         HOST: ${{ secrets.REMOTE_HOST }}
         USERNAME: ${{ secrets.REMOTE_USER }}
         KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        
+
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
