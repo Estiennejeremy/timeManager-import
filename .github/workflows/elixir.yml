@@ -31,7 +31,8 @@ jobs:
     - name: Deploy
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
-          SSH_PRIVATE_KEY: >-"-----BEGIN RSA PRIVATE KEY-----
+          SSH_PRIVATE_KEY:
+            - '-----BEGIN RSA PRIVATE KEY-----
 MIIJJwIBAAKCAgEA2zaeu2G0dHKCKJGTJVRcVzFn2D+rdmRhBQ9BihiNKmg+Qr0E
 Lf3707NodfRx9JHIThuhpqgrMH5jdVdih7chiveFs2dBUutBw6kh5LZhpQ44WDDX
 oGoVYMltMplMB7wQ+TZzdVNi6TK0SCy5ynyBXPNgnQ3Nq1FoGPQ4tiALcogrDwNf
@@ -81,7 +82,7 @@ a/LELfPW0IK1ICIwlFhsIaGou75f+PkezE4IZ7QElfjp7FX2DJrtNbi5+tqapI42
 KpzY+hf8rwP+NlKvhbt4Qd7+XGxchW3HUB7o9A0LYLyfLeGbU8FbBLy12USSKnpi
 NThibch2+fl3FLMp1In1AnSTeeH/eWIti6+6U61ZMauchMdmesuXfD1qZlat6pl7
 SbQU5xzNfKom622EneoVwbFw7rv0n2xFhyFLtK0RiRhGr+Mqcrl8LmK0hA==
------END RSA PRIVATE KEY----- "
+-----END RSA PRIVATE KEY-----'
           ARGS: "-rltgoDzvO --delete"
           SOURCE: "dist/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
