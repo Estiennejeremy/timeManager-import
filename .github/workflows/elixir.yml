@@ -49,4 +49,4 @@ jobs:
         command_timeout: 30m
         script: |
           cd TimeManager
-          docker-compose up -d
+          docker-compose up 
