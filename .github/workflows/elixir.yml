@@ -9,38 +9,33 @@ on:
 jobs:
   build:
 
-    name: Build and test
-    runs-on: ubuntu-latest
+    # name: Build and test
+    # runs-on: ubuntu-latest
+    #
+    # steps:
+    # - uses: actions/checkout@v2
+    # - name: Set up Elixir
+    #   uses: actions/setup-elixir@v1
+    #   with:
+    #     elixir-version: '1.7'
+    #     otp-version: '22.3'
+    #
+    # - name: Restore dependencies cache
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: time_manager_api/deps
+    #     key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+    #     restore-keys: ${{ runner.os }}-mix-
+    #
+    # - name: Build
+    #   run: docker-compose up -d
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Elixir
-      uses: actions/setup-elixir@v1
-      with:
-        elixir-version: '1.7'
-        otp-version: '22.3'
-        
-    - name: Restore dependencies cache
-      uses: actions/cache@v2
-      with:
-        path: time_manager_api/deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-
-    - name: Build
-      run: docker-compose up -d
-
-    - name: Copy repository contents via scp
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.REMOTE_HOST }}
-        USERNAME: ${{ secrets.REMOTE_USER }}
-        KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Executing remote command
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        USERNAME: ${{ secrets.REMOTE_USER }}
-        KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: ls
+    - name: copy file via ssh password
+    uses: appleboy/scp-action@master
+    with:
+      host: 51.75.122.116
+      username: timemanager
+      password: timemanager
+      port: 22
+      source: "."
+      target: "test"
