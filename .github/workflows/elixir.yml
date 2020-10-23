@@ -28,12 +28,17 @@ jobs:
     - name: Build
       run: docker-compose up -d
 
-    - name: Deploy
-      uses: easingthemes/ssh-deploy@v2.1.5
+    - name: Copy repository contents via scp
+      uses: appleboy/scp-action@master
       env:
-          ARGS: "-rltgoDzvO --delete"
-          SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+        HOST: ${{ secrets.REMOTE_HOST }}
+        USERNAME: ${{ secrets.REMOTE_USER }}
+        KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+    - name: Executing remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        USERNAME: ${{ secrets.REMOTE_USER }}
+        KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: ls
