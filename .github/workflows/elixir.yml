@@ -27,5 +27,4 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: |-
-            cd time_manager_api 
             docker-compose build
