@@ -38,4 +38,12 @@ jobs:
         password: timemanager
         port: 22
         source: "."
-        target: "test"
+        target: "TimeManager"
+
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: 51.75.122.116
+        username: timemanager
+        password: timemanager
+        script: docker-compose up -d
