@@ -26,7 +26,7 @@ jobs:
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
     - name: Build
-      run: docker-compose build
+      run: docker-compose up -d
 
     - name: Deploy
       uses: easingthemes/ssh-deploy@v2.1.5
