@@ -38,5 +38,10 @@ services:
     environment:
       - PORT=8081
     restart: on-failure
+    tty: true
+
+networks:
+  default:
+
 volumes:
   pgdata:

@@ -11,11 +11,11 @@
 # Production
 
 # étape de build
-FROM node:lts-alpine as build-stage
+FROM node as build-stage
 WORKDIR /client_web
 ENV PATH /client_web/node_modules/.bin:$PATH
 COPY package*.json /client_web/
-RUN npm install --silent
+RUN npm install
 COPY . .
 RUN npm run build
 
@@ -24,5 +24,5 @@ FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /client_web/dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d
-EXPOSE 8080
+EXPOSE 8081
 CMD ["nginx", "-g", "daemon off;"]
