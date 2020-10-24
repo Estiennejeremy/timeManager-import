@@ -8,4 +8,6 @@ RUN mkdir assets
 
 RUN mix deps.clean --all && mix deps.get && mix compile
 
+COPY . .
+
 CMD mix phx.server
