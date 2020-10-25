@@ -7,9 +7,9 @@
 docker-compose up --build
 ```
 
-## Access
+# Access
 
 The application is hosted on a VPS
 
-Client: http://51.75.122.116:8080/
-Api: http://51.75.122.116:4000/api/
+* Client: http://51.75.122.116:8080/
+* Api: http://51.75.122.116:4000/api/
