@@ -1,5 +1,5 @@
 <template>
-  <v-container id="workingTimes">
+  <v-container id="workingTimes" fill-height>
     <span v-if="workingTimes.length > 0">
       <working-time
         v-for="(item, index) in workingTimes"
@@ -9,19 +9,23 @@
       />
     </span>
 
-    <span v-else>
-      <v-row justify="center" align="center">
-        <v-avatar tile size="128">
-          <v-img src="https://image.flaticon.com/icons/svg/1548/1548784.svg" />
-        </v-avatar>
-      </v-row>
+    <v-row v-else align="center">
+      <v-col cols="12">
+        <v-row justify="center" align="center">
+          <v-avatar tile size="128">
+            <v-img
+              src="https://image.flaticon.com/icons/svg/1548/1548784.svg"
+            />
+          </v-avatar>
+        </v-row>
 
-      <v-row justify="center">
-        <span class="text-center display-3">
-          No working times for this user
-        </span>
-      </v-row>
-    </span>
+        <v-row justify="center">
+          <span class="text-center display-3">
+            No working times for this user
+          </span>
+        </v-row>
+      </v-col>
+    </v-row>
 
     <v-fab-transition>
       <v-btn
