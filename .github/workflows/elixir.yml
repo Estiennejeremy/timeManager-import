@@ -14,39 +14,38 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    # - name: Set up Elixir
-    #   uses: actions/setup-elixir@v1
-    #   with:
-    #     elixir-version: '1.7'
-    #     otp-version: '22.3'
-    #
-    # - name: Restore dependencies cache
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: time_manager_api/deps
-    #     key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-    #     restore-keys: ${{ runner.os }}-mix-
-    #
-    # - name: Build
-    #   run: docker-compose up -d
+    - name: Set up Elixir
+      uses: actions/setup-elixir@v1
+      with:
+        elixir-version: '1.7'
+        otp-version: '22.3'
 
-    - name: copy file via ssh password
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: time_manager_api/deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+
+    - name: Build
+      run: docker-compose up -d
+
+    - name: Copy file via ssh
       uses: appleboy/scp-action@master
       with:
-        host: 51.75.122.116
-        username: timemanager
-        password: timemanager
+        host: ${{ secrets.HOSTNAME }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
         port: 22
         source: "."
         target: "TimeManager"
 
-    - name: executing remote ssh commands using password
+    - name: Executing remote ssh commands
       uses: appleboy/ssh-action@master
       with:
-        host: 51.75.122.116
-        username: timemanager
-        password: timemanager
+        host: ${{ secrets.HOSTNAME }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
         command_timeout: 30m
         script: |
-          cd TimeManager
-          docker-compose up 
+          ./timemanager.sh
