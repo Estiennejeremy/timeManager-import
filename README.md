@@ -1,57 +1,15 @@
 # TimeManager
 ![Elixir CI](https://github.com/Lucashw68/TimeManager/workflows/Elixir%20CI/badge.svg)
 
-# Init:
+## Build
 
 ```
-docker-compose build
+docker-compose up --build
 ```
 
-```
-docker-compose run server mix ecto.create
-```
+## Access
 
-```
-docker-compose up
-```
+The application is hosted on a VPS
 
-# Generate models:
-
-```
-docker container exec server_server_1 mix phx.gen.context Accounts User users username:string email:string
-```
-
-```
-docker container exec server_server_1 mix ecto.migrate
-```
-
-# Generate REST endpoints:
-
-```
-docker container exec -it bash
-```
-
-```
-mix phx.gen.json Accounts User users username:string email:string --no-context --no-schema
-```
-
-# Adding the routes:
-```
-scope "/api", ServerWeb do
-  pipe_through :api
-  resources "/users", UserController, except: [:new, :edit]
-end
-```
-
-# Add seeds and populate (in priv/repo/seeds.exs)
-
-```
-alias server.Repo
-alias server.Accounts.User
-Repo.insert! %User{username: "oui", email: "oui@oui.fr"}
-Repo.insert! %User{username: "non", email: "non@non.fr"}
-```
-
-```
-docker container exec server_server_1 mix run priv/repo/seeds.exs
-```
+Client: http://51.75.122.116:8080/
+Api: http://51.75.122.116:4000/api/
