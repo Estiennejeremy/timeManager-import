@@ -46,6 +46,6 @@ jobs:
         host: ${{ secrets.HOSTNAME }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        command_timeout: 30m
+        command_timeout: 5m
         script: |
-          ./timemanager.sh
+          nohup ./timemanager.sh > build.log &
