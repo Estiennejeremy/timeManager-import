@@ -17,81 +17,47 @@ export default [
   },
 
   // =========================================================================
-  // WORKING-TIMES
+  // DASHBOARD
   // =========================================================================
 
   {
-    path: "/workingTimes/:userId",
-    url: "/workingTimes/",
-    name: "WorkingTimes",
-    view: "WorkingTimes",
-    icon: "mdi-briefcase-outline",
+    path: "/dashboard",
+    name: "Dashboard",
+    view: "Dashboard",
+    icon: "mdi-monitor-dashboard",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
+    parameters: []
   },
 
   // =========================================================================
-  // WORKING-TIME UPDATE/DELETE
+  // PROFILE
   // =========================================================================
 
   {
-    path: "/workingTime/:userId/:workingTimeId",
-    name: "WT Update",
-    view: "WorkingTimeUpdate",
-    icon: "mdi-briefcase",
-    group: "top",
-    public: true,
-    show: false,
-    parameters: ["userId", "workingTimeId"]
-  },
-
-  // =========================================================================
-  // WORKING-TIME CREATE
-  // =========================================================================
-
-  {
-    path: "/workingTime/:userId",
-    url: "/workingTime/",
-    name: "WorkingTime",
-    view: "WorkingTimeCreate",
-    icon: "mdi-briefcase",
+    path: "/profile",
+    name: "Profile",
+    view: "Profile",
+    icon: "mdi-account-circle",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
+    parameters: []
   },
 
   // =========================================================================
-  // CLOCK MANAGER
+  // SETTINGS
   // =========================================================================
 
   {
-    path: "/clock/:userId",
-    url: "/clock/",
-    name: "Clock Manager",
-    view: "ClockManager",
-    icon: "mdi-clock",
+    path: "/settings",
+    name: "Settings",
+    view: "Settings",
+    icon: "mdi-settings",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
-  },
-
-  // =========================================================================
-  // CHART MANAGER
-  // =========================================================================
-
-  {
-    path: "/chartManager/:userId",
-    url: "/chartManager/",
-    name: "ChartManager",
-    view: "ChartManager",
-    icon: "mdi-chart-bar",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: ["userId"]
+    parameters: []
   }
 ];

@@ -15,12 +15,8 @@
     :src="image"
   >
     <span class="avatar-drawer">
-      <v-img
-        contain
-        width="128"
-        src="https://img.icons8.com/plasticine/2x/telegram-app.png"
-      >
-        <span class="text-uppercase avatar-text centered-bottom">Timeger</span>
+      <v-img contain width="128" src="@/assets/logo_big.png">
+        <!-- <span class="text-uppercase avatar-text centered-bottom">Timeger</span> -->
       </v-img>
     </span>
 

@@ -1,5 +1,5 @@
-// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-//   .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 module.exports = {
   transpileDependencies: ["vuetify"],
@@ -7,13 +7,10 @@ module.exports = {
     host: "0.0.0.0"
   },
   configureWebpack: {
-    // plugins: [new BundleAnalyzerPlugin()],
-    resolve: {
-      alias: {
-        vue$: "vue/dist/vue.common.js",
-        jquery: "jquery/src/jquery.js"
-      }
-    }
+    plugins:
+      process.env.npm_lifecycle_event !== "build"
+        ? [new BundleAnalyzerPlugin()]
+        : null
   },
   chainWebpack(config) {
     config.plugins.delete("prefetch");
