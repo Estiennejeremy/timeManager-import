@@ -6,6 +6,7 @@ on:
     paths-ignore:
     - 'README.md'
     - 'Project.md'
+    - 'DeginThinking.md'
     - 'design_thinking/'
   pull_request:
     branches: [ main ]
