@@ -15,8 +15,8 @@ defmodule TimeManagerApiWeb.TeamController do
     with {:ok, %Team{} = team} <- Teams.create_team(team_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.teams_team_path(conn, :show, team))
-      |> render("show.json", team: team)
+      |> put_resp_header("location", Routes.team_path(conn, :show, team))
+      |> render("create.json", team: team)
     end
   end
 
