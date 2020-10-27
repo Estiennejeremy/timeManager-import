@@ -3,7 +3,7 @@
     <v-container fill-height>
       <v-container>
         <v-row justify="center">
-          <v-avatar size="256">
+          <v-avatar :size="responsive ? 128 : 256">
             <v-img
               src="https://cdn1.iconfinder.com/data/icons/flat-mobile-app-icons/128/Clock-512.png"
             />
@@ -11,7 +11,14 @@
         </v-row>
 
         <v-row class="pt-4" justify="center">
-          <span class="display-3" style="text-shadow: 2px 2px 0 #7A7A7A;"
+          <span
+            :class="responsive ? 'display-1' : 'display-3'"
+            class=" text-center font-weight-thin"
+            :style="
+              responsive
+                ? 'text-shadow: 1px 1px 0 #7A7A7A;'
+                : 'text-shadow: 2px 2px 0 #7A7A7A;'
+            "
             >Welcome to TimeManager</span
           >
         </v-row>
@@ -19,17 +26,17 @@
 
       <v-col cols="12">
         <v-row justify="center" align="center">
-          <v-col cols="4">
+          <v-col :cols="responsive ? 12 : 4">
             <v-card color="#0FAFF8" class="home-card" min-height="300">
             </v-card>
           </v-col>
 
-          <v-col cols="4">
+          <v-col :cols="responsive ? 12 : 4">
             <v-card color="#0FAFF8" class="home-card" min-height="300">
             </v-card>
           </v-col>
 
-          <v-col cols="4">
+          <v-col :cols="responsive ? 12 : 4">
             <v-card color="#0FAFF8" class="home-card" min-height="300">
             </v-card>
           </v-col>
@@ -41,7 +48,30 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+
+  data: () => ({
+    responsive: false
+  }),
+
+  methods: {
+    onResponsiveInverted() {
+      if (window.innerWidth < 1450) {
+        this.responsive = true;
+      } else {
+        this.responsive = false;
+      }
+    }
+  },
+
+  mounted() {
+    this.onResponsiveInverted();
+    window.addEventListener("resize", this.onResponsiveInverted);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResponsiveInverted);
+  }
 };
 </script>
 

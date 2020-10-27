@@ -13,7 +13,8 @@ export default [
     group: "top",
     public: true,
     show: true,
-    parameters: []
+    parameters: [],
+    role: ["default"]
   },
 
   // =========================================================================
@@ -28,7 +29,8 @@ export default [
     group: "top",
     public: true,
     show: true,
-    parameters: []
+    parameters: [],
+    role: ["default", "manager"]
   },
 
   // =========================================================================
@@ -43,7 +45,56 @@ export default [
     group: "top",
     public: true,
     show: true,
-    parameters: []
+    parameters: [],
+    role: ["default", "employee", "manager"]
+  },
+
+  // =========================================================================
+  // CLOCKIN
+  // =========================================================================
+
+  {
+    path: "/clockin",
+    name: "Clock'in",
+    view: "Clockin",
+    icon: "mdi-clock",
+    group: "top",
+    public: true,
+    show: true,
+    parameters: [],
+    role: ["default", "employee", "manager"]
+  },
+
+  // =========================================================================
+  // LOGIN
+  // =========================================================================
+
+  {
+    path: "/login",
+    name: "Login",
+    view: "Login",
+    icon: "mdi-account-circle",
+    group: "bottom",
+    public: true,
+    show: true,
+    parameters: [],
+    role: ["default"]
+  },
+
+  // =========================================================================
+  // ABOUT
+  // =========================================================================
+
+  {
+    path: "/about",
+    name: "About",
+    view: "About",
+    icon: "mdi-information",
+    group: "top",
+    public: true,
+    show: true,
+    parameters: [],
+    role: ["default"]
   },
 
   // =========================================================================
@@ -58,6 +109,7 @@ export default [
     group: "top",
     public: true,
     show: true,
-    parameters: []
+    parameters: [],
+    role: ["default"]
   }
 ];

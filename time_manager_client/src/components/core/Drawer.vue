@@ -14,11 +14,24 @@
     "
     :src="image"
   >
-    <span class="avatar-drawer">
-      <v-img contain width="128" src="@/assets/logo_big.png">
-        <!-- <span class="text-uppercase avatar-text centered-bottom">Timeger</span> -->
-      </v-img>
-    </span>
+    <v-container fluid>
+      <v-row justify="start">
+        <v-col cols="4">
+          <v-avatar size="100">
+            <v-img
+              contain
+              src="https://cdn1.iconfinder.com/data/icons/flat-mobile-app-icons/128/Clock-512.png"
+            />
+          </v-avatar>
+        </v-col>
+
+        <v-col cols="8" style="transform: rotate(33deg);">
+          <span class="avatar-text headline font-weight-thin pt-2">
+            TimeManager
+          </span>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <v-divider
       style="margin-top: 30px;width: 70%;margin-left: auto;margin-right: auto;"
@@ -181,7 +194,9 @@ export default {
 <style scoped>
 .avatar-text {
   font-size: 22px;
-  background-image: linear-gradient(to top, #0e4a99, 20%, #39c2d8 80%);
+  /* background-image: linear-gradient(to top, #0e4a99, 20%, #39c2d8 80%); */
+  color: white;
+  text-shadow: 1px 1px 0 #7a7a7a;
   box-shadow: 0px 0px 10px 1px #121212 !important;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -194,7 +209,7 @@ export default {
 .avatar-drawer {
   position: relative;
   text-align: center;
-  left: 25%; /* ?? */
+  left: 20%;
   color: white;
 }
 

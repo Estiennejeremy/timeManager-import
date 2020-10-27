@@ -30,9 +30,21 @@
         <doughnut-chart :chartdata="doughnutData" :options="options" />
       </v-col>
 
-      <v-col class="d-flex flex-column align-self-start" cols="12" md="9" lg="9">
+      <v-col
+        class="d-flex flex-column align-self-start"
+        cols="12"
+        md="9"
+        lg="9"
+      >
         <v-row align="baseline" justify="end">
-          <v-col class="d-flex mr-auto" align="center" cols="12" lg="3" md="3" sm="3">
+          <v-col
+            class="d-flex mr-auto"
+            align="center"
+            cols="12"
+            lg="3"
+            md="3"
+            sm="3"
+          >
             <v-btn block height="46" @click="profile()">
               My profile
             </v-btn>
@@ -48,7 +60,11 @@
         </v-row>
         <v-row v-if="team" align="baseline" justify="end">
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
-            <v-select :items="EmployeeOption" label="Select employee" solo></v-select>
+            <v-select
+              :items="EmployeeOption"
+              label="Select employee"
+              solo
+            ></v-select>
           </v-col>
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
             <v-btn block height="46">
@@ -85,26 +101,26 @@ export default {
       datasets: [
         {
           data: [70, 30],
-          weight: 0.5,
-        },
-      ],
+          weight: 0.5
+        }
+      ]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: false
     },
     teamOption: ["Team 1", "Team 2", "Team 3"],
-    EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"],
+    EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"]
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
-    profile(){
-      this.$router.push("/profile")
+    profile() {
+      this.$router.push("/profile");
     }
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"]),
+    ...mapState("user", ["id", "email", "username"])
   },
   mounted() {
     setInterval(
@@ -117,8 +133,8 @@ export default {
   },
   components: {
     DoughnutChart,
-    Profile,
-  },
+    Profile
+  }
 };
 </script>
 

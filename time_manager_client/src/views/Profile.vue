@@ -47,7 +47,7 @@ import LineChart from "../components/charts/Line.js";
 import DoughnutChart from "../components/charts/Doughnut.js";
 export default {
   name: "Profile",
-  props: ['hideTitle'],
+  props: ["hideTitle"],
   data: () => ({
     date: `${new Date().getHours()}:${(new Date().getMinutes() < 10
       ? "0"
@@ -58,23 +58,23 @@ export default {
       datasets: [
         {
           data: [70, 30],
-          weight: 0.5,
-        },
-      ],
+          weight: 0.5
+        }
+      ]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: false
     },
     visualizeOptions: ["Line", "Doughnut", "Bar"],
-    periodeOptions: ["Monthly", "Weekly", "Daily"],
+    periodeOptions: ["Monthly", "Weekly", "Daily"]
   }),
   methods: {
-    ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
+    ...mapMutations("user", ["setId", "setEmail", "setUsername"])
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"]),
+    ...mapState("user", ["id", "email", "username"])
   },
   mounted() {
     setInterval(
@@ -87,8 +87,8 @@ export default {
   },
   components: {
     LineChart,
-    DoughnutChart,
-  },
+    DoughnutChart
+  }
 };
 </script>
 

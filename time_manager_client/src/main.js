@@ -9,7 +9,25 @@ import "@mdi/font/css/materialdesignicons.css";
 
 import { sync } from "vuex-router-sync";
 
+import Paths from "@/router/paths.js";
+
 sync(store, router);
+
+router.beforeEach((to, from, next) => {
+  if (
+    !store.state.user.isUserLoggedIn &&
+    Paths.filter(
+      path =>
+        path.name === to.name &&
+        path.public === false &&
+        path.role.includes(store.state.user.role)
+    ).length > 0
+  ) {
+    next("login");
+  } else {
+    next();
+  }
+});
 
 Vue.config.productionTip = false;
 
