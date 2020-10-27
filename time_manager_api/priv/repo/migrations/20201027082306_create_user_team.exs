@@ -8,11 +8,11 @@ defmodule MyApp.Repo.Migrations.AddTableUserteams do
       timestamps()
     end
 
-    create(index(:user_teams, [:teams_id]))
-    create(index(:user_teams, [:user_id]))
+    create(index(:user_team, [:team_id]))
+    create(index(:user_team, [:user_id]))
 
     create(
-      unique_index(:user_teams, [:user_id, :teams_id], name: :user_id_teams_id_unique_index)
+      unique_index(:user_team, [:user_id, :team_id], name: :user_id_teams_id_unique_index)
     )
   end
 end
