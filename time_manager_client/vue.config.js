@@ -10,7 +10,7 @@ module.exports = {
     plugins:
       process.env.npm_lifecycle_event !== "build"
         ? [new BundleAnalyzerPlugin()]
-        : null
+        : []
   },
   chainWebpack(config) {
     config.plugins.delete("prefetch");
