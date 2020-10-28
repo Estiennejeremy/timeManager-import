@@ -15,6 +15,19 @@ defmodule TimeManagerApi.Clocks do
     |> Repo.insert()
   end
 
+  # IO.puts NaiveDateTime.compare(~N[2016-04-16 13:30:15], NaiveDateTime.from_iso8601!("2020-11-28T16:59:59"))
+  def get_clock_by_start_to_end(id, start, endtime) do
+    Repo.all(from w in Clock, where: w.time >= ^start and w.time <= ^endtime and w.id == ^id)
+  end
+
+  def get_clock_by_start(id, start) do
+    Repo.all(from w in Clock, where: w.time >= ^start and w.id == ^id)
+  end
+
+  def get_clock_by_end(id, endtime) do
+    Repo.all(from w in Clock, where: w.time <= ^endtime and w.id == ^id)
+  end
+
   def get_AllUserId(id) do
     Clock
     |> where(user_id: ^id)

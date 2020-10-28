@@ -19,7 +19,7 @@ defmodule TimeManagerApiWeb.TeamView do
       name: team.name,
       manager_id: team.manager_id,
       localisation: team.localisation,
-      employee: render_many(team.users, TimeManagerApiWeb.UserView , "create.json", as: :user)}
+      employee: render_many(team.users, TimeManagerApiWeb.UserView , "createUser.json", as: :user)}
   end
 
   def render("createTeam.json", %{team: team}) do
