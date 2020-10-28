@@ -18,25 +18,28 @@ defmodule TimeManagerApi.Users do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(User) |> Repo.preload([:teams])
   end
 
   def list_users_by_email_username(email, username) do
     User
     |> where(email: ^email, username: ^username)
     |> Repo.all()
+    |> Repo.preload([:teams])
   end
 
   def list_users_by_username(username) do
     User
     |> where(username: ^username)
     |> Repo.all()
+    |> Repo.preload([:teams])
   end
 
   def list_users_by_email(email) do
     User
     |> where(email: ^email)
     |> Repo.all()
+    |> Repo.preload([:teams])
   end
 
   @doc """
@@ -53,7 +56,7 @@ defmodule TimeManagerApi.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: Repo.get!(User, id) |> Repo.preload([:teams])
 
   @doc """
   Creates a user.

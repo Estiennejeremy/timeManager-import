@@ -10,9 +10,22 @@ defmodule TimeManagerApiWeb.UserView do
     %{data: render_one(user, UserView, "user.json")}
   end
 
+  def render("create.json", %{user: user}) do
+    %{data: render_one(user, UserView, "createUser.json")}
+  end
+
   def render("user.json", %{user: user}) do
+    %{id: user.id,
+      username: user.username,
+      email: user.email,
+      teams: render_many(user.teams, TimeManagerApiWeb.TeamView , "createTeam.json", as: :team)}
+  end
+
+
+  def render("createUser.json", %{user: user}) do
     %{id: user.id,
       username: user.username,
       email: user.email}
   end
+
 end

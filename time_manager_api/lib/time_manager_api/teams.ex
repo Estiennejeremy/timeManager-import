@@ -35,7 +35,7 @@ defmodule TimeManagerApi.Teams do
       ** (Ecto.NoResultsError)
 
   """
-  def get_team!(id), do: Repo.get!(Team, id)
+  def get_team!(id), do: Repo.get!(Team, id) |> Repo.preload([:users])
 
   @doc """
   Creates a team.
@@ -53,6 +53,7 @@ defmodule TimeManagerApi.Teams do
     %Team{}
     |> Team.changeset(attrs)
     |> Repo.insert()
+
   end
 
   @doc """
