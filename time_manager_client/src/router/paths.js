@@ -13,85 +13,103 @@ export default [
     group: "top",
     public: true,
     show: true,
-    parameters: []
+    parameters: [],
+    role: ["default"]
   },
 
   // =========================================================================
-  // WORKING-TIMES
+  // DASHBOARD
   // =========================================================================
 
   {
-    path: "/workingTimes/:userId",
-    url: "/workingTimes/",
-    name: "WorkingTimes",
-    view: "WorkingTimes",
-    icon: "mdi-briefcase-outline",
+    path: "/dashboard",
+    name: "Dashboard",
+    view: "Dashboard",
+    icon: "mdi-monitor-dashboard",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
+    parameters: [],
+    role: ["default", "manager"]
   },
 
   // =========================================================================
-  // WORKING-TIME UPDATE/DELETE
+  // PROFILE
   // =========================================================================
 
   {
-    path: "/workingTime/:userId/:workingTimeId",
-    name: "WT Update",
-    view: "WorkingTimeUpdate",
-    icon: "mdi-briefcase",
-    group: "top",
-    public: true,
-    show: false,
-    parameters: ["userId", "workingTimeId"]
-  },
-
-  // =========================================================================
-  // WORKING-TIME CREATE
-  // =========================================================================
-
-  {
-    path: "/workingTime/:userId",
-    url: "/workingTime/",
-    name: "WorkingTime",
-    view: "WorkingTimeCreate",
-    icon: "mdi-briefcase",
+    path: "/profile",
+    name: "Profile",
+    view: "Profile",
+    icon: "mdi-account-circle",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
+    parameters: [],
+    role: ["default", "employee", "manager"]
   },
 
   // =========================================================================
-  // CLOCK MANAGER
+  // CLOCKIN
   // =========================================================================
 
   {
-    path: "/clock/:userId",
-    url: "/clock/",
-    name: "Clock Manager",
-    view: "ClockManager",
+    path: "/clockin",
+    name: "Clock'in",
+    view: "Clockin",
     icon: "mdi-clock",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
+    parameters: [],
+    role: ["default", "employee", "manager"]
   },
 
   // =========================================================================
-  // CHART MANAGER
+  // LOGIN
   // =========================================================================
 
   {
-    path: "/chartManager/:userId",
-    url: "/chartManager/",
-    name: "ChartManager",
-    view: "ChartManager",
-    icon: "mdi-chart-bar",
+    path: "/login",
+    name: "Login",
+    view: "Login",
+    icon: "mdi-account-circle",
+    group: "bottom",
+    public: true,
+    show: true,
+    parameters: [],
+    role: ["default"]
+  },
+
+  // =========================================================================
+  // ABOUT
+  // =========================================================================
+
+  {
+    path: "/about",
+    name: "About",
+    view: "About",
+    icon: "mdi-information",
     group: "top",
     public: true,
     show: true,
-    parameters: ["userId"]
+    parameters: [],
+    role: ["default"]
+  },
+
+  // =========================================================================
+  // SETTINGS
+  // =========================================================================
+
+  {
+    path: "/settings",
+    name: "Settings",
+    view: "Settings",
+    icon: "mdi-settings",
+    group: "top",
+    public: true,
+    show: true,
+    parameters: [],
+    role: ["default"]
   }
 ];

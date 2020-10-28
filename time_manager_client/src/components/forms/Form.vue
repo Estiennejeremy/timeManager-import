@@ -1,7 +1,12 @@
 <template>
   <v-container fluid>
+    <v-row v-if="config.image && config.image.length !== 0" justify="center">
+      <v-avatar size="200">
+        <v-img :src="config.image" />
+      </v-avatar>
+    </v-row>
     <v-row align="center" align-content="center" justify="center">
-      <v-col :cols="responsive ? 12 : 6">
+      <v-col :cols="responsive ? 12 : config.width || 4">
         <v-card :color="color" id="form-title">
           <v-card-title id="title"
             ><v-icon class="pr-4" dark large>{{ config.icon }}</v-icon
