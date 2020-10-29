@@ -47,6 +47,7 @@ export default {
       "setEmployee",
       "setManagerId"
     ]),
+    
     deleteEmployee(){
       Team.deleteTeam(this.id)
       .then(() => Team.getTeam(this.id))
