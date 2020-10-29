@@ -35,6 +35,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import Team from "../services/TeamService.js";
 export default {
   name: "Team",
   data: () => ({
@@ -46,6 +47,16 @@ export default {
       "setEmployee",
       "setManagerId"
     ]),
+    deleteEmployee(){
+      Team.deleteTeam(this.id)
+      .then(() => Team.getTeam(this.id))
+      .then(res => {
+        let t = res.data.data;
+        this.setName = t.name;
+        this.setEmployee = t.employee;
+        this.setManager_id = t.manager_id;
+      })
+    }
   },
 
   computed: {
