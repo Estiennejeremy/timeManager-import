@@ -53,8 +53,8 @@ defmodule TimeManagerApi.Workingtimes do
     Repo.all(from w in Workingtime, where: w.end <= ^endtime and w.user_id == ^id)
   end
 
-  def get_workingtime_by_user(userId, workingtimeId) do
-    Repo.get_by(Workingtime, [id: workingtimeId, user_id: userId])
+  def get_workingtime_by_team(teamID, workingtimeId) do
+    Repo.get_by(Workingtime, [id: workingtimeId, team_id: teamID])
   end
 
   @doc """

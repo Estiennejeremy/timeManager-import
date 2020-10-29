@@ -20,10 +20,21 @@ defmodule TimeManagerApiWeb.UserTeamController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user_team = UsersTeams.get_user_team!(id)
+  def getUserByTeam(conn, %{"teamID" => id_team}) do
+    user_team = UsersTeams.getUserByTeam!(id_team)
+    render(conn, "index.json", user_team: user_team)
+  end
+
+  def getTeamsByUser(conn, %{"userID" => id_user}) do
+    user_team = UsersTeams.getTeamsByUser!(id_user)
+    render(conn, "index.json", user_team: user_team)
+  end
+
+  def getUserTeam(conn, %{"userID" => id_user, "teamID" => id_team}) do
+    user_team = UsersTeams.get_user_team!(id_team, id_user)
     render(conn, "show.json", user_team: user_team)
   end
+
 
   def update(conn, %{"id" => id, "user_team" => user_team_params}) do
     user_team = UsersTeams.get_user_team!(id)

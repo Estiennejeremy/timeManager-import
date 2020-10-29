@@ -6,6 +6,7 @@ defmodule TimeManagerApi.Teams.Team do
     field :name, :string
     field :localisation, :string
     belongs_to :manager, TimeManagerApi.Users.User
+    has_many :workingTime, TimeManagerApi.Teams.Team
     many_to_many(
       :users,
       TimeManagerApi.Users.User,

@@ -45,8 +45,8 @@ defmodule TimeManagerApiWeb.WorkingtimeController do
     render(conn, "index.json", workingtimes: workingtimes)
   end
 
-  def getWorkingtimeByUser(conn, %{"userID" => userID, "workingtimeID" => workingtimeID}) do
-    workingtimes = Workingtimes.get_workingtime_by_user(userID,workingtimeID)
+  def getWorkingtimeByUser(conn, %{"teamID" => teamID, "workingtimeID" => workingtimeID}) do
+    workingtimes = Workingtimes.get_workingtime_by_team(teamID,workingtimeID)
     render(conn, "show.json", workingtime: workingtimes)
   end
 

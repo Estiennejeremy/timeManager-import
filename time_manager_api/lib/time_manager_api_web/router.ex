@@ -18,6 +18,12 @@ defmodule TimeManagerApiWeb.Router do
 
     get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByUser
 
+    get "/Usersteams/:userID/:teamID", UserTeamController, :getUserTeam
+
+    get "/UsersteamsByUser/:userID", UserTeamController, :getTeamsByUser
+
+    get "/UsersteamsByTeam/:teamID", UserTeamController, :getUserByTeam
+
   end
 
   # Enables LiveDashboard only for development
