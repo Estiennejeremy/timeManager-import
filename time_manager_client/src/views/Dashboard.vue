@@ -50,7 +50,15 @@
             </v-btn>
           </v-col>
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
-            <v-select :items="teamOption" label="Select team" solo></v-select>
+            <v-select
+              :items="teams"
+              label="Select team"
+              solo
+              v-model="team"
+              item-text="name"
+              item-value="id"
+              return-object
+            ></v-select>
           </v-col>
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
             <v-btn block height="46">
@@ -61,8 +69,12 @@
         <v-row v-if="team" align="baseline" justify="end">
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
             <v-select
-              :items="EmployeeOption"
+              :items="team.employee"
               label="Select employee"
+              v-model="employee"
+              item-text="username"
+              item-value="id"
+              return-object
               solo
             ></v-select>
           </v-col>
@@ -74,7 +86,7 @@
         </v-row>
         <v-row align="center" justify="space-around">
           <profile v-if="employee" hideTitle="true" class="test" />
-          <profile v-if="team" hideTitle="true" class="test" />
+          <profile v-if="team && !employee" hideTitle="true" class="test" />
         </v-row>
       </v-col>
     </v-row>
@@ -85,6 +97,7 @@
 import { mapState, mapMutations } from "vuex";
 import DoughnutChart from "../components/charts/Doughnut.js";
 import Profile from "./Profile.vue";
+import Team from "../services/TeamService.js";
 export default {
   name: "Dashboard",
   data: () => ({
@@ -94,7 +107,8 @@ export default {
     isLate: false,
     nbEmployees: 10,
     nbTeams: 3,
-    team: 1,
+    teams: [],
+    team: null,
     employee: null,
     doughnutData: {
       labels: ["Workingtime", "Free time"],
@@ -109,7 +123,6 @@ export default {
       responsive: true,
       maintainAspectRatio: false
     },
-    teamOption: ["Team 1", "Team 2", "Team 3"],
     EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"]
   }),
   methods: {
@@ -130,6 +143,8 @@ export default {
           : "") + new Date().getMinutes()}`),
       10000
     );
+
+    Team.getTeams().then(res => (this.teams = res.data.data));
   },
   components: {
     DoughnutChart,

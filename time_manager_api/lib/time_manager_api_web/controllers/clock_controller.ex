@@ -29,6 +29,21 @@ defmodule TimeManagerApiWeb.ClockController do
     end
   end
 
+  def show_usersID(conn, %{"user_id" => id, "start" => start, "end" => endtime}) do
+    clock = Clocks.get_clock_by_start_to_end(id, conn.query_params["start"], conn.query_params["end"])
+    render(conn, "index.json", clocks: clock)
+  end
+
+  def show_usersID(conn, %{"user_id" => id, "end" => endtime}) do
+    clock = Clocks.get_clock_by_end(id, conn.query_params["end"])
+    render(conn, "index.json", clocks: clock)
+  end
+
+  def show_usersID(conn, %{"user_id" => id, "start" => start}) do
+    clock = Clocks.get_clock_by_start(id, conn.query_params["start"])
+    render(conn, "index.json", clocks: clock)
+  end
+
   def show_usersID(conn, %{"user_id" => user_id}) do
     clocks = Clocks.get_AllUserId(user_id)
     render(conn, "index.json", clocks: clocks)

@@ -45,36 +45,44 @@
 import { mapState, mapMutations } from "vuex";
 import LineChart from "../components/charts/Line.js";
 import DoughnutChart from "../components/charts/Doughnut.js";
+import WorkingTimesService from "../services/WorkingTimesService.js";
+import ClockService from "../services/ClockService.js";
 export default {
   name: "Profile",
-  props: ["hideTitle"],
+  props: ["hideTitle", "userId"],
   data: () => ({
     date: `${new Date().getHours()}:${(new Date().getMinutes() < 10
       ? "0"
       : "") + new Date().getMinutes()}`,
     isLate: false,
+    dailyWorkingtimes: null,
+    weeklyWorkingtimes: null,
+    monthlyWorkingtimes: null,
+    dailyClocks: null,
+    weeklyClocks: null,
+    monthlyClocks: null,
     doughnutData: {
       labels: ["Workingtime", "Free time"],
       datasets: [
         {
           data: [70, 30],
-          weight: 0.5
-        }
-      ]
+          weight: 0.5,
+        },
+      ],
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
     },
     visualizeOptions: ["Line", "Doughnut", "Bar"],
-    periodeOptions: ["Monthly", "Weekly", "Daily"]
+    periodeOptions: ["Monthly", "Weekly", "Daily"],
   }),
   methods: {
-    ...mapMutations("user", ["setId", "setEmail", "setUsername"])
+    ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"])
+    ...mapState("user", ["id", "email", "username"]),
   },
   mounted() {
     setInterval(
@@ -84,11 +92,35 @@ export default {
           : "") + new Date().getMinutes()}`),
       10000
     );
+    Promise.all([
+      // Daily
+      WorkingTimesService.getDailyWorkingTimesUser(
+        this.userId ? this.userId : this.id, 
+      ),
+      ClockService.getDailyClocksUser(this.userId ? this.userId : this.id),
+      // Weekly
+      WorkingTimesService.getWeeklyWorkingTimesUser(
+        this.userId ? this.userId : this.id
+      ),
+      ClockService.getWeeklyClocksUser(this.userId ? this.userId : this.id),
+      // Monthly
+      WorkingTimesService.getMonthlyWorkingTimesUser(
+        this.userId ? this.userId : this.id
+      ),
+      ClockService.getMonthlyClocksUser(this.userId ? this.userId : this.id),
+    ]).then((res) => {
+      this.dailyWorkingtimes = res[0].data.data;
+      this.dailyClocks = res[1].data.data;
+      this.weeklyWorkingtimes = res[2].data.data;
+      this.weeklyClocks = res[3].data.data;
+      this.monthlyWorkingtimes = res[4].data.data;
+      this.monthlyClocks = res[5].data.data;
+    });
   },
   components: {
     LineChart,
-    DoughnutChart
-  }
+    DoughnutChart,
+  },
 };
 </script>
 
