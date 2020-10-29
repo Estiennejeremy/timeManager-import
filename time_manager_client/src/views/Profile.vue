@@ -23,7 +23,11 @@
             </h3>
           </section>
         </div>
-        <doughnut-chart v-if="doughnutData" :chartdata="doughnutData" :options="options" />
+        <doughnut-chart
+          v-if="dailyWorkData"
+          :chartdata="dailyWorkData"
+          :options="options"
+        />
       </v-col>
 
       <v-col class="d-flex flex-column" cols="12" md="9" lg="9">
@@ -43,7 +47,11 @@
             ></v-select>
           </v-col>
         </v-row>
-        <line-chart v-if="doughnutData" :chartdata="doughnutData" :options="options" />
+        <line-chart
+          v-if="dailyWorkData"
+          :chartdata="dailyWorkData"
+          :options="options"
+        />
       </v-col>
     </v-row>
   </div>
@@ -69,7 +77,7 @@ export default {
     dailyClocks: null,
     weeklyClocks: null,
     monthlyClocks: null,
-    doughnutData: null,
+    dailyWorkData: null,
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -87,6 +95,13 @@ export default {
       ).slice(-2)}-${("0" + end.getHours()).slice(-2)}:${(
         "0" + end.getMinutes()
       ).slice(-2)}`;
+    },
+    getWeekNumber(d) {
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+      return weekNo;
     },
   },
 
@@ -108,6 +123,8 @@ export default {
       ),
       ClockService.getClockUser(this.userId ? this.userId : this.id),
     ]).then((res) => {
+      ///////////////// DAILY //////////////////////////////
+
       /// GET DAILY WORKINGTIMES
       let dailyWorkingtimes = res[0].data.data.filter((workingTime) => {
         let current = new Date();
@@ -146,6 +163,7 @@ export default {
           new Date() < new Date(workingtime.end)
       );
 
+      /// SET WORKINGTIME CHART
       if (currentWorkingTime) {
         let lastClock = dailyClocks.find(
           (clock) =>
@@ -153,20 +171,49 @@ export default {
             new Date(clock.time) <= new Date(currentWorkingTime.end)
         );
         if (lastClock) {
-          let total = ((new Date(currentWorkingTime.end).getTime() - new Date(currentWorkingTime.start).getTime()) / (1000*3600)).toFixed(2);
-          let work = ((new Date().getTime() - new Date(lastClock.time).getTime()) / (1000*3600)).toFixed(2);
-          this.doughnutData = {
-            labels: ["Workingtime", "Less time", ],
+          let total = (
+            (new Date(currentWorkingTime.end).getTime() -
+              new Date(currentWorkingTime.start).getTime()) /
+            (1000 * 3600)
+          ).toFixed(2);
+          let work = (
+            (new Date().getTime() - new Date(lastClock.time).getTime()) /
+            (1000 * 3600)
+          ).toFixed(2);
+          this.dailyWorkData = {
+            labels: ["Workingtime", "Less time"],
             datasets: [
               {
                 data: [work, total - work],
                 backgroundColor: ["green", "yellow"],
-                weight: 0.5
+                weight: 0.5,
               },
             ],
           };
         }
       }
+
+      /////////////////// WEEKLY ///////////////////////////////////
+      /// GET WEEKLY WORKINGTIMES
+      let weeklyWorkingtimes = res[0].data.data.filter((workingTime) => {
+        let current = new Date();
+        let start = new Date(workingTime.start);
+        let end = new Date(workingTime.end);
+        return (
+          this.getWeekNumber(start) == this.getWeekNumber(current) &&
+          this.getWeekNumber(end) == this.getWeekNumber(current)
+        );
+      });
+      this.weeklyWorkingtimes = weeklyWorkingtimes;
+
+      /// GET WEEKLY CLOCKS
+      let weeklyClocks = res[1].data.data.filter((clock) => {
+        let current = new Date();
+        let time = new Date(clock.time);
+        return this.getWeekNumber(time) == this.getWeekNumber(current);
+      });
+      this.weeklyClocks = weeklyClocks;
+
     });
   },
   components: {
