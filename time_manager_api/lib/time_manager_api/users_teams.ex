@@ -35,7 +35,17 @@ defmodule TimeManagerApi.UsersTeams do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user_team!(id), do: Repo.get!(UserTeam, id)
+  def get_user_team!(teamID, userID) do
+    Repo.get_by(UserTeam, [user_id: userID, team_id: teamID])
+  end
+
+  def getUserByTeam!(teamID) do
+    Repo.all(from u in UserTeam, where: u.team_id == ^teamID)
+  end
+
+  def getTeamsByUser!(userID) do
+    Repo.all(from u in UserTeam, where: u.user_id == ^userID)
+  end
 
   @doc """
   Creates a user_team.
@@ -49,9 +59,9 @@ defmodule TimeManagerApi.UsersTeams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user_team(attrs \\ %{}) do
+  def create_user_team(user, team) do
     %UserTeam{}
-    |> UserTeam.changeset(attrs)
+    |> UserTeam.changeset(user, team)
     |> Repo.insert()
   end
 

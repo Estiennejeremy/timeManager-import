@@ -5,14 +5,14 @@ defmodule TimeManagerApi.Workingtimes.Workingtime do
   schema "workingtimes" do
     field :end, :naive_datetime
     field :start, :naive_datetime
-    belongs_to :user, TimeManagerApi.Users.User
+    belongs_to :team, TimeManagerApi.Teams.Team
     timestamps()
   end
 
   @doc false
   def changeset(workingtime, attrs) do
     workingtime
-    |> cast(attrs, [:start, :end, :user_id])
+    |> cast(attrs, [:start, :end, :team_id])
     |> validate_required([:start, :end])
   end
 end

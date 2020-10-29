@@ -11,12 +11,16 @@ defmodule TimeManagerApiWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
     resources "/teams", TeamController, except: [:new, :edit]
-    resources "/Usersteams", UserTeamController
+    resources "/Usersteams", UserTeamController, except: [:new, :edit]
     #resources "/clocks", ClockController, except: [:new, :edit]
     get "/clocks/:user_id", ClockController, :show_usersID
     post "/clocks/:id", ClockController, :post_clock_with_user
 
-    get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByUser
+    get "/workingtimes/:teamID/:workingtimeID", WorkingtimeController, :getWorkingtimeByTeam
+
+    get "/Usersteams/:userID/:teamID", UserTeamController, :getUserTeam
+    get "/UsersteamsByUser/:userID", UserTeamController, :getTeamsByUser
+    get "/UsersteamsByTeam/:teamID", UserTeamController, :getUserByTeam
 
   end
 

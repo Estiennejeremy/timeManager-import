@@ -37,24 +37,24 @@ defmodule TimeManagerApi.Workingtimes do
   """
   def get_workingtime!(id), do: Repo.get!(Workingtime, id)
 
-  def get_workingtime_to_user(id) do
-    Repo.all(from w in Workingtime, where: w.user_id == ^id)
+  def get_workingtime_to_team(id) do
+    Repo.all(from w in Workingtime, where: w.team_id == ^id)
   end
 
   def get_workingtime_by_start_to_end(id, start, endtime) do
-    Repo.all(from w in Workingtime, where: w.start >= ^start and w.end <= ^endtime and w.user_id == ^id)
+    Repo.all(from w in Workingtime, where: w.start >= ^start and w.end <= ^endtime and w.team_id == ^id)
   end
 
   def get_workingtime_by_start(id, start) do
-    Repo.all(from w in Workingtime, where: w.start >= ^start and w.user_id == ^id)
+    Repo.all(from w in Workingtime, where: w.start >= ^start and w.team_id == ^id)
   end
 
   def get_workingtime_by_end(id, endtime) do
-    Repo.all(from w in Workingtime, where: w.end <= ^endtime and w.user_id == ^id)
+    Repo.all(from w in Workingtime, where: w.end <= ^endtime and w.team_id == ^id)
   end
 
-  def get_workingtime_by_user(userId, workingtimeId) do
-    Repo.get_by(Workingtime, [id: workingtimeId, user_id: userId])
+  def get_workingtime_by_team(teamID, workingtimeId) do
+    Repo.get_by(Workingtime, [id: workingtimeId, team_id: teamID])
   end
 
   @doc """
