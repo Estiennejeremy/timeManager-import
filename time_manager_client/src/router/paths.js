@@ -1,115 +1,131 @@
 // Relative to /src/views
 
 export default [
-  // =========================================================================
-  // HOME
-  // =========================================================================
+    // =========================================================================
+    // HOME
+    // =========================================================================
 
-  {
-    path: "/",
-    name: "Home",
-    view: "Home",
-    icon: "mdi-home",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default"]
-  },
+    {
+        path: "/",
+        name: "Home",
+        view: "Home",
+        icon: "mdi-home",
+        group: "top",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default"]
+    },
 
-  // =========================================================================
-  // DASHBOARD
-  // =========================================================================
+    // =========================================================================
+    // DASHBOARD
+    // =========================================================================
 
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    view: "Dashboard",
-    icon: "mdi-monitor-dashboard",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default", "manager"]
-  },
+    {
+        path: "/dashboard",
+        name: "Dashboard",
+        view: "Dashboard",
+        icon: "mdi-monitor-dashboard",
+        group: "top",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default", "manager"]
+    },
 
-  // =========================================================================
-  // PROFILE
-  // =========================================================================
+    // =========================================================================
+    // TEAM
+    // =========================================================================
 
-  {
-    path: "/profile",
-    name: "Profile",
-    view: "Profile",
-    icon: "mdi-account-circle",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default", "employee", "manager"]
-  },
+    {
+        path: "/team/:name",
+        name: "Team",
+        view: "Team",
+        icon: "mdi-monitor-dashboard",
+        group: "top",
+        public: true,
+        show: false,
+        parameters: ["name"],
+        role: ["default", "manager"]
+    },
 
-  // =========================================================================
-  // CLOCKIN
-  // =========================================================================
+    // =========================================================================
+    // PROFILE
+    // =========================================================================
 
-  {
-    path: "/clockin",
-    name: "Clock'in",
-    view: "Clockin",
-    icon: "mdi-clock",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default", "employee", "manager"]
-  },
+    {
+        path: "/profile",
+        name: "Profile",
+        view: "Profile",
+        icon: "mdi-account-circle",
+        group: "top",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default", "employee", "manager"]
+    },
 
-  // =========================================================================
-  // LOGIN
-  // =========================================================================
+    // =========================================================================
+    // CLOCKIN
+    // =========================================================================
 
-  {
-    path: "/login",
-    name: "Login",
-    view: "Login",
-    icon: "mdi-account-circle",
-    group: "bottom",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default"]
-  },
+    {
+        path: "/clockin",
+        name: "Clock'in",
+        view: "Clockin",
+        icon: "mdi-clock",
+        group: "top",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default", "employee", "manager"]
+    },
 
-  // =========================================================================
-  // ABOUT
-  // =========================================================================
+    // =========================================================================
+    // LOGIN
+    // =========================================================================
 
-  {
-    path: "/about",
-    name: "About",
-    view: "About",
-    icon: "mdi-information",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default"]
-  },
+    {
+        path: "/login",
+        name: "Login",
+        view: "Login",
+        icon: "mdi-account-circle",
+        group: "bottom",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default"]
+    },
 
-  // =========================================================================
-  // SETTINGS
-  // =========================================================================
+    // =========================================================================
+    // ABOUT
+    // =========================================================================
 
-  {
-    path: "/settings",
-    name: "Settings",
-    view: "Settings",
-    icon: "mdi-settings",
-    group: "top",
-    public: true,
-    show: true,
-    parameters: [],
-    role: ["default"]
-  }
+    {
+        path: "/about",
+        name: "About",
+        view: "About",
+        icon: "mdi-information",
+        group: "top",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default"]
+    },
+
+    // =========================================================================
+    // SETTINGS
+    // =========================================================================
+
+    {
+        path: "/settings",
+        name: "Settings",
+        view: "Settings",
+        icon: "mdi-settings",
+        group: "top",
+        public: true,
+        show: true,
+        parameters: [],
+        role: ["default"]
+    }
 ];

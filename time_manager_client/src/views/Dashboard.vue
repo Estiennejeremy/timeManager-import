@@ -45,7 +45,7 @@
             md="3"
             sm="3"
           >
-            <v-btn block height="46" @click="profile()">
+            <v-btn block height="46" @click="displayProfile()">
               My profile
             </v-btn>
           </v-col>
@@ -79,7 +79,7 @@
             ></v-select>
           </v-col>
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
-            <v-btn block height="46">
+            <v-btn block height="46" @click="displayDashboard()">
               Manage team
             </v-btn>
           </v-col>
@@ -127,9 +127,17 @@ export default {
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
-    profile() {
+    ...mapMutations("team", ["setId", "setName", "setEmployee", "setManagerId"]),
+    displayProfile() {
       this.$router.push("/profile");
-    }
+    },
+    displayDashboard() {
+      this.setId(this.team.id);
+      this.setName(this.team.name);
+      this.setEmployee(this.team.employee);
+      this.setManagerId(this.team.manager_id);
+      this.$router.push(`/team/${this.team.name}`);
+    },
   },
 
   computed: {
