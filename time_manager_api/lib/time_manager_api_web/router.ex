@@ -16,7 +16,7 @@ defmodule TimeManagerApiWeb.Router do
     get "/clocks/:user_id", ClockController, :show_usersID
     post "/clocks/:id", ClockController, :post_clock_with_user
 
-    get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByUser
+    get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :getWorkingtimeByTeam
 
     get "/Usersteams/:userID/:teamID", UserTeamController, :getUserTeam
     get "/UsersteamsByUser/:userID", UserTeamController, :getTeamsByUser
