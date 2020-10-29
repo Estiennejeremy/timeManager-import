@@ -59,9 +59,9 @@ defmodule TimeManagerApi.UsersTeams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user_team(attrs \\ %{}) do
+  def create_user_team(user, team) do
     %UserTeam{}
-    |> UserTeam.changeset(attrs)
+    |> UserTeam.changeset(user, team)
     |> Repo.insert()
   end
 

@@ -9,9 +9,17 @@ defmodule TimeManagerApiWeb.UserTeamView do
   def render("show.json", %{user_team: user_team}) do
     %{userTeam: render_one(user_team, UserTeamView, "user_team.json")}
   end
+  def render("create.json", %{user_team: user_team}) do
+    %{userTeam: render_one(user_team, UserTeamView, "createUserTeam.json")}
+  end
 
   def render("user_team.json", %{user_team: user_team}) do
     %{user_id: user_team.user_id,
       team_id: user_team.team_id}
+  end
+
+  def render("createUserTeam.json", %{user_team: user_team}) do
+    %{user_id: user_team.user.id,
+      team_id: user_team.team.id}
   end
 end
