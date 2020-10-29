@@ -14,6 +14,6 @@ defmodule TimeManagerApiWeb.WorkingtimeView do
     %{id: workingtime.id,
       start: workingtime.start,
       end: workingtime.end,
-      user_id: workingtime.user_id}
+      team_id: workingtime.team_id}
   end
 end
