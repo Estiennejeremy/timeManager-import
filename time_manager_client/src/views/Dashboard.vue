@@ -79,14 +79,13 @@
             ></v-select>
           </v-col>
           <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
-            <v-btn block height="46" @click="displayDashboard()">
+            <v-btn block height="46" @click="displayTeam()">
               Manage team
             </v-btn>
           </v-col>
         </v-row>
         <v-row align="center" justify="space-around">
           <profile v-if="employee" hideTitle="true" class="test" />
-          <profile v-if="team && !employee" hideTitle="true" class="test" />
         </v-row>
       </v-col>
     </v-row>
@@ -131,17 +130,15 @@ export default {
     displayProfile() {
       this.$router.push("/profile");
     },
-    displayDashboard() {
+    displayTeam() {
       this.setId(this.team.id);
-      this.setName(this.team.name);
-      this.setEmployee(this.team.employee);
-      this.setManagerId(this.team.manager_id);
       this.$router.push(`/team/${this.team.name}`);
     },
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"])
+    ...mapState("user", ["id", "email", "username"]),
+    ...mapState("team", ["id"])
   },
   mounted() {
     setInterval(
@@ -152,7 +149,13 @@ export default {
       10000
     );
 
-    Team.getTeams().then(res => (this.teams = res.data.data));
+    Team.getTeams().then(res => {
+      this.teams = res.data.data;
+      console.log(this.id)
+      if(this.id){
+        this.team = this.teams.find(t => t.id == this.id);
+      }
+    });
   },
   components: {
     DoughnutChart,

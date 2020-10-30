@@ -17,7 +17,7 @@ export default {
         return Api().get(`/workingtimes/${user_id}/${id}`);
     },
 
-    getWorkingTimeSUser(userId, start, end) {
+    getWorkingTimesUser(userId, start, end) {
         return Api().get(
                 `/workingtimes/${userId}?${start ? `start=${start}` : ""}${
         end ? `&end=${end}` : ""
