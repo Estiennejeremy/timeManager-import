@@ -4,7 +4,6 @@ defmodule TimeManagerApi.UsersTeams.UserTeam do
 
   @derive {Phoenix.Param, key: :user, key: :team}
 
-  @primary_key false
   schema "user_team" do
     belongs_to(:user,  TimeManagerApi.Users.User)
     belongs_to(:team,  TimeManagerApi.Teams.Team)

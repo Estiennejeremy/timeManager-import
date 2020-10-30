@@ -19,6 +19,7 @@ defmodule TimeManagerApiWeb.Router do
     get "/workingtimes/:teamID/:workingtimeID", WorkingtimeController, :getWorkingtimeByTeam
 
     get "/Usersteams/:userID/:teamID", UserTeamController, :getUserTeam
+    delete "/Usersteams/:userID/:teamID", UserTeamController, :deleteUserTeam
     get "/UsersteamsByUser/:userID", UserTeamController, :getTeamsByUser
     get "/UsersteamsByTeam/:teamID", UserTeamController, :getUserByTeam
 

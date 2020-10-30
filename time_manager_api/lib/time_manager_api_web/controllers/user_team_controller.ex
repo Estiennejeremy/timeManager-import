@@ -38,11 +38,8 @@ defmodule TimeManagerApiWeb.UserTeamController do
     render(conn, "show.json", user_team: user_team)
   end
 
-
-
-  def delete(conn, %{"id" => id}) do
-    user_team = UsersTeams.get_user_team!(id)
-
+  def deleteUserTeam(conn, %{"userID" => id_user, "teamID" => id_team}) do
+    user_team = UsersTeams.get_user_team!(id_team, id_user)
     with {:ok, %UserTeam{}} <- UsersTeams.delete_user_team(user_team) do
       send_resp(conn, :no_content, "")
     end
