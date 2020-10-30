@@ -57,6 +57,10 @@ defmodule TimeManagerApi.Workingtimes do
     Repo.get_by(Workingtime, [id: workingtimeId, team_id: teamID])
   end
 
+  def get_all_workingtime_by_team(teamID) do
+    Repo.all(from w in Workingtime, where: w.team_id == ^teamID)
+  end
+
   @doc """
   Creates a workingtime.
 

@@ -50,6 +50,11 @@ defmodule TimeManagerApiWeb.WorkingtimeController do
     render(conn, "show.json", workingtime: workingtimes)
   end
 
+  def getAllWorkingtimeByteam(conn, %{"teamID" => teamID}) do
+    workingtimes = Workingtimes.get_all_workingtime_by_team(teamID)
+    render(conn, "index.json", workingtimes: workingtimes)
+  end
+
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
     workingtime = Workingtimes.get_workingtime!(id)
 
