@@ -1,33 +1,57 @@
 <template>
   <div class="container">
-    <h2>Team : {{ this.name }}</h2>
-    <v-row align="top">
+    <v-row justify="center">
+      <v-col class="d-flex flex-column" cols="12" lg="2" md="6" sm="6">
+        <v-select
+          :items="teams"
+          label="Select team"
+          solo
+          v-model="team"
+          item-text="name"
+          item-value="id"
+          return-object
+        ></v-select>
+      </v-col>
+      <v-col class="d-flex" cols="12" lg="3" md="3" sm="3">
+        <v-autocomplete
+          :items="getUsersNotInTeam()"
+          label="Select employee"
+          solo
+          v-model="employee"
+          item-text="email"
+          item-value="id"
+          no-data-text="No user found"
+          return-object
+        ></v-autocomplete>
+      </v-col>
+      <v-col class="d-flex" cols="12" lg="2" md="3" sm="3">
+        <v-btn block height="46" @click="addEmployee()">
+          Add employee
+        </v-btn>
+      </v-col>
+    </v-row>
+    <h2 v-if="team">Team : {{ this.team.name }}</h2>
+    <v-row v-if="team" align="top">
       <v-col class="d-flex flex-column" cols="12" md="6" lg="4">
-        <v-list-item
-        v-for="e in employee"
-        :key="e.id"
-      >
-        <v-list-item-avatar>
-          <v-icon
-            class="grey lighten-1"
-            dark
-          >
-            mdi-account
-          </v-icon>
-        </v-list-item-avatar>
+        <v-list-item v-for="e in team.employee" :key="e.id">
+          <v-list-item-avatar>
+            <v-icon class="grey lighten-1" dark>
+              mdi-account
+            </v-icon>
+          </v-list-item-avatar>
 
-        <v-list-item-content>
-          <v-list-item-title v-text="e.username"></v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title v-text="e.username"></v-list-item-title>
 
-          <v-list-item-subtitle v-text="e.email"></v-list-item-subtitle>
-        </v-list-item-content>
+            <v-list-item-subtitle v-text="e.email"></v-list-item-subtitle>
+          </v-list-item-content>
 
-        <v-list-item-action>
-          <v-btn icon>
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
+          <v-list-item-action>
+            <v-btn icon>
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
       </v-col>
     </v-row>
   </div>
@@ -36,32 +60,58 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import Team from "../services/TeamService.js";
+import Account from "../services/AccountService.js";
 export default {
   name: "Team",
   data: () => ({
+    users: null,
+    teams: null,
+    team: null,
+    employee: null,
   }),
   methods: {
     ...mapMutations("team", [
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId"
+      "setManagerId",
     ]),
-    
-    deleteEmployee(){
+    init() {
+      Promise.all([Team.getTeams(), Account.getUsers()]).then((res) => {
+        this.teams = res[0].data.data;
+        if (this.id) {
+          this.team = this.teams.find((t) => t.id == this.id);
+        }
+        this.users = res[1].data.data;
+      });
+    },
+    getUsersNotInTeam(){
+      return this.users.filter(user => user.teams.every(t => t.id != this.team.id))
+    },
+    addEmployee() {
+      this.setId(this.team.id);
+      Team.addEmployee(this.team.id, this.employee.id).then(() => {
+        this.init();
+        this.employee = null;
+      });
+    },
+    deleteEmployee() {
       Team.deleteTeam(this.id)
-      .then(() => Team.getTeam(this.id))
-      .then(res => {
-        let t = res.data.data;
-        this.setName = t.name;
-        this.setEmployee = t.employee;
-        this.setManager_id = t.manager_id;
-      })
-    }
+        .then(() => Team.getTeam(this.id))
+        .then((res) => {
+          let t = res.data.data;
+          this.setId = t.id;
+        });
+    },
   },
-
+  mounted() {
+    this.init();
+  },
+  beforeDestroy() {
+    this.setId(this.team.id);
+  },
   computed: {
-    ...mapState("team", ["id", "name", "employee", "manager_id"]),
+    ...mapState("team", ["id"]),
   },
   components: {},
 };
@@ -72,7 +122,7 @@ export default {
   padding: 40px;
   display: flex;
   flex-direction: column;
-  height: auto; 
+  height: auto;
 }
 .isLate {
   display: flex;

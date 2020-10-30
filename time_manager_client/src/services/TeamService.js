@@ -20,4 +20,9 @@ export default {
     getTeams() {
         return Api().get(`/teams`);
     },
+
+    addEmployee(team_id, user_id) {
+        return Api().post(`/Usersteams`, { user_team: { team_id, user_id } });
+    },
+
 };
