@@ -47,7 +47,7 @@
           </v-list-item-content>
 
           <v-list-item-action>
-            <v-btn icon>
+            <v-btn icon @click="removeEmployee(e.id)">
               <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-list-item-action>
@@ -85,14 +85,23 @@ export default {
         this.users = res[1].data.data;
       });
     },
-    getUsersNotInTeam(){
-      return this.users.filter(user => user.teams.every(t => t.id != this.team.id))
+    getUsersNotInTeam() {
+      return this.users.filter((user) =>
+        user.teams.every((t) => t.id != this.team.id)
+      );
     },
     addEmployee() {
       this.setId(this.team.id);
       Team.addEmployee(this.team.id, this.employee.id).then(() => {
         this.init();
         this.employee = null;
+      });
+    },
+    removeEmployee(userId) {
+      this.setId(this.team.id);
+      this.employee = null;
+      Team.removeEmployee(this.team.id, userId).then(() => {
+        this.init();
       });
     },
     deleteEmployee() {

@@ -25,4 +25,8 @@ export default {
         return Api().post(`/Usersteams`, { user_team: { team_id, user_id } });
     },
 
+    removeEmployee(team_id, user_id) {
+        return Api().delete(`/Usersteams/${user_id}/${team_id}`);
+    },
+
 };
