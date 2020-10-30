@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-row justify="center">
-      <v-col class="d-flex flex-column" cols="12" lg="4" md="6" sm="8">
+      <v-col class="d-flex flex-column" cols="12" lg="6" md="6" sm="8">
         <v-select
           :items="teams"
           label="Select team"
@@ -12,15 +12,10 @@
           return-object
         ></v-select>
       </v-col>
-      <v-col class="d-flex" cols="12" lg="2" md="4" sm="4">
-        <v-btn block height="48" @click="addEmployee()">
-          Add workingtime
-        </v-btn>
-      </v-col>
     </v-row>
-    <h2 v-if="team">Team : {{ this.team.name }}</h2>
     <v-row v-if="team" align="top">
-      <v-col class="d-flex flex-column" cols="12" md="6" lg="4">
+      <v-col class="d-flex flex-column pa-5" cols="12" lg="6" md="6">
+        <h2 v-if="team">Team : {{ this.team.name }}</h2>
         <v-row>
           <v-list-item v-for="e in team.employee" :key="e.id">
             <v-list-item-avatar>
@@ -64,6 +59,47 @@
           </v-row>
         </v-row>
       </v-col>
+
+      <v-col
+        v-if="workingtimes"
+        class="d-flex flex-column pa-5"
+        cols="12"
+        lg="6"
+        md="6"
+      >
+        <h2>Workingtimes</h2>
+        <v-row>
+          <v-list-item v-for="w in workingtimes" :key="w.id">
+            <v-list-item-avatar>
+              <v-icon class="grey lighten-1" dark>
+                 mdi-calendar
+              </v-icon>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="formatWorkingtime(w)"></v-list-item-title>
+            </v-list-item-content>
+
+            <v-list-item-action class="d-flex flex-row align-center">
+              <v-btn icon>
+                <v-icon>mdi-update</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </v-row>
+        <v-row>
+          <v-row justify="end">
+            <v-col class="d-flex" cols="12" lg="4" md="4" sm="4">
+              <v-btn block height="48" @click="addEmployee()">
+                Add workingtime
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-row>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -78,6 +114,7 @@ export default {
     users: null,
     teams: null,
     team: null,
+    workingtimes: null,
     employee: null,
   }),
   methods: {
@@ -92,6 +129,7 @@ export default {
         this.teams = res[0].data.data;
         if (this.id) {
           this.team = this.teams.find((t) => t.id == this.id);
+          this.getWorkingtimesTeam();
         }
         this.users = res[1].data.data;
       });
@@ -115,14 +153,15 @@ export default {
         this.init();
       });
     },
-    deleteEmployee() {
-      Team.deleteTeam(this.id)
-        .then(() => Team.getTeam(this.id))
-        .then((res) => {
-          let t = res.data.data;
-          this.setId = t.id;
-        });
+    getWorkingtimesTeam(){
+      Team.getWorkingtimesTeam(this.team.id)
+      .then(res => this.workingtimes = res.data.workingtimes)
     },
+    formatWorkingtime(w){
+      let start = new Date(w.start);
+      let end = new Date(w.end);
+      return `${("0" + start.getDate()).slice(-2)}/${("0" + start.getMonth()).slice(-2)} ${("0" + start.getHours()).slice(-2)}:${("0" + start.getMinutes()).slice(-2)} - ${("0" + end.getDate()).slice(-2)}/${("0" + end.getMonth()).slice(-2)} ${("0" + end.getHours()).slice(-2)}:${("0" + end.getMinutes()).slice(-2)}`
+    }
   },
   mounted() {
     this.init();

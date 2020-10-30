@@ -29,4 +29,8 @@ export default {
         return Api().delete(`/Usersteams/${user_id}/${team_id}`);
     },
 
+    getWorkingtimesTeam(team_id) {
+        return Api().get(`/workingtimesByTeam/${team_id}`);
+    },
+
 };
