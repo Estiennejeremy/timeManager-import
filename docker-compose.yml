@@ -2,7 +2,7 @@ version: '3'
 services:
   db:
     environment:
-      PGDATA: /var/lib/postgresql/pgdata2
+      PGDATA: /var/lib/postgresql/pgdata
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: time_manager_api_dev
@@ -10,7 +10,7 @@ services:
     image: 'postgres:12-alpine'
     restart: always
     volumes:
-      - 'pgdata:/var/lib/postgresql/data2'
+      - 'pgdata:/var/lib/postgresql/data'
   server:
     build: "./time_manager_api"
     depends_on:
