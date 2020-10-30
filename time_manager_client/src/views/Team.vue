@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-row justify="center">
-      <v-col class="d-flex flex-column" cols="12" lg="2" md="6" sm="6">
+      <v-col class="d-flex flex-column" cols="12" lg="4" md="6" sm="8">
         <v-select
           :items="teams"
           label="Select team"
@@ -12,46 +12,57 @@
           return-object
         ></v-select>
       </v-col>
-      <v-col class="d-flex" cols="12" lg="3" md="3" sm="3">
-        <v-autocomplete
-          :items="getUsersNotInTeam()"
-          label="Select employee"
-          solo
-          v-model="employee"
-          item-text="email"
-          item-value="id"
-          no-data-text="No user found"
-          return-object
-        ></v-autocomplete>
-      </v-col>
-      <v-col class="d-flex" cols="12" lg="2" md="3" sm="3">
-        <v-btn block height="46" @click="addEmployee()">
-          Add employee
+      <v-col class="d-flex" cols="12" lg="2" md="4" sm="4">
+        <v-btn block height="48" @click="addEmployee()">
+          Add workingtime
         </v-btn>
       </v-col>
     </v-row>
     <h2 v-if="team">Team : {{ this.team.name }}</h2>
     <v-row v-if="team" align="top">
       <v-col class="d-flex flex-column" cols="12" md="6" lg="4">
-        <v-list-item v-for="e in team.employee" :key="e.id">
-          <v-list-item-avatar>
-            <v-icon class="grey lighten-1" dark>
-              mdi-account
-            </v-icon>
-          </v-list-item-avatar>
+        <v-row>
+          <v-list-item v-for="e in team.employee" :key="e.id">
+            <v-list-item-avatar>
+              <v-icon class="grey lighten-1" dark>
+                mdi-account
+              </v-icon>
+            </v-list-item-avatar>
 
-          <v-list-item-content>
-            <v-list-item-title v-text="e.username"></v-list-item-title>
+            <v-list-item-content>
+              <v-list-item-title v-text="e.username"></v-list-item-title>
 
-            <v-list-item-subtitle v-text="e.email"></v-list-item-subtitle>
-          </v-list-item-content>
+              <v-list-item-subtitle v-text="e.email"></v-list-item-subtitle>
+            </v-list-item-content>
 
-          <v-list-item-action>
-            <v-btn icon @click="removeEmployee(e.id)">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
+            <v-list-item-action>
+              <v-btn icon @click="removeEmployee(e.id)">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+        </v-row>
+        <v-row>
+          <v-row justify="center">
+            <v-col class="d-flex" cols="12" lg="8" md="8" sm="8">
+              <v-autocomplete
+                :items="getUsersNotInTeam()"
+                label="Select employee"
+                solo
+                v-model="employee"
+                item-text="email"
+                item-value="id"
+                no-data-text="No user found"
+                return-object
+              ></v-autocomplete>
+            </v-col>
+            <v-col class="d-flex" cols="12" lg="4" md="4" sm="4">
+              <v-btn block height="48" @click="addEmployee()">
+                Add employee
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-row>
       </v-col>
     </v-row>
   </div>
