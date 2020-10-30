@@ -9,6 +9,7 @@
           v-model="team"
           item-text="name"
           item-value="id"
+          v-on:change="getWorkingtimesTeam()"
           return-object
         ></v-select>
       </v-col>
@@ -127,7 +128,7 @@ export default {
     init() {
       Promise.all([Team.getTeams(), Account.getUsers()]).then((res) => {
         this.teams = res[0].data.data;
-        if (this.id) {
+        if (this.id && !this.team) {
           this.team = this.teams.find((t) => t.id == this.id);
           this.getWorkingtimesTeam();
         }
