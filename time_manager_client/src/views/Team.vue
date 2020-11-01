@@ -87,13 +87,17 @@
               <v-btn icon>
                 <v-icon>mdi-update</v-icon>
               </v-btn>
-              <v-btn icon>
+              <v-btn icon @click="removeWorkingtime(w.id)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-list-item-action>
           </v-list-item>
         </v-row>
-        <working-time-create v-if="team"  v-bind:team-id="team.id" v-on:created="getWorkingtimesTeam()"/>
+        <working-time-create
+          v-if="team"
+          v-bind:team-id="team.id"
+          v-on:created="getWorkingtimesTeam()"
+        />
       </v-col>
     </v-row>
   </div>
@@ -103,6 +107,7 @@
 import { mapState, mapMutations } from "vuex";
 import Team from "../services/TeamService.js";
 import Account from "../services/AccountService.js";
+import WorkingTimesService from "../services/WorkingTimesService.js";
 import WorkingTimeCreate from "../components/WorkingTimeCreate.vue";
 export default {
   name: "Team",
@@ -154,6 +159,11 @@ export default {
       Team.getWorkingtimesTeam(this.team.id).then(
         (res) => (this.workingtimes = res.data.workingtimes)
       );
+    },
+    removeWorkingtime(id) {
+      WorkingTimesService.deleteWorkingTime(id).then(() => {
+        this.getWorkingtimesTeam();
+      });
     },
     formatWorkingtime(w) {
       let start = new Date(w.start);
