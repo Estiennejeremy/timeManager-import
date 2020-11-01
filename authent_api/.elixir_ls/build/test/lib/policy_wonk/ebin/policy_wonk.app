@@ -1,0 +1,13 @@
+{application,policy_wonk,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"Plug based authorization and resource loading.\nAimed at Phoenix, but depends only on Plug.\nMIT license\nUpdated to compile clean with Elixir 1.4\n"},
+              {modules,['Elixir.PolicyWonk','Elixir.PolicyWonk.Enforce',
+                        'Elixir.PolicyWonk.Enforce.Error',
+                        'Elixir.PolicyWonk.Load',
+                        'Elixir.PolicyWonk.Load.Error',
+                        'Elixir.PolicyWonk.Policy',
+                        'Elixir.PolicyWonk.Policy.Error',
+                        'Elixir.PolicyWonk.Resource',
+                        'Elixir.PolicyWonk.Resource.Error']},
+              {registered,[]},
+              {vsn,"1.0.0"}]}.
