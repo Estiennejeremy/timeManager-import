@@ -14,7 +14,7 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-row v-if="team" align="top">
+    <v-row v-if="team">
       <v-col class="d-flex flex-column pa-5" cols="12" lg="6" md="6">
         <h2 v-if="team">Team : {{ this.team.name }}</h2>
         <v-row>
@@ -73,12 +73,14 @@
           <v-list-item v-for="w in workingtimes" :key="w.id">
             <v-list-item-avatar>
               <v-icon class="grey lighten-1" dark>
-                 mdi-calendar
+                mdi-calendar
               </v-icon>
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title v-text="formatWorkingtime(w)"></v-list-item-title>
+              <v-list-item-title
+                v-text="formatWorkingtime(w)"
+              ></v-list-item-title>
             </v-list-item-content>
 
             <v-list-item-action class="d-flex flex-row align-center">
@@ -91,15 +93,7 @@
             </v-list-item-action>
           </v-list-item>
         </v-row>
-        <v-row>
-          <v-row justify="end">
-            <v-col class="d-flex" cols="12" lg="4" md="4" sm="4">
-              <v-btn block height="48" @click="addEmployee()">
-                Add workingtime
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-row>
+        <working-time-create v-if="team"  v-bind:team-id="team.id" v-on:created="getWorkingtimesTeam()"/>
       </v-col>
     </v-row>
   </div>
@@ -109,6 +103,7 @@
 import { mapState, mapMutations } from "vuex";
 import Team from "../services/TeamService.js";
 import Account from "../services/AccountService.js";
+import WorkingTimeCreate from "../components/WorkingTimeCreate.vue";
 export default {
   name: "Team",
   data: () => ({
@@ -117,6 +112,7 @@ export default {
     team: null,
     workingtimes: null,
     employee: null,
+    createDialog: false,
   }),
   methods: {
     ...mapMutations("team", [
@@ -154,15 +150,27 @@ export default {
         this.init();
       });
     },
-    getWorkingtimesTeam(){
-      Team.getWorkingtimesTeam(this.team.id)
-      .then(res => this.workingtimes = res.data.workingtimes)
+    getWorkingtimesTeam() {
+      Team.getWorkingtimesTeam(this.team.id).then(
+        (res) => (this.workingtimes = res.data.workingtimes)
+      );
     },
-    formatWorkingtime(w){
+    formatWorkingtime(w) {
       let start = new Date(w.start);
       let end = new Date(w.end);
-      return `${("0" + start.getDate()).slice(-2)}/${("0" + start.getMonth()).slice(-2)} ${("0" + start.getHours()).slice(-2)}:${("0" + start.getMinutes()).slice(-2)} - ${("0" + end.getDate()).slice(-2)}/${("0" + end.getMonth()).slice(-2)} ${("0" + end.getHours()).slice(-2)}:${("0" + end.getMinutes()).slice(-2)}`
-    }
+      return `${("0" + start.getDate()).slice(-2)}/${(
+        "0" + start.getMonth()
+      ).slice(-2)} ${("0" + start.getHours()).slice(-2)}:${(
+        "0" + start.getMinutes()
+      ).slice(-2)} - ${("0" + end.getDate()).slice(-2)}/${(
+        "0" + end.getMonth()
+      ).slice(-2)} ${("0" + end.getHours()).slice(-2)}:${(
+        "0" + end.getMinutes()
+      ).slice(-2)}`;
+    },
+    openCreateDialog() {
+      this.createDialog = true;
+    },
   },
   mounted() {
     this.init();
@@ -173,7 +181,9 @@ export default {
   computed: {
     ...mapState("team", ["id"]),
   },
-  components: {},
+  components: {
+    WorkingTimeCreate,
+  },
 };
 </script>
 
