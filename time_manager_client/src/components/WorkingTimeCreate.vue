@@ -128,7 +128,7 @@ export default {
     createWorkingTime(workingtime) {
       WorkingTimesService.createWorkingTime(workingtime);
       this.dialog = false;
-      this.$emit('created')
+      this.$emit('created');
     },
 
     getModel(name) {

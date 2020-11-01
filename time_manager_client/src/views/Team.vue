@@ -84,9 +84,10 @@
             </v-list-item-content>
 
             <v-list-item-action class="d-flex flex-row align-center">
-              <v-btn icon>
-                <v-icon>mdi-update</v-icon>
-              </v-btn>
+              <working-time-update
+                v-bind:workingtime="w"
+                v-on:updated="init()"
+              />
               <v-btn icon @click="removeWorkingtime(w.id)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
@@ -109,6 +110,7 @@ import Team from "../services/TeamService.js";
 import Account from "../services/AccountService.js";
 import WorkingTimesService from "../services/WorkingTimesService.js";
 import WorkingTimeCreate from "../components/WorkingTimeCreate.vue";
+import WorkingTimeUpdate from "../components/WorkingTimeUpdate.vue";
 export default {
   name: "Team",
   data: () => ({
@@ -169,11 +171,13 @@ export default {
       let start = new Date(w.start);
       let end = new Date(w.end);
       return `${("0" + start.getDate()).slice(-2)}/${(
-        "0" + start.getMonth()
+        "0" +
+        (start.getMonth() + 1)
       ).slice(-2)} ${("0" + start.getHours()).slice(-2)}:${(
         "0" + start.getMinutes()
       ).slice(-2)} - ${("0" + end.getDate()).slice(-2)}/${(
-        "0" + end.getMonth()
+        "0" +
+        (end.getMonth() + 1)
       ).slice(-2)} ${("0" + end.getHours()).slice(-2)}:${(
         "0" + end.getMinutes()
       ).slice(-2)}`;
@@ -193,6 +197,7 @@ export default {
   },
   components: {
     WorkingTimeCreate,
+    WorkingTimeUpdate,
   },
 };
 </script>
