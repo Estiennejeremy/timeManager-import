@@ -151,7 +151,6 @@ export default {
 
     Team.getTeams().then(res => {
       this.teams = res.data.data;
-      console.log(this.id)
       if(this.id){
         this.team = this.teams.find(t => t.id == this.id);
       }

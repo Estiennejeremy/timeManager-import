@@ -1,12 +1,17 @@
 <template>
-  <v-container id="workingTimes">
-    <material-form
-      v-if="workingTime.start != null"
-      :config="config"
-      @update:config="config = $event"
-      @validate="updateWorkingTime(getWorkingTimeFromForm())"
-    />
-  </v-container>
+  <v-row justify="center">
+    <v-dialog v-model="dialog" max-width="80%">
+      <material-form
+        v-if="workingtime"
+        :config="config"
+        @update:config="config = $event"
+        @validate="updateWorkingTime(getWorkingTimeFromForm())"
+      />
+    </v-dialog>
+    <v-btn icon @click="dialog = true">
+      <v-icon>mdi-update</v-icon>
+    </v-btn>
+  </v-row>
 </template>
 
 <script>
@@ -14,20 +19,16 @@ import WorkingTimesService from "@/services/WorkingTimesService";
 import MaterialForm from "@/components/forms/Form.vue";
 export default {
   name: "WorkingTimeUpdate",
-
+  props: ["workingtime"],
   data: () => ({
-    workingTime: {
-      id: null,
-      start: null,
-      end: null
-    },
+    dialog: false,
     config: {
       title: "Update working time",
       validate: "Update",
       message: {
         type: null,
         text: null,
-        duration: 5000
+        duration: 5000,
       },
       image: "",
       components: [
@@ -49,8 +50,8 @@ export default {
             required: true,
             label: "Start date",
             counter: 0,
-            rules: [v => !!v || "Start time is required"]
-          }
+            rules: [(v) => !!v || "Start time is required"],
+          },
         },
         {
           id: 1,
@@ -70,8 +71,8 @@ export default {
             required: true,
             label: "Start time",
             counter: 0,
-            rules: [v => !!v || "Start time is required"]
-          }
+            rules: [(v) => !!v || "Start time is required"],
+          },
         },
         {
           id: 2,
@@ -91,8 +92,8 @@ export default {
             required: true,
             label: "End date",
             counter: 0,
-            rules: [v => !!v || "End time is required"]
-          }
+            rules: [(v) => !!v || "End time is required"],
+          },
         },
         {
           id: 3,
@@ -112,68 +113,57 @@ export default {
             required: true,
             label: "End time",
             counter: 0,
-            rules: [v => !!v || "End time is required"]
-          }
-        }
-      ]
-    }
+            rules: [(v) => !!v || "End time is required"],
+          },
+        },
+      ],
+    },
   }),
 
   mounted() {
-    this.getWorkingTime();
+    this.setWorkingTime();
   },
 
   methods: {
-    getWorkingTime() {
-      WorkingTimesService.getWorkingTime(
-        JSON.parse(window.localStorage.TimeManager).route.params.workingTimeId,
-        JSON.parse(window.localStorage.TimeManager).route.params.userId
-      )
-        .then(res => {
-          this.workingTime = res.data.data;
-          this.setModel(
-            "startDate",
-            new Date(this.workingTime.start).toISOString().substr(0, 10)
-          );
-          this.setModel(
-            "startTime",
-            new Date(this.workingTime.start).getHours() +
-              ":" +
-              new Date(this.workingTime.start).getMinutes()
-          );
-          this.setModel(
-            "endDate",
-            new Date(this.workingTime.end).toISOString().substr(0, 10)
-          );
-          this.setModel(
-            "endTime",
-            new Date(this.workingTime.end).getHours() +
-              ":" +
-              new Date(this.workingTime.end).getMinutes()
-          );
-        })
-        .catch(err => console.log(err));
+    setWorkingTime() {
+      let start = new Date(this.workingtime.start);
+      let end = new Date(this.workingtime.end);
+      this.setModel("startDate", start.toISOString().substr(0, 10));
+      this.setModel(
+        "startTime",
+        `${("0" + start.getHours()).slice(-2)}:${(
+          "0" + start.getMinutes()
+        ).slice(-2)}`
+      );
+      this.setModel("endDate", end.toISOString().substr(0, 10));
+      this.setModel(
+        "endTime",
+        `${("0" + end.getHours()).slice(-2)}:${("0" + end.getMinutes()).slice(
+          -2
+        )}`
+      );
     },
 
     updateWorkingTime(workingtime) {
-      WorkingTimesService.updateWorkingTime(this.workingTime.id, workingtime);
-      this.$router.push(
-        `/workingTimes/${
-          JSON.parse(window.localStorage.TimeManager).route.params.userId
-        }`
-      );
+      WorkingTimesService.updateWorkingTime(
+        this.workingtime.id,
+        workingtime
+      ).then(() => {
+        this.dialog = false;
+        this.$emit("updated");
+      });
     },
 
     getModel(name) {
       let id = this.config.components.findIndex(
-        item => item.modelName === name
+        (item) => item.modelName === name
       );
       return this.config.components[id].model;
     },
 
     setModel(name, value) {
       let id = this.config.components.findIndex(
-        item => item.modelName === name
+        (item) => item.modelName === name
       );
       this.config.components[id].model = value;
     },
@@ -182,13 +172,14 @@ export default {
       return {
         start: `${this.getModel("startDate")}T${this.getModel("startTime")}`,
         end: `${this.getModel("endDate")}T${this.getModel("endTime")}`,
-        user_id: JSON.parse(window.localStorage.TimeManager).route.params.userId
+        user_id: JSON.parse(window.localStorage.TimeManager).route.params
+          .userId,
       };
-    }
+    },
   },
 
   components: {
-    MaterialForm
-  }
+    MaterialForm,
+  },
 };
 </script>
