@@ -17,7 +17,7 @@
     <v-row v-if="team">
       <v-col class="d-flex flex-column pa-5" cols="12" lg="6" md="6">
         <h2 v-if="team">Team : {{ this.team.name }}</h2>
-        <v-row>
+        <v-row align-content="start">
           <v-list-item v-for="e in team.employee" :key="e.id">
             <v-list-item-avatar>
               <v-icon class="grey lighten-1" dark>
@@ -133,8 +133,9 @@ export default {
         this.teams = res[0].data.data;
         if (this.id && !this.team) {
           this.team = this.teams.find((t) => t.id == this.id);
-          this.getWorkingtimesTeam();
         }
+        else this.team = this.teams.find((t) => t.id == this.team.id);
+        if (this.team) this.getWorkingtimesTeam();
         this.users = res[1].data.data;
       });
     },
@@ -158,11 +159,9 @@ export default {
       });
     },
     getWorkingtimesTeam() {
-      Team.getWorkingtimesTeam(this.team.id).then(
-        (res) => {
-          this.workingtimes = res.data.workingtimes;
-        }
-      );
+      Team.getWorkingtimesTeam(this.team.id).then((res) => {
+        this.workingtimes = res.data.workingtimes;
+      });
     },
     removeWorkingtime(id) {
       WorkingTimesService.deleteWorkingTime(id).then(() => {

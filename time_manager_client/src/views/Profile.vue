@@ -218,32 +218,32 @@ export default {
       this.weeklyClocks = weeklyClocks;
 
       /// SET WEEKLY WORKINGTIME CHART
-      let sortyWorkingtimeByDay = weeklyWorkingtimes.reduce((sort,workingtime) => {
-        switch(new Date(workingtime.start).toLocaleString("default", { weekday: "long" })){
-          case "Monday":
-            sort[0].push(workingtime);
-            break;
-          case "Tuesday":
-            sort[1].push(workingtime);
-            break;
-          case "Wednesday":
-            sort[2].push(workingtime);
-            break;
-          case "Thursday":
-            sort[3].push(workingtime);
-            break;
-          case "Friday":
-            sort[4].push(workingtime);
-            break;
-          case "Saturday":
-            sort[5].push(workingtime);
-            break;
-          case "Sunday":
-            sort[6].push(workingtime);
-            break;
-        }
-        return sort;
-      }, [[],[],[],[],[],[],[]])
+      // let sortyWorkingtimeByDay = weeklyWorkingtimes.reduce((sort,workingtime) => {
+      //   switch(new Date(workingtime.start).toLocaleString("default", { weekday: "long" })){
+      //     case "Monday":
+      //       sort[0].push(workingtime);
+      //       break;
+      //     case "Tuesday":
+      //       sort[1].push(workingtime);
+      //       break;
+      //     case "Wednesday":
+      //       sort[2].push(workingtime);
+      //       break;
+      //     case "Thursday":
+      //       sort[3].push(workingtime);
+      //       break;
+      //     case "Friday":
+      //       sort[4].push(workingtime);
+      //       break;
+      //     case "Saturday":
+      //       sort[5].push(workingtime);
+      //       break;
+      //     case "Sunday":
+      //       sort[6].push(workingtime);
+      //       break;
+      //   }
+      //   return sort;
+      // }, [[],[],[],[],[],[],[]])
 
       let sortClockByDay = weeklyClocks.reduce((sort,clock) => {
         switch(new Date(clock.time).toLocaleString("default", { weekday: "long" })){
