@@ -86,7 +86,7 @@
             <v-list-item-action class="d-flex flex-row align-center">
               <working-time-update
                 v-bind:workingtime="w"
-                v-on:updated="init()"
+                v-on:updated="getWorkingtimesTeam()"
               />
               <v-btn icon @click="removeWorkingtime(w.id)">
                 <v-icon>mdi-delete</v-icon>
@@ -159,7 +159,9 @@ export default {
     },
     getWorkingtimesTeam() {
       Team.getWorkingtimesTeam(this.team.id).then(
-        (res) => (this.workingtimes = res.data.workingtimes)
+        (res) => {
+          this.workingtimes = res.data.workingtimes;
+        }
       );
     },
     removeWorkingtime(id) {

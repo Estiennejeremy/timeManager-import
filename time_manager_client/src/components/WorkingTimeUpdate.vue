@@ -145,9 +145,13 @@ export default {
     },
 
     updateWorkingTime(workingtime) {
-      WorkingTimesService.updateWorkingTime(this.workingtime.id, workingtime);
-      this.dialog = false;
-      this.$emit('updated')
+      WorkingTimesService.updateWorkingTime(
+        this.workingtime.id,
+        workingtime
+      ).then(() => {
+        this.dialog = false;
+        this.$emit("updated");
+      });
     },
 
     getModel(name) {
