@@ -21,6 +21,8 @@ defmodule TimeManagerApi.Teams do
     Repo.all(Team) |> Repo.preload([:users])
   end
 
+
+
   @doc """
   Gets a single team.
 
