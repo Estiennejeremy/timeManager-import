@@ -9,9 +9,9 @@ module.exports = {
     config.plugins.delete("prefetch");
   },
 
-  publicPath: '',
+  publicPath: "",
 
   pluginOptions: {
-    cordovaPath: 'src-cordova'
+    cordovaPath: "src-cordova"
   }
 };

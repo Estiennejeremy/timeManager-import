@@ -119,28 +119,28 @@ export default {
     team: null,
     workingtimes: null,
     employee: null,
-    createDialog: false,
+    createDialog: false
   }),
   methods: {
     ...mapMutations("team", [
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId",
+      "setManagerId"
     ]),
     init() {
-      Promise.all([Team.getTeams(), Account.getUsers()]).then((res) => {
+      Promise.all([Team.getTeams(), Account.getUsers()]).then(res => {
         this.teams = res[0].data.data;
         if (this.id && !this.team) {
-          this.team = this.teams.find((t) => t.id == this.id);
+          this.team = this.teams.find(t => t.id == this.id);
           this.getWorkingtimesTeam();
         }
         this.users = res[1].data.data;
       });
     },
     getUsersNotInTeam() {
-      return this.users.filter((user) =>
-        user.teams.every((t) => t.id != this.team.id)
+      return this.users.filter(user =>
+        user.teams.every(t => t.id != this.team.id)
       );
     },
     addEmployee() {
@@ -159,7 +159,7 @@ export default {
     },
     getWorkingtimesTeam() {
       Team.getWorkingtimesTeam(this.team.id).then(
-        (res) => (this.workingtimes = res.data.workingtimes)
+        res => (this.workingtimes = res.data.workingtimes)
       );
     },
     removeWorkingtime(id) {
@@ -184,7 +184,7 @@ export default {
     },
     openCreateDialog() {
       this.createDialog = true;
-    },
+    }
   },
   mounted() {
     this.init();
@@ -193,12 +193,12 @@ export default {
     this.setId(this.team.id);
   },
   computed: {
-    ...mapState("team", ["id"]),
+    ...mapState("team", ["id"])
   },
   components: {
     WorkingTimeCreate,
-    WorkingTimeUpdate,
-  },
+    WorkingTimeUpdate
+  }
 };
 </script>
 

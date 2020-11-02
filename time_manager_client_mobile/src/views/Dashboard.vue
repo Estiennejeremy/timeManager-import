@@ -126,14 +126,19 @@ export default {
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
-    ...mapMutations("team", ["setId", "setName", "setEmployee", "setManagerId"]),
+    ...mapMutations("team", [
+      "setId",
+      "setName",
+      "setEmployee",
+      "setManagerId"
+    ]),
     displayProfile() {
       this.$router.push("/profile");
     },
     displayTeam() {
       this.setId(this.team.id);
       this.$router.push(`/team/${this.team.name}`);
-    },
+    }
   },
 
   computed: {
@@ -151,8 +156,8 @@ export default {
 
     Team.getTeams().then(res => {
       this.teams = res.data.data;
-      console.log(this.id)
-      if(this.id){
+      console.log(this.id);
+      if (this.id) {
         this.team = this.teams.find(t => t.id == this.id);
       }
     });

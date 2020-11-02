@@ -12,7 +12,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 // import AccountService from "@/services/AccountService";
-import AuthenticationService from "@/services/AccountService";
+import AuthenticationService from "@/services/AuthenticationService";
 import MaterialForm from "@/components/forms/Form.vue";
 export default {
   name: "Login",
@@ -178,7 +178,7 @@ export default {
     ...mapState("user", ["user", "isUserLoggedIn", "token"]),
 
     getButtonStateGithub() {
-      return this.config.components[3].model;
+      return this.config.components[2].model;
     }
   },
 

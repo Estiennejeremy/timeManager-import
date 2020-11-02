@@ -39,21 +39,32 @@
           <v-row
             v-for="(item, index) in messages"
             :key="index"
-            :style="index % 2 === 0 ? 'justify-content: flex-end;' : 'justify-content: flex-start;' "
+            :style="
+              index % 2 === 0
+                ? 'justify-content: flex-end;'
+                : 'justify-content: flex-start;'
+            "
           >
-
             <v-col cols="10">
               <v-card rounded color="#424242" class="pa-4">
                 <span class="px-4 white--text">{{ item.text }}</span>
               </v-card>
             </v-col>
-
           </v-row>
         </v-container>
 
         <v-divider></v-divider>
 
-        <v-text-field v-model="message" append-icon="mdi-send" required hide-details @keyup.enter="sendMessage(), message = ''" filled tile label="Enter message..."/>
+        <v-text-field
+          v-model="message"
+          append-icon="mdi-send"
+          required
+          hide-details
+          @keyup.enter="sendMessage(), (message = '')"
+          filled
+          tile
+          label="Enter message..."
+        />
 
         <v-row justify="center">
           <v-col cols="6" class="text-center">
@@ -68,10 +79,8 @@
             </v-btn>
           </v-col>
         </v-row>
-
       </v-card>
     </v-menu>
-
   </div>
 </template>
 
@@ -91,7 +100,7 @@ export default {
       {
         text: "Hello !",
         emitter: "John"
-      },
+      }
       // {
       //   text: "Hi !",
       //   emitter: "Nhoj"
@@ -105,8 +114,7 @@ export default {
     this.socket = io("http://localhost:8082");
   },
 
-  mounted() {
-  },
+  mounted() {},
 
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -115,7 +123,7 @@ export default {
       this.messages.push({
         text: this.message,
         emitter: this.username
-      })
+      });
     }
   },
 

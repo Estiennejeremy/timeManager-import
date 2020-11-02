@@ -80,10 +80,10 @@ export default {
     dailyWorkData: null,
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: false
     },
     visualizeOptions: ["Line", "Doughnut", "Bar"],
-    periodeOptions: ["Monthly", "Weekly", "Daily"],
+    periodeOptions: ["Monthly", "Weekly", "Daily"]
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -102,11 +102,11 @@ export default {
       var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
       var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
       return weekNo;
-    },
+    }
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"]),
+    ...mapState("user", ["id", "email", "username"])
   },
   mounted() {
     setInterval(
@@ -121,12 +121,12 @@ export default {
       WorkingTimesService.getWorkingTimesUser(
         this.userId ? this.userId : this.id
       ),
-      ClockService.getClockUser(this.userId ? this.userId : this.id),
-    ]).then((res) => {
+      ClockService.getClockUser(this.userId ? this.userId : this.id)
+    ]).then(res => {
       ///////////////// DAILY //////////////////////////////
 
       /// GET DAILY WORKINGTIMES
-      let dailyWorkingtimes = res[0].data.data.filter((workingTime) => {
+      let dailyWorkingtimes = res[0].data.data.filter(workingTime => {
         let current = new Date();
         let start = new Date(workingTime.start);
         let end = new Date(workingTime.end);
@@ -138,7 +138,7 @@ export default {
       this.dailyWorkingtimes = dailyWorkingtimes;
 
       /// GET DAILY CLOCKS
-      let dailyClocks = res[1].data.data.filter((clock) => {
+      let dailyClocks = res[1].data.data.filter(clock => {
         let current = new Date();
         let time = new Date(clock.time);
         return time.toLocaleDateString() == current.toLocaleDateString();
@@ -148,7 +148,7 @@ export default {
       /// SET IF HE/SHE'S WORKING
       if (
         dailyWorkingtimes.some(
-          (workingtime) =>
+          workingtime =>
             new Date() > new Date(workingtime.start) &&
             new Date() < new Date(workingtime.end)
         )
@@ -158,7 +158,7 @@ export default {
 
       /// SET CURRENT WORKINGTIME AND HOW MANY WORKINGTIME LESS
       let currentWorkingTime = dailyWorkingtimes.find(
-        (workingtime) =>
+        workingtime =>
           new Date() > new Date(workingtime.start) &&
           new Date() < new Date(workingtime.end)
       );
@@ -166,7 +166,7 @@ export default {
       /// SET WORKINGTIME CHART
       if (currentWorkingTime) {
         let lastClock = dailyClocks.find(
-          (clock) =>
+          clock =>
             new Date(clock.time) >= new Date(currentWorkingTime.start) &&
             new Date(clock.time) <= new Date(currentWorkingTime.end)
         );
@@ -186,16 +186,16 @@ export default {
               {
                 data: [work, total - work],
                 backgroundColor: ["green", "yellow"],
-                weight: 0.5,
-              },
-            ],
+                weight: 0.5
+              }
+            ]
           };
         }
       }
 
       /////////////////// WEEKLY ///////////////////////////////////
       /// GET WEEKLY WORKINGTIMES
-      let weeklyWorkingtimes = res[0].data.data.filter((workingTime) => {
+      let weeklyWorkingtimes = res[0].data.data.filter(workingTime => {
         let current = new Date();
         let start = new Date(workingTime.start);
         let end = new Date(workingTime.end);
@@ -207,21 +207,18 @@ export default {
       this.weeklyWorkingtimes = weeklyWorkingtimes;
 
       /// GET WEEKLY CLOCKS
-      let weeklyClocks = res[1].data.data.filter((clock) => {
+      let weeklyClocks = res[1].data.data.filter(clock => {
         let current = new Date();
         let time = new Date(clock.time);
         return this.getWeekNumber(time) == this.getWeekNumber(current);
       });
       this.weeklyClocks = weeklyClocks;
-
-      
-
     });
   },
   components: {
     LineChart,
-    DoughnutChart,
-  },
+    DoughnutChart
+  }
 };
 </script>
 

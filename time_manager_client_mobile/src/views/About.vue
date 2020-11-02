@@ -3,7 +3,11 @@
     <chart-manager />
 
     <v-flex xs12 md12 lg4 style="z-index: 200;">
-      <a style="color: transparent;z-index: 20;" href="app-release-1.apk" download>
+      <a
+        style="color: transparent;z-index: 20;"
+        href="app-release-1.apk"
+        download
+      >
         <v-btn rounded large dark>
           <v-icon dark large>mdi-download</v-icon>
           Download static APK
@@ -12,14 +16,17 @@
     </v-flex>
 
     <v-flex xs12 md12 lg4 style="z-index: 200;">
-      <a style="color: transparent;z-index: 20;" href="app-release-unsigned.apk" download>
+      <a
+        style="color: transparent;z-index: 20;"
+        href="app-release-unsigned.apk"
+        download
+      >
         <v-btn rounded large dark>
           <v-icon dark large>mdi-download</v-icon>
           Download new APK
         </v-btn>
       </a>
     </v-flex>
-
   </v-container>
 </template>
 

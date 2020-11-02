@@ -59,7 +59,7 @@ export default [
     view: "Profile",
     icon: "mdi-account-circle",
     group: "top",
-    public: true,
+    public: false,
     show: true,
     parameters: [],
     role: ["default", "employee", "manager"]
