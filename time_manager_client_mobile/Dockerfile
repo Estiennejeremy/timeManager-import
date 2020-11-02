@@ -42,7 +42,6 @@ COPY . .
 
 WORKDIR /client_mobile/src-cordova
 # RUN sdkmanager --list
-RUN cordova platform add android
 RUN cordova requirements
 
 WORKDIR /client_mobile
