@@ -1,5 +1,5 @@
 export default {
-    id: 2,
+    id: 1,
     email: "greg@greg.fr",
     username: "greg",
     token: null,
