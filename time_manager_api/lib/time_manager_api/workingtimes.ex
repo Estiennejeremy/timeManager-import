@@ -61,6 +61,10 @@ defmodule TimeManagerApi.Workingtimes do
     Repo.all(from w in Workingtime, where: w.team_id == ^teamID)
   end
 
+  def get_all_workingtime_by_user(userID) do
+    Repo.all(from w in Workingtime , left_join: u in TimeManagerApi.UsersTeams.UserTeam, on: u.team_id == w.team_id , where: u.user_id == ^userID)
+  end
+
   @doc """
   Creates a workingtime.
 
