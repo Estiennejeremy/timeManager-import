@@ -1,5 +1,15 @@
 version: '3'
 services:
+  client_mobile:
+    build:
+      context: "./time_manager_client_mobile"
+      args:
+          android_home: /opt/android-sdk-linux/
+          keypass: timemanager
+    networks:
+      - default
+    volumes:
+      - apk:/client_mobile/src-cordova/platforms/android/app/build/outputs/apk:rw
   db:
     environment:
       PGDATA: /var/lib/postgresql/pgdata
@@ -35,13 +45,17 @@ services:
       - default
     depends_on:
       - server
+      - client_mobile
     environment:
       - PORT=8080
     restart: on-failure
     tty: true
+    volumes:
+      - apk:/client_web/public/mobile:ro
 
 networks:
   default:
 
 volumes:
   pgdata:
+  apk:
