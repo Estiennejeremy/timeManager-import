@@ -288,8 +288,8 @@ export default {
         datasets: [
           {
             data: sortClockByDay.map(dayClocks => dayClocks.reduce((hours, clock, index) => {
-              if(index > 0 && index < dayClocks.length -1 && index % 2 == 1){
-                return hours + ((Math.abs(new Date(clock.time) - new Date(dayClocks[index-1].time)) / 36e5)).toFixed(2);
+              if(index % 2 == 1){
+                return hours + parseInt(((Math.abs(new Date(clock.time) - new Date(dayClocks[index-1].time)) / 36e5)).toFixed(2));
               }
               else return hours
             }, 0)),
