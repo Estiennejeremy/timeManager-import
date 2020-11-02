@@ -21,7 +21,7 @@ const scrollBehavior = function(to, from, savedPosition) {
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   routes: paths
     .map(path => route(path.path, path.view, path.name))
     .concat([{ path: "*", redirect: "/" }]),
