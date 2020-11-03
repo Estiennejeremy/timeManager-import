@@ -21,6 +21,10 @@
             <h3 v-for="workingtime in dailyWorkingtimes" :key="workingtime.id">
               {{ getPlanning(workingtime) }}
             </h3>
+            <h3 v-if="dailyWorkingtimes.length == 0 || !dailyWorkingtimes">
+              No current workingtime
+            </h3>
+
           </section>
         </div>
         <doughnut-chart
@@ -146,6 +150,7 @@ export default {
       });
       this.dailyClocks = dailyClocks;
 
+      console.log(dailyWorkingtimes)
       /// SET IF HE/SHE'S WORKING
       if (
         dailyWorkingtimes.some(
@@ -273,7 +278,6 @@ export default {
       }, [[],[],[],[],[],[],[]]);
 
       sortClockByDay.map(dayClocks => dayClocks.sort((c1,c2) => new Date(c1.time).getTime() > new Date(c2.time).getTime() ? 1 : -1));
-      console.log(sortClockByDay)
 
       this.weeklyWorkData = {
         labels: [
