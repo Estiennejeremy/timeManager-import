@@ -49,5 +49,6 @@ defmodule TimeManagerApiWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :time_manager_api
   plug TimeManagerApiWeb.Router
 end

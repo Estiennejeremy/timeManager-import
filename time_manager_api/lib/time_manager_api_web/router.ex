@@ -1,9 +1,27 @@
 defmodule TimeManagerApiWeb.Router do
   use TimeManagerApiWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :api do
     plug CORSPlug, origin: "*"
     plug :accepts, ["json"]
+    plug TimeManagerApiWeb.ApiAuthPlug, otp_app: :time_manager_api
+  end
+
+  pipeline :api_protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: TimeManagerApiWeb.ApiAuthErrorHandler
+  end
+
+  pipeline :employee do
+    plug TimeManagerApiWeb.EnsureRolePlug, :employee
+  end
+
+  pipeline :manager do
+    plug TimeManagerApiWeb.EnsureRolePlug, :manager
+  end
+
+  pipeline :superManager do
+    plug TimeManagerApiWeb.EnsureRolePlug, :superManager
   end
 
   scope "/api", TimeManagerApiWeb do
@@ -24,6 +42,10 @@ defmodule TimeManagerApiWeb.Router do
     delete "/Usersteams/:userID/:teamID", UserTeamController, :deleteUserTeam
     get "/UsersteamsByUser/:userID", UserTeamController, :getTeamsByUser
     get "/UsersteamsByTeam/:teamID", UserTeamController, :getUserByTeam
+
+    resources "/registration", RegistrationController, singleton: true, only: [:create]
+    resources "/session", SessionController, singleton: true, only: [:create, :delete]
+    post "/session/renew", SessionController, :renew
 
   end
 
