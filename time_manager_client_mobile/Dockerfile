@@ -65,5 +65,6 @@ RUN jarsigner -verbose \
   -keypass $keypass \
   ./src-cordova/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk timemanager
 
-RUN chmod +x ./idle.sh
-RUN ./idle.sh
+# Idle to copy the build apk (temporary)
+# RUN chmod +x ./idle.sh
+# RUN ./idle.sh
