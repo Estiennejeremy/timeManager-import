@@ -43,6 +43,7 @@ COPY . .
 WORKDIR /client_mobile/src-cordova
 RUN cordova platforms add android; exit 0
 # RUN sdkmanager --list
+RUN cordova platforms add android; exit 0
 RUN cordova requirements
 
 WORKDIR /client_mobile
@@ -69,3 +70,4 @@ RUN jarsigner -verbose \
 # Idle to copy the build apk (temporary)
 # RUN chmod +x ./idle.sh
 # RUN ./idle.sh
+
