@@ -41,9 +41,7 @@ RUN npm install
 COPY . .
 
 WORKDIR /client_mobile/src-cordova
-RUN cordova platforms add android; exit 0
-# RUN sdkmanager --list
-RUN cordova requirements
+
 
 WORKDIR /client_mobile
 RUN npm run cordova-prepare
