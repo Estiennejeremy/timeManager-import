@@ -62,7 +62,6 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import DoughnutChart from "../components/charts/Doughnut.js";
 import Profile from "./Profile.vue";
 import Team from "../services/TeamService.js";
 export default {
@@ -77,19 +76,6 @@ export default {
     teams: [],
     team: null,
     employee: null,
-    doughnutData: {
-      labels: ["Workingtime", "Free time"],
-      datasets: [
-        {
-          data: [70, 30],
-          weight: 0.5,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-    },
     EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"],
   }),
   methods: {
@@ -130,7 +116,6 @@ export default {
     });
   },
   components: {
-    DoughnutChart,
     Profile,
   },
 };
