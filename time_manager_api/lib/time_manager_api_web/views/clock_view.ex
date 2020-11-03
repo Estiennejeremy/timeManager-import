@@ -11,9 +11,10 @@ defmodule TimeManagerApiWeb.ClockView do
   end
 
   def render("clock.json", %{clock: clock}) do
+    IO.inspect(clock)
     %{id: clock.id,
-      time: clock.time,
-      status: clock.status,
+      start: clock.start,
+      end: clock.end,
       user_id: clock.user_id}
   end
 end

@@ -33,6 +33,8 @@ defmodule TimeManagerApiWeb.Router do
     #resources "/clocks", ClockController, except: [:new, :edit]
     get "/clocks/:user_id", ClockController, :show_usersID
     post "/clocks/:id", ClockController, :post_clock_with_user
+    get "/clocksMax/:userID", ClockController, :show_max_by_user
+    put "/clocks/:id", ClockController, :update_clock
 
     get "/workingtimes/:teamID/:workingtimeID", WorkingtimeController, :getWorkingtimeByTeam
     get "/workingtimesByTeam/:teamID", WorkingtimeController, :getAllWorkingtimeByteam
