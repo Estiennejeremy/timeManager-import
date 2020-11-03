@@ -1,0 +1,18 @@
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          51.75.122.116
++ Target Hostname:    51.75.122.116
++ Target Port:        8080
++ Start Time:         2020-11-03 12:11:12 (GMT1)
+---------------------------------------------------------------------------
++ Server: nginx/1.18.0
++ Server leaks inodes via ETags, header found with file /, fields: 0x5fa02d80 0x680 
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ /WEB-INF/web.xml: JRUN default file found.
++ 7542 requests: 0 error(s) and 5 item(s) reported on remote host
++ End Time:           2020-11-03 12:13:48 (GMT1) (156 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
