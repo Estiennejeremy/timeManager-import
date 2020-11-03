@@ -1,0 +1,11 @@
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-03 09:27 CET
+Nmap scan report for 116.ip-51-75-122.eu (51.75.122.116)
+Host is up (0.017s latency).
+Not shown: 996 closed ports
+PORT     STATE    SERVICE
+22/tcp   open     ssh
+25/tcp   filtered smtp
+4000/tcp open     remoteanything
+8080/tcp open     http-proxy
+
+Nmap done: 1 IP address (1 host up) scanned in 1.55 seconds

@@ -1,0 +1,8 @@
+Starting Nmap 7.80 ( https://nmap.org ) at 2020-11-03 09:30 CET
+Nmap scan report for 116.ip-51-75-122.eu (51.75.122.116)
+Host is up (0.019s latency).
+All 1000 scanned ports on 116.ip-51-75-122.eu (51.75.122.116) are filtered (931) or closed (69)
+Too many fingerprints match this host to give specific OS details
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 67.75 seconds
