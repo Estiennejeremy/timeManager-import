@@ -41,6 +41,7 @@ RUN npm install
 COPY . .
 
 WORKDIR /client_mobile/src-cordova
+RUN cordova platforms add android; exit 0
 # RUN sdkmanager --list
 RUN cordova requirements
 
@@ -65,5 +66,7 @@ RUN jarsigner -verbose \
   -keypass $keypass \
   ./src-cordova/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk timemanager
 
-RUN chmod +x ./idle.sh
-RUN ./idle.sh
+# Idle to copy the build apk (temporary)
+# RUN chmod +x ./idle.sh
+# RUN ./idle.sh
+

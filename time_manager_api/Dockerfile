@@ -10,4 +10,6 @@ RUN mix deps.clean --all && mix deps.get && mix compile
 
 COPY . .
 
+CMD mix pow.install
+
 CMD mix phx.server

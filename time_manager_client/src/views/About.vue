@@ -5,7 +5,7 @@
     <v-row justify="center">
       <a
         style="color: transparent;z-index: 20;"
-        href="timemanager.apk"
+        href="mobile/timemanager.apk"
         download
       >
         <v-btn rounded large dark>

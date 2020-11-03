@@ -8,6 +8,7 @@ on:
     - 'Project.md'
     - 'DeginThinking.md'
     - 'design_thinking/**'
+    - 'cybersecurity/**'
 
 jobs:
   build:

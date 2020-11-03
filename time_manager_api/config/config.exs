@@ -23,6 +23,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Pow
+config :time_manager_api, :pow,
+  user: TimeManagerApi.Users.User,
+  repo: TimeManagerApi.Repo
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
