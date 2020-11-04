@@ -341,23 +341,19 @@ export default {
                 if (clock.end) {
                   hours =
                     hours +
-                    parseInt(
                       (
                         Math.abs(new Date(clock.start) - new Date(clock.end)) /
                         36e5
-                      ).toFixed(2)
-                    );
+                      )
                 } else {
                   hours =
                     hours +
-                    parseInt(
                       (
                         Math.abs(new Date(clock.start) - new Date()) / 36e5
-                      ).toFixed(2)
-                    );
+                      )
                 }
                 return hours;
-              }, 0)
+              }, 0.0).toFixed(2)
             ),
             label: "Workingtime",
             backgroundColor: "green",
@@ -496,23 +492,19 @@ export default {
                 if (clock.end) {
                   hours =
                     hours +
-                    parseInt(
                       (
                         Math.abs(new Date(clock.start) - new Date(clock.end)) /
                         36e5
-                      ).toFixed(2)
                     );
                 } else {
                   hours =
                     hours +
-                    parseInt(
                       (
                         Math.abs(new Date(clock.start) - new Date()) / 36e5
                       ).toFixed(2)
-                    );
                 }
                 return hours;
-              }, 0)
+              }, 0).toFixed(2)
             ),
             label: "Workingtime",
             backgroundColor: "green",
