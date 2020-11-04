@@ -38,6 +38,7 @@ defmodule TimeManagerApi.Users do
   def list_users_by_email(email) do
     User
     |> where(email: ^email)
+    |> limit(1)
     |> Repo.all()
     |> Repo.preload([:teams])
   end
@@ -90,8 +91,7 @@ defmodule TimeManagerApi.Users do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
-    |> Repo.update()
+    |> User.update_user(attrs)
   end
 
   @doc """
