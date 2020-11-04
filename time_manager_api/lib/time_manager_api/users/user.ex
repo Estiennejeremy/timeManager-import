@@ -4,7 +4,6 @@ defmodule TimeManagerApi.Users.User do
   use Pow.Ecto.Schema
 
   schema "users" do
-    field :email, :string
     field :username, :string
 
     field :role, :string, null: false, default: "employee"
@@ -22,12 +21,11 @@ defmodule TimeManagerApi.Users.User do
     timestamps()
   end
 
-  @doc false
-  def changeset(user, attrs) do
-    user
-    |> cast(attrs, [:username, :email, :role])
-    |> validate_required([:username, :email, :role])
-    |> unique_constraint(:email)
+  def changeset(user_or_changeset, attrs) do
+    user_or_changeset
+    |> pow_changeset(attrs)
+    |> Ecto.Changeset.cast(attrs, [:username])
+    |> Ecto.Changeset.validate_required([:username])
   end
 
   def changeset_update_teams(user, attrs, teams) do
@@ -46,6 +44,7 @@ defmodule TimeManagerApi.Users.User do
     |> Ecto.Changeset.validate_inclusion(:role, ~w(employee manager generalManager))
   end
 
+
   alias TimeManagerApi.{Repo, Users.User}
 
   @type t :: %User{}
@@ -53,6 +52,7 @@ defmodule TimeManagerApi.Users.User do
   @spec create_employee(map()) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
   def create_employee(params) do
     %User{}
+    |> Ecto.Changeset.cast(params["username"], [:username])
     |> User.changeset(params)
     |> User.changeset_role(%{role: "employee"})
     |> Repo.insert()
