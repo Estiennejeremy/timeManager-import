@@ -1,8 +1,3 @@
-<!--
-  TODO:
-    - Handle gradient for old browsers
- -->
-
 <template>
   <v-main>
     <div id="core-view" :style="'background: ' + gradient">
@@ -19,7 +14,6 @@ export default {
   name: "CoreView",
 
   data: () => ({
-    //
   }),
 
   computed: {
@@ -36,8 +30,6 @@ html {
   height: 100%;
   background: #424242; /* fallback */
   background-size: 800% 800% !important;
-  /* background: -webkit-linear-gradient(to top, #f7797d, #FBD786, #C6FFDD);  /* Chrome 10-25, Safari 5.1-6 */
-  /* background: linear-gradient(to top, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-animation: gradient 30s ease-in infinite !important;
   -moz-animation: gradient 30s ease-in infinite !important;
   animation: gradient 30s ease-in infinite !important;

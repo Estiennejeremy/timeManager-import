@@ -59,10 +59,6 @@ export default {
   methods: {
     ...mapMutations("app", ["setDark", "toggleDark", "setColor"]),
 
-    debug(message, obj) {
-      console.log(message, obj);
-    },
-
     onInput(hue) {
       this.colorstate.hue = hue;
       this.setColor(

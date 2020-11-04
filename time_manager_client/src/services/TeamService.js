@@ -1,36 +1,35 @@
 import Api from "@/services/Api";
 
 export default {
-    createTeam(team) {
-        return Api().post("/teams", { team: team });
-    },
+  createTeam(team) {
+    return Api().post("/teams", { team: team });
+  },
 
-    updateTeam(id, team) {
-        return Api().put(`/teams/${id}`, { team: team });
-    },
+  updateTeam(id, team) {
+    return Api().put(`/teams/${id}`, { team: team });
+  },
 
-    deleteTeam(id) {
-        return Api().delete(`/teams/${id}`);
-    },
+  deleteTeam(id) {
+    return Api().delete(`/teams/${id}`);
+  },
 
-    getTeam(team_id) {
-        return Api().get(`/teams/${team_id}`);
-    },
+  getTeam(team_id) {
+    return Api().get(`/teams/${team_id}`);
+  },
 
-    getTeams() {
-        return Api().get(`/teams`);
-    },
+  getTeams() {
+    return Api().get(`/teams`);
+  },
 
-    addEmployee(team_id, user_id) {
-        return Api().post(`/Usersteams`, { user_team: { team_id, user_id } });
-    },
+  addEmployee(team_id, user_id) {
+    return Api().post(`/Usersteams`, { user_team: { team_id, user_id } });
+  },
 
-    removeEmployee(team_id, user_id) {
-        return Api().delete(`/Usersteams/${user_id}/${team_id}`);
-    },
+  removeEmployee(team_id, user_id) {
+    return Api().delete(`/Usersteams/${user_id}/${team_id}`);
+  },
 
-    getWorkingtimesTeam(team_id) {
-        return Api().get(`/workingtimesByTeam/${team_id}`);
-    },
-
+  getWorkingtimesTeam(team_id) {
+    return Api().get(`/workingtimesByTeam/${team_id}`);
+  }
 };

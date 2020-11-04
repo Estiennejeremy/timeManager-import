@@ -52,6 +52,34 @@ services:
     tty: true
     volumes:
       - apk:/client_web/public/mobile:ro
+  chat_server:
+    build: "./time_manager_websockets"
+    ports:
+      - "8082:8082"
+    expose:
+      - 8082
+    networks:
+      - default
+    environment:
+      - PORT=8082
+    depends_on:
+      - chat_db
+    restart: on-failure
+  chat_db:
+    image: mongo:latest
+    container_name: mongodb-chat
+    expose:
+      - 27027
+      - 35496
+    ports:
+      - "27027:27027"
+    restart: on-failure
+    volumes:
+      - mongo-volume:/data/db
+    networks:
+      - default
+    environment:
+      - PORT=27027
 
 networks:
   default:
@@ -59,3 +87,4 @@ networks:
 volumes:
   pgdata:
   apk:
+  mongo-volume:

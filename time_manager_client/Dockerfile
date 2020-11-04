@@ -1,13 +1,3 @@
-# Dev
-
-# FROM node:alpine AS client_web
-# WORKDIR /client_web
-# COPY package*.json ./
-# RUN npm install --silent
-# COPY . .
-# CMD [ "npm", "run", "serve" ]
-
-
 # Production
 
 # étape de build

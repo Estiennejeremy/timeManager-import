@@ -1,7 +1,9 @@
 export default {
-    id: 2,
-    email: "greg@greg.fr",
-    username: "greg",
+    id: null,
+    email: null,
+    username: null,
     token: null,
-    isUserLoggedIn: false
+    refresh_token: null,
+    isUserLoggedIn: false,
+    role: "default"
 };
