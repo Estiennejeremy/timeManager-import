@@ -53,7 +53,12 @@
           </v-col>
         </v-row>
         <line-chart
-          v-if="weeklyWorkData"
+          v-if="weeklyWorkData && visualize == 'Line'"
+          :chartdata="weeklyWorkData"
+          :options="options"
+        />
+        <bar-chart
+          v-if="weeklyWorkData && visualize == 'Bar'"
           :chartdata="weeklyWorkData"
           :options="options"
         />
@@ -65,6 +70,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import LineChart from "../components/charts/Line.js";
+import BarChart from "../components/charts/Bar.js";
 import DoughnutChart from "../components/charts/Doughnut.js";
 import WorkingTimesService from "../services/WorkingTimesService.js";
 import ClockService from "../services/ClockService.js";
@@ -91,7 +97,7 @@ export default {
       responsive: true,
       maintainAspectRatio: false,
     },
-    visualizeOptions: ["Line", "Doughnut", "Bar"],
+    visualizeOptions: ["Line", "Bar"],
     periodeOptions: ["Weekly", "Monthly"],
     monthNames: [
       "January",
@@ -580,6 +586,7 @@ export default {
   components: {
     LineChart,
     DoughnutChart,
+    BarChart
   },
 };
 </script>
