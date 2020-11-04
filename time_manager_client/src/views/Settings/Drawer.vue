@@ -1,8 +1,3 @@
-<!--
-  TODO:
-    - Minified mode ?
- -->
-
 <template>
   <div class="drawer-settings">
     <material-form
@@ -75,7 +70,6 @@ export default {
     },
 
     changeDrawerImage() {
-      console.log("Change URL");
       this.setImage(this.getModel("url"));
     },
 

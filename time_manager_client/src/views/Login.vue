@@ -11,8 +11,8 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-// import AccountService from "@/services/AccountService";
 import AuthenticationService from "@/services/AuthenticationService";
+import AccountService from "@/services/AccountService";
 import MaterialForm from "@/components/forms/Form.vue";
 export default {
   name: "Login",
@@ -56,6 +56,7 @@ export default {
             counter: 0,
             rules: [
               v => !!v || "Email required",
+              v => /.+@.+\.+./.test(v) || 'Invalid Email address',
               v =>
                 (v && v.length > 4) ||
                 "Email must be superior than 4 characters"
@@ -84,25 +85,9 @@ export default {
             rules: [
               v => !!v || "Password required",
               v =>
-                (v && v.length > 4) ||
-                "Password must be superior than 4 characters"
+                (v && v.length > 7) ||
+                "Password must be superior than 7 characters"
             ]
-          }
-        },
-        {
-          id: 2,
-          model: false,
-          modelName: "github-login",
-          name: "actions-button",
-          directive: "config",
-          options: {
-            block: true,
-            xlarge: true,
-            dark: true,
-            light: false,
-            dense: false,
-            shaped: false,
-            label: "Login with Github"
           }
         }
       ]
@@ -110,7 +95,7 @@ export default {
   }),
 
   methods: {
-    ...mapMutations("user", ["setToken", "setUser"]),
+    ...mapMutations("user", ["setToken", "setRefreshToken", "setEmail", "setUsername", "setId", "setRole"]),
 
     async login() {
       try {
@@ -118,13 +103,16 @@ export default {
           email: this.getModel("email"),
           password: this.getModel("password")
         });
-
-        this.setToken(res.data.token);
-        this.setUser(this.getModel("email"));
-
+        this.setToken(res.data.data.token);
+        this.setRefreshToken(res.data.data.renew_token);
+        this.setEmail(this.getModel("email"));
+        this.setUsername("Trump")
+        this.setId(0)
+        this.setRole("employee")
         this.$router.push({
-          name: "Profile"
+          name: "Home"
         });
+        this.getUsers()
       } catch (err) {
         this.config.message.type = "error";
         this.config.message.text =
@@ -135,27 +123,13 @@ export default {
       }
     },
 
-    async loginService() {
+    async getUsers() {
       try {
-        const production = false;
-        location.replace(
-          production
-            ? "http://51.75.122.116:8081/api/auth/github"
-            : "http://localhost:8081/api/auth/github"
-        );
+        const res = await AccountService.getUsers()
+        console.log(res)
       } catch (err) {
-        this.config.message.type = "error";
-        this.config.message.text = "Login with Github failed";
-        console.log("Login with Github failed: ", err);
+        console.log(err)
       }
-    },
-
-    getSignIn() {
-      this.setToken(this.$route.query.token);
-      this.$router.push({
-        name: "Profile"
-      });
-      console.log("Your now connected with your github account");
     },
 
     getModel(name) {
@@ -175,23 +149,10 @@ export default {
   },
 
   computed: {
-    ...mapState("user", ["user", "isUserLoggedIn", "token"]),
-
-    getButtonStateGithub() {
-      return this.config.components[2].model;
-    }
+    ...mapState("user", ["user", "isUserLoggedIn", "token"])
   },
 
   watch: {
-    getButtonStateGithub: {
-      handler: function(after, before) {
-        if (after) {
-          this.loginService();
-          this.config.components[3].model = before;
-        }
-      },
-      deep: true
-    },
     "config.message.text": function(after) {
       if (after !== null) {
         setTimeout(() => {
@@ -199,29 +160,6 @@ export default {
         }, 5000);
       }
     }
-  },
-
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      console.log("beforeRouteEnter: ", from);
-      if (to.path === "/login" && typeof to.query.token != "undefined") {
-        console.log("%c (...___=== SUCCESS ===___...)", "color: green;");
-        vm.getSignIn();
-      } else if (
-        to.path === "/login" &&
-        typeof to.query.service != "undefined" &&
-        typeof to.query.success != undefined
-      ) {
-        if (to.query.success === "true") {
-          console.log(
-            "%c (...___=== SUCCESS CHECK ===___...)",
-            "color: green;"
-          );
-        } else {
-          console.log("%c (...___=== ERROR CHECK ===___...)", "color: red;");
-        }
-      }
-    });
   },
 
   created() {
