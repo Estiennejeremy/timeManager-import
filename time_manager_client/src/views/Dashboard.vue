@@ -26,9 +26,7 @@
         ></v-select>
       </v-col>
       <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
-        <v-btn block height="46">
-          Create team
-        </v-btn>
+        <team-create v-on:created="getTeams()"/>
       </v-col>
     </v-row>
     <v-row v-if="team" align="baseline" justify="end" class="mx-5">
@@ -64,6 +62,7 @@
 import { mapState, mapMutations } from "vuex";
 import Profile from "./Profile.vue";
 import Team from "../services/TeamService.js";
+import TeamCreate from "../components/TeamCreate.vue";
 export default {
   name: "Dashboard",
   data: () => ({
@@ -93,6 +92,14 @@ export default {
       this.setId(this.team.id);
       this.$router.push(`/team/${this.team.name}`);
     },
+    getTeams() {
+      Team.getTeams().then((res) => {
+        this.teams = res.data.data;
+        if (this.id) {
+          this.team = this.teams.find((t) => t.id == this.id);
+        }
+      });
+    },
   },
 
   computed: {
@@ -107,16 +114,11 @@ export default {
           : "") + new Date().getMinutes()}`),
       10000
     );
-
-    Team.getTeams().then((res) => {
-      this.teams = res.data.data;
-      if (this.id) {
-        this.team = this.teams.find((t) => t.id == this.id);
-      }
-    });
+    this.getTeams();
   },
   components: {
     Profile,
+    TeamCreate,
   },
 };
 </script>
