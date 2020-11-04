@@ -50,7 +50,6 @@
     <v-row align="center" justify="space-around" class="mx-5">
       <profile
         v-if="employee"
-        hideTitle="true"
         class="profile"
         v-bind:user-id="employee.id"
       />
