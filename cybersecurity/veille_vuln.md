@@ -1,4 +1,4 @@
-### Veille de vulnérabilités
+# Veille de vulnérabilités
 
 ## Périmétre :
 
@@ -9,11 +9,11 @@ ChartJS
 
 ## CVE / Score CVSS :
 
-# Elixir / Phoenix
+### Elixir / Phoenix
 CVE-2017-1000163 / 5.8
 
-# VueJS
+### VueJS
 CVE-2018-17046 / 6.1
 
-# ChartJS
+### ChartJS
 CVE-2020-7746 / 7.5
