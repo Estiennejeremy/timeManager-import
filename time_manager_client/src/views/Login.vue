@@ -116,9 +116,9 @@ export default {
       } catch (err) {
         this.config.message.type = "error";
         this.config.message.text =
-          typeof err.response !== "undefined" ? err.response.data.message : err;
+          typeof err.response !== "undefined" ? err.response.data.error.message : err;
         console.log(
-          typeof err.response === "undefined" ? err : err.response.data.message
+          typeof err.response === "undefined" ? err : err.response.data.error.message
         );
       }
     },

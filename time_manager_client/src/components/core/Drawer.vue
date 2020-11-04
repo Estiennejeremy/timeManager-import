@@ -158,17 +158,18 @@ export default {
 
   computed: {
     ...mapState("app", ["image", "color"]),
-    ...mapState("user", ["id", "isUserLoggedIn", "token"]),
+    ...mapState("user", ["id", "isUserLoggedIn", "token", "role"]),
 
     topPaths() {
       return Paths.filter(path =>
         this.isUserLoggedIn
-          ? path.group === "top" && path.show === true
+          ? path.group === "top" && path.show === true && (path.role.includes("default") || path.role.includes(this.role))
           : path.public === true &&
             path.group === "top" &&
             path.show === true &&
             (path.parameters.length === 0 ||
-              (path.parameters.length > 0 && this.id !== null))
+              (path.parameters.length > 0 && this.id !== null)) &&
+            (path.role.includes("default") || path.role.includes(this.role))
       );
     },
 

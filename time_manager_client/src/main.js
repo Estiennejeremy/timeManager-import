@@ -19,11 +19,18 @@ router.beforeEach((to, from, next) => {
     Paths.filter(
       path =>
         path.name === to.name &&
-        path.public === false &&
-        path.role.includes(store.state.user.role)
+        path.public === false
     ).length > 0
   ) {
     next("login");
+  } else if (store.state.user.isUserLoggedIn &&
+    Paths.filter(
+      path =>
+        path.name === to.name &&
+        (path.role.includes("default") || path.role.includes(store.state.user.role))
+    ).length === 0
+  ) {
+    next("home");
   } else {
     next();
   }
