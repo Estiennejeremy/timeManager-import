@@ -50,6 +50,6 @@ jobs:
         host: ${{ secrets.HOSTNAME }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        command_timeout: 15m
+        command_timeout: 30m
         script: |
           ./timemanager.sh
