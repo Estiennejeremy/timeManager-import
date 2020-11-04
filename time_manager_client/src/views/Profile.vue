@@ -168,34 +168,54 @@ export default {
       if (currentWorkingTime) {
         let lastClock = dailyClocks.find(
           (clock) =>
-            new Date(clock.start) >= new Date(currentWorkingTime.start) &&
-            !clock.end
+            (new Date(clock.start) >= new Date(currentWorkingTime.start) &&
+              !clock.end) ||
+            (clock.end &&
+              new Date(clock.end) <= new Date(currentWorkingTime.end) &&
+              new Date(clock.start) >= new Date(currentWorkingTime.start))
         );
-        let total = (
-          (new Date(currentWorkingTime.end).getTime() -
-            new Date(currentWorkingTime.start).getTime()) /
-          (1000 * 3600)
-        ).toFixed(2);
         if (lastClock) {
-          let work = (
-            (new Date().getTime() - new Date(lastClock.start).getTime()) /
-            (1000 * 3600)
-          ).toFixed(2);
           let late = (
             (new Date(lastClock.start).getTime() -
               new Date(currentWorkingTime.start).getTime()) /
             (1000 * 3600)
           ).toFixed(2);
-          this.dailyWorkData = {
-            labels: ["Late time", "Workingtime", "Less time"],
-            datasets: [
-              {
-                data: [late, work, total - work],
-                backgroundColor: ["yellow", "green"],
-                weight: 0.5,
-              },
-            ],
-          };
+          let total = (
+            (new Date(currentWorkingTime.end).getTime() -
+              new Date(currentWorkingTime.start).getTime()) /
+            (1000 * 3600)
+          ).toFixed(2);
+          let work = !lastClock.end
+            ? (
+                (new Date().getTime() - new Date(lastClock.start).getTime()) /
+                (1000 * 3600)
+              ).toFixed(2)
+            : (
+                (new Date(lastClock.end).getTime() -
+                  new Date(lastClock.start).getTime()) /
+                (1000 * 3600)
+              ).toFixed(2);
+          this.dailyWorkData = !lastClock.end
+            ? {
+                labels: ["Start margin", "Workingtime", "Less time"],
+                datasets: [
+                  {
+                    data: [late, work, (total - work).toFixed(2)],
+                    backgroundColor: ["yellow", "green"],
+                    weight: 0.5,
+                  },
+                ],
+              }
+            : {
+                labels: ["Start margin", "Workingtime", "End margin"],
+                datasets: [
+                  {
+                    data: [late, work, (total - work - late).toFixed(2)],
+                    backgroundColor: ["yellow", "green", "yellow"],
+                    weight: 0.5,
+                  },
+                ],
+              };
         } else {
           let late = (
             (new Date().getTime() -
@@ -536,6 +556,7 @@ export default {
         let sortyWorkingtimeByWeekDay = this.sortWorkingtimesByWeekDays(
           weeklyWorkingtimes
         );
+        sortyWorkingtimeByWeekDay = sortyWorkingtimeByWeekDay;
 
         let sortClockByWeekDay = this.sortClocksByWeekDays(weeklyClocks);
         this.weeklyClocks = sortClockByWeekDay;
@@ -557,7 +578,7 @@ export default {
 
         let sortClockByMonthDay = this.sortClocksByMonthDays(monthlyClocks);
         this.monthlyClocks = sortClockByMonthDay;
-        console.log(sortClockByMonthDay)
+        console.log(sortClockByMonthDay);
       });
     },
   },
@@ -586,7 +607,7 @@ export default {
   components: {
     LineChart,
     DoughnutChart,
-    BarChart
+    BarChart,
   },
 };
 </script>

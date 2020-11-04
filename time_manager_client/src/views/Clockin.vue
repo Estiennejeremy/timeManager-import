@@ -44,10 +44,12 @@ export default {
     },
 
     clock() {
+      let now = new Date();
+      now.setHours(now.getHours() + 1); // Offset timezone
       if ((this.lastClock && this.lastClock.end) || !this.lastClock) {
         ClockService.createClock(
           {
-            start: new Date().toISOString(),
+            start: now.toISOString(),
           },
           this.id
         )
@@ -56,7 +58,7 @@ export default {
       } else {
         ClockService.updateClock(
           {
-            end: new Date().toISOString(),
+            end: now.toISOString(),
           },
           this.lastClock.id
         )
