@@ -90,7 +90,7 @@
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
-          <v-list-item-content @click="logout()">
+          <v-list-item-content @click.stop="logout()">
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -148,7 +148,7 @@ export default {
           this.setRefreshToken(null);
           this.setEmail(null);
           this.setUsername(null);
-          this.$router.push({ path: "/home" });
+          this.$router.push({ name: "Home" });
         }
       } catch (err) {
         console.log(err)

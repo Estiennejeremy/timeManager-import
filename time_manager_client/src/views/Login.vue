@@ -106,13 +106,12 @@ export default {
         this.setToken(res.data.data.token);
         this.setRefreshToken(res.data.data.renew_token);
         this.setEmail(this.getModel("email"));
-        this.setUsername("Trump")
-        this.setId(0)
-        this.setRole("employee")
+        this.setId(res.data.data.id)
+        this.getUserInfos()
+
         this.$router.push({
           name: "Home"
         });
-        this.getUsers()
       } catch (err) {
         this.config.message.type = "error";
         this.config.message.text =
@@ -123,9 +122,11 @@ export default {
       }
     },
 
-    async getUsers() {
+    async getUserInfos() {
       try {
-        const res = await AccountService.getUsers()
+        const res = await AccountService.getUser(this.id)
+        this.setUsername(res.data.data.username)
+        this.setRole(res.data.data.role)
         console.log(res)
       } catch (err) {
         console.log(err)
@@ -149,7 +150,7 @@ export default {
   },
 
   computed: {
-    ...mapState("user", ["user", "isUserLoggedIn", "token"])
+    ...mapState("user", ["user", "isUserLoggedIn", "token", "id"])
   },
 
   watch: {
