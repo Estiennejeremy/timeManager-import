@@ -46,7 +46,6 @@
           class="my-4"
           :key="i"
         >
-          <!-- link -->
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -86,14 +85,13 @@
         <v-list-item
           v-if="isUserLoggedIn"
           class="mt-4 border"
-          to="/login"
           active-class="border"
         >
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
           <v-list-item-content @click="logout()">
-            <v-list-item-title>Déconnexion</v-list-item-title>
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -102,6 +100,7 @@
 </template>
 
 <script>
+import AuthenticationService from "@/services/AuthenticationService"
 import { mapMutations, mapState } from "vuex";
 import Paths from "@/router/paths.js";
 export default {
@@ -118,7 +117,7 @@ export default {
 
   methods: {
     ...mapMutations("app", ["setDrawer", "toggleDrawer"]),
-    ...mapMutations("user", ["setUser", "setToken"]),
+    ...mapMutations("user", ["setUsername", "setEmail", "setToken", "setRefreshToken"]),
 
     onResponsiveInverted() {
       if (window.innerWidth < 991) {
@@ -141,28 +140,36 @@ export default {
       return url;
     },
 
-    logout() {
-      if (this.isUserLoggedIn) {
-        this.setToken(null);
-        this.setUser(null);
-        this.$router.push({ path: "/login" });
+    async logout() {
+      try {
+        await AuthenticationService.logout(this.token)
+        if (this.isUserLoggedIn) {
+          this.setToken(null);
+          this.setRefreshToken(null);
+          this.setEmail(null);
+          this.setUsername(null);
+          this.$router.push({ path: "/home" });
+        }
+      } catch (err) {
+        console.log(err)
       }
     }
   },
 
   computed: {
     ...mapState("app", ["image", "color"]),
-    ...mapState("user", ["id", "isUserLoggedIn"]),
+    ...mapState("user", ["id", "isUserLoggedIn", "token", "role"]),
 
     topPaths() {
       return Paths.filter(path =>
         this.isUserLoggedIn
-          ? path.group === "top" && path.show === true
+          ? path.group === "top" && path.show === true && (path.role.includes("default") || path.role.includes(this.role))
           : path.public === true &&
             path.group === "top" &&
             path.show === true &&
             (path.parameters.length === 0 ||
-              (path.parameters.length > 0 && this.id !== null))
+              (path.parameters.length > 0 && this.id !== null)) &&
+            (path.role.includes("default") || path.role.includes(this.role))
       );
     },
 
@@ -194,7 +201,6 @@ export default {
 <style scoped>
 .avatar-text {
   font-size: 22px;
-  /* background-image: linear-gradient(to top, #0e4a99, 20%, #39c2d8 80%); */
   color: white;
   text-shadow: 1px 1px 0 #7a7a7a;
   box-shadow: 0px 0px 10px 1px #121212 !important;
@@ -213,13 +219,8 @@ export default {
   color: white;
 }
 
-.border {
-  /* border: 2px dashed orange; */
-}
-
 .border:hover {
   border: 2px solid cyan;
-  /* color: red; */
 }
 
 .v-list-item__title {
@@ -227,35 +228,30 @@ export default {
   font-weight: 300;
 }
 
-/* Bottom left text */
 .bottom-left {
   position: absolute;
   bottom: 8px;
   left: 16px;
 }
 
-/* Top left text */
 .top-left {
   position: absolute;
   top: 8px;
   left: 16px;
 }
 
-/* Top right text */
 .top-right {
   position: absolute;
   top: 8px;
   right: 16px;
 }
 
-/* Bottom right text */
 .bottom-right {
   position: absolute;
   bottom: 8px;
   right: 16px;
 }
 
-/* Centered text */
 .centered {
   position: absolute;
   top: 50%;

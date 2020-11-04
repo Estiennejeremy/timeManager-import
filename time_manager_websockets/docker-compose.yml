@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+  websockets:
+    build: "."
+    ports:
+      - "8082:8082"
+    expose:
+      - 8082
+    networks:
+      - default
+    environment:
+      - PORT=8082
+    depends_on:
+      - mongodb
+    restart: on-failure
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-chat
+    expose:
+      - 27027
+      - 35496
+    ports:
+      - "27027:27027"
+    restart: on-failure
+    volumes:
+      - mongo-volume:/data/db
+    networks:
+      - default
+    environment:
+      - PORT=27027
+
+networks:
+  default:
+
+volumes:
+  mongo-volume:

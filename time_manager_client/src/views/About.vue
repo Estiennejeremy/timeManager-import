@@ -1,67 +1,141 @@
 <template>
-  <v-container fill-height id="about">
-    <!-- <chart-manager /> -->
+    <span id="about" style="height: 100%;">
 
-    <v-row justify="center">
-      <a
-        style="color: transparent;z-index: 20;"
-        href="mobile/timemanager.apk"
-        download
+      <v-parallax
+        dark
+        jumbotron
+        :height="screenHeight"
       >
-        <v-btn rounded large dark>
-          <v-icon dark large>mdi-download</v-icon>
-          Download APK
-        </v-btn>
-      </a>
-    </v-row>
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            class="text-center"
+            :cols="responsive ? 12 : 4"
+          >
+            <about-card
+              title="Increase Productivity !"
+              subtitle="Save time and money with TimeManager"
+              image="https://cdn.iconscout.com/icon/premium/png-256-thumb/productivity-2075482-1751755.png"
+            />
+          </v-col>
 
-    <v-row justify="center">
-      <v-flex xs12 md12 lg4 style="z-index: 200;">
-        <div v-if="!responsive" class="smartphone mt-4 .d-none .d-xl-flex">
-          <div class="content">
-            <v-img src="@/assets/demo_drawer.png" height="100%"> </v-img>
-          </div>
-        </div>
-        <div v-else>
-          <div class="content">
-            <v-img contain src="@/assets/demo_drawer.png" height="100%">
-            </v-img>
-          </div>
-        </div>
-      </v-flex>
+          <v-col
+            class="text-center"
+            :cols="responsive ? 12 : 4"
+          >
+            <about-card
+              title="Keep track of your employees"
+              subtitle="Save time and money with TimeManager"
+              image="https://h5p.org/sites/default/files/styles/medium-logo/public/logos/chart-icon-color.png?itok=kpLTYHHJ"
+              tile
+              button
+              @button="scrollTo('android')"
+            />
+          </v-col>
 
-      <v-flex xs12 md12 lg4 style="z-index: 200;">
-        <div v-if="!responsive" class="smartphone mt-4 .d-none .d-xl-flex">
-          <div class="content">
-            <v-img src="@/assets/demo_clockin.png" height="100%"> </v-img>
-          </div>
-        </div>
-        <div v-else>
-          <div class="content">
-            <v-img src="@/assets/demo_clockin.png" height="100%"> </v-img>
-          </div>
-        </div>
-      </v-flex>
-    </v-row>
-  </v-container>
+          <v-col
+            class="text-center"
+            :cols="responsive ? 12 : 4"
+          >
+            <about-card
+              title="Manage your teams"
+              subtitle="Save time and money with TimeManager"
+              image="https://png.pngtree.com/png-vector/20190412/ourlarge/pngtree-vector-team-icon-png-image_931080.jpg"
+            />
+          </v-col>
+        </v-row>
+      </v-parallax>
+
+    <v-parallax
+      dark
+      jumbotron
+      id="android"
+      :height="screenHeight"
+      src="@/assets/android.png"
+    >
+      <v-container fluid fill-height>
+        <v-row justify="center">
+          <a
+          style="color: transparent;"
+          href="mobile/timemanager.apk"
+          download
+          >
+            <v-btn rounded x-large dark color="primary">
+              <v-icon dark large>mdi-download</v-icon>
+              Download APK
+            </v-btn>
+          </a>
+        </v-row>
+
+        <v-row justify="center">
+          <v-flex xs12 md12 lg4>
+            <div class="smartphone mt-4 .d-none .d-xl-flex">
+              <div class="content">
+                <v-img src="@/assets/demo_drawer.png" height="100%"> </v-img>
+              </div>
+            </div>
+          </v-flex>
+
+          <v-flex xs12 md12 lg4 v-if="!responsive">
+            <div class="smartphone mt-4 .d-none .d-xl-flex">
+              <div class="content">
+                <v-img src="@/assets/demo_clockin.png" height="100%"> </v-img>
+              </div>
+            </div>
+
+          </v-flex>
+        </v-row>
+      </v-container>
+    </v-parallax>
+
+  </span>
 </template>
 
 <script>
-// import ChartManager from "@/components/ChartManager.vue";
+import AboutCard from "@/views/About/AboutCard.vue";
 export default {
   name: "About",
 
   data: () => ({
-    publicPath: process.env.BASE_URL
+    responsive: false
   }),
 
-  components: {
-    // ChartManager
+  computed: {
+    screenHeight() {
+      return window.innerHeight - 64
+    }
   },
 
-  methods: {},
+  methods: {
+    scrollTo(name) {
+      document.getElementById(name).scrollIntoView({
+        behavior: 'smooth'
+      });
+    },
 
-  mounted() {}
+    onResponsiveInverted() {
+      if (window.innerWidth < 1450) {
+        this.responsive = true;
+      } else {
+        this.responsive = false;
+      }
+    }
+  },
+
+  components: {
+    AboutCard
+  },
+
+  mounted() {
+    this.onResponsiveInverted();
+    window.addEventListener("resize", this.onResponsiveInverted);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResponsiveInverted);
+  }
 };
 </script>
 
@@ -77,7 +151,6 @@ export default {
   border-radius: 36px;
 }
 
-/* The horizontal line on the top of the device */
 .smartphone:before {
   content: "";
   display: block;
@@ -91,7 +164,6 @@ export default {
   border-radius: 10px;
 }
 
-/* The circle on the bottom of the device */
 .smartphone:after {
   content: "";
   display: block;
@@ -105,7 +177,6 @@ export default {
   border-radius: 50%;
 }
 
-/* The screen (or content) of the device */
 .smartphone .content {
   width: 100%;
   height: 100%;

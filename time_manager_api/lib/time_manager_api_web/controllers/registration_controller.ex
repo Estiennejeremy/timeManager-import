@@ -11,7 +11,7 @@ defmodule TimeManagerApiWeb.RegistrationController do
     |> Pow.Plug.create_user(user_params)
     |> case do
       {:ok, _user, conn} ->
-        json(conn, %{data: %{token: conn.private[:api_auth_token], renew_token: conn.private[:api_renew_token]}})
+        json(conn, %{data: %{id: _user.id, token: conn.private[:api_auth_token], renew_token: conn.private[:api_renew_token]}})
 
       {:error, changeset, conn} ->
         errors = Changeset.traverse_errors(changeset, &ErrorHelpers.translate_error/1)
