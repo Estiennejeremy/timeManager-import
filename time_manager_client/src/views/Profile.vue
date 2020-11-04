@@ -172,7 +172,8 @@ export default {
         if (currentWorkingTime) {
           let lastClock = dailyClocks.find(
             (clock) =>
-              new Date(clock.start) >= new Date(currentWorkingTime.start) && !clock.end
+              new Date(clock.start) >= new Date(currentWorkingTime.start) &&
+              !clock.end
           );
           if (lastClock) {
             let total = (
@@ -185,7 +186,8 @@ export default {
               (1000 * 3600)
             ).toFixed(2);
             let late = (
-              (new Date(lastClock.start).getTime() - new Date(currentWorkingTime.start).getTime()) /
+              (new Date(lastClock.start).getTime() -
+                new Date(currentWorkingTime.start).getTime()) /
               (1000 * 3600)
             ).toFixed(2);
             this.dailyWorkData = {
@@ -219,7 +221,7 @@ export default {
         /// GET WEEKLY CLOCKS
         let weeklyClocks = res[1].data.data.filter((clock) => {
           let current = new Date();
-          let time = new Date(clock.time);
+          let time = new Date(clock.start);
           return this.getWeekNumber(time) == this.getWeekNumber(current);
         });
         this.weeklyClocks = weeklyClocks;
@@ -255,7 +257,7 @@ export default {
         let sortClockByDay = weeklyClocks.reduce(
           (sort, clock) => {
             switch (
-              new Date(clock.time).toLocaleString("default", {
+              new Date(clock.start).toLocaleString("default", {
                 weekday: "long",
               })
             ) {
@@ -288,7 +290,7 @@ export default {
 
         sortClockByDay.map((dayClocks) =>
           dayClocks.sort((c1, c2) =>
-            new Date(c1.time).getTime() > new Date(c2.time).getTime() ? 1 : -1
+            new Date(c1.start).getTime() > new Date(c2.end).getTime() ? 1 : -1
           )
         );
 
@@ -305,20 +307,25 @@ export default {
           datasets: [
             {
               data: sortClockByDay.map((dayClocks) =>
-                dayClocks.reduce((hours, clock, index) => {
-                  if (index % 2 == 1) {
-                    return (
-                      hours +
+                dayClocks.reduce((hours, clock) => {
+                  if (clock.end) {
+                    hours = hours +
                       parseInt(
                         (
                           Math.abs(
-                            new Date(clock.time) -
-                              new Date(dayClocks[index - 1].time)
+                            new Date(clock.start) - new Date(clock.end)
                           ) / 36e5
                         ).toFixed(2)
-                      )
-                    );
-                  } else return hours;
+                      );
+                  } else {
+                    hours = hours +
+                      parseInt(
+                        (
+                          Math.abs(new Date(clock.start) - new Date()) / 36e5
+                        ).toFixed(2)
+                      );
+                  }
+                  return hours;
                 }, 0)
               ),
               label: "Workingtime",
