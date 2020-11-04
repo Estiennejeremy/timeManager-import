@@ -2,7 +2,7 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ testrunner ]
+    branches: [ test ]
     paths-ignore:
     - 'README.md'
     - 'Project.md'
