@@ -4,10 +4,7 @@
       :titlePrimary="clockIn ? 'Work in progress' : 'Not clocked in yet'"
     >
       <template v-slot:header>
-        <material-timer
-          :glow="clockIn"
-          @clockin="(clockIn = $event.active), (startDateTime = $event.date)"
-        />
+        <material-timer :glow="clockIn" @clockin="clock()" />
       </template>
     </material-spa>
   </span>
@@ -22,43 +19,54 @@ export default {
   name: "ClockManager",
 
   data: () => ({
-    startDateTime: null,
-    clockIn: false
+    clockIn: false,
+    lastClock: null,
   }),
 
   components: {
     MaterialSpa,
-    MaterialTimer
+    MaterialTimer,
   },
 
   computed: {
-    ...mapState("user", ["id"])
+    ...mapState("user", ["id"]),
   },
 
   methods: {
-    async refresh() {
-      try {
-        const res = await ClockService.getClock(this.id);
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
+    refresh() {
+      ClockService.getLastClockUser(this.id).then(
+        (res) => {
+          this.lastClock = res.data.data.length == 1 ? res.data.data[0] : null;
+          if(this.lastClock && this.lastClock.start && !this.lastClock.end) this.clockIn = true;
+          else this.clockIn = false;
+        }
+      );
     },
 
-    async clock() {
-      try {
-        const res = await ClockService.updateClock(
+    clock() {
+      if ((this.lastClock && this.lastClock.end) || !this.lastClock) {
+        ClockService.createClock(
           {
-            time: this.startDateTime,
-            status: this.clockIn
+            start: new Date().toISOString(),
           },
           this.id
-        );
-        console.log(res);
-      } catch (err) {
-        console.log(err);
+        )
+          .then(() => this.refresh())
+          .catch(() => this.refresh());
+      } else {
+        ClockService.updateClock(
+          {
+            end: new Date().toISOString(),
+          },
+          this.lastClock.id
+        )
+          .then(() => this.refresh())
+          .catch(() => this.refresh());
       }
-    }
-  }
+    },
+  },
+  mounted() {
+    this.refresh();
+  },
 };
 </script>

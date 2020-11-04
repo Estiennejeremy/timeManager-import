@@ -13,7 +13,7 @@
         size="256"
         :style="'border: 20px solid ' + color + ';background: white;'"
       >
-        <v-tooltip nudge-top="100" bottom v-if="!running">
+        <v-tooltip nudge-top="100" bottom v-if="!glow">
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               v-bind="attrs"
@@ -66,7 +66,6 @@ export default {
   data: () => ({
     responsive: false,
     interval: null,
-    running: false,
     timer: 0
   }),
 
@@ -76,12 +75,10 @@ export default {
         active: true,
         date: new Date().toISOString().substr(0, 10)
       });
-      this.running = true;
     },
 
     endTimer() {
       this.$emit("clockin", false);
-      this.running = false;
     },
 
     onResponsiveInverted() {
