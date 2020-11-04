@@ -49,12 +49,17 @@ defmodule TimeManagerApiWeb.ClockController do
     render(conn, "index.json", clocks: clocks)
   end
 
+  def show_max_by_user(conn, %{"userID" => userID}) do
+    clock = Clocks.get_max_clock_by_user(userID)
+    render(conn, "index.json", clocks: clock)
+  end
+
   def show(conn, %{"id" => id}) do
     clock = Clocks.get_clock!(id)
     render(conn, "show.json", clock: clock)
   end
 
-  def update(conn, %{"id" => id, "clock" => clock_params}) do
+  def update_clock(conn, %{"id" => id, "clock" => clock_params}) do
     clock = Clocks.get_clock!(id)
 
     with {:ok, %Clock{} = clock} <- Clocks.update_clock(clock, clock_params) do

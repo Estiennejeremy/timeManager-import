@@ -17,15 +17,20 @@ defmodule TimeManagerApi.Clocks do
 
   # IO.puts NaiveDateTime.compare(~N[2016-04-16 13:30:15], NaiveDateTime.from_iso8601!("2020-11-28T16:59:59"))
   def get_clock_by_start_to_end(id, start, endtime) do
-    Repo.all(from w in Clock, where: w.time >= ^start and w.time <= ^endtime and w.id == ^id)
+    Repo.all(from w in Clock, where: w.start >= ^start and w.end <= ^endtime and w.id == ^id)
   end
 
   def get_clock_by_start(id, start) do
-    Repo.all(from w in Clock, where: w.time >= ^start and w.id == ^id)
+    Repo.all(from w in Clock, where: w.start >= ^start and w.id == ^id)
   end
 
   def get_clock_by_end(id, endtime) do
-    Repo.all(from w in Clock, where: w.time <= ^endtime and w.id == ^id)
+    Repo.all(from w in Clock, where: w.end <= ^endtime and w.id == ^id)
+  end
+
+
+  def get_max_clock_by_user(userID) do
+    Repo.all(from w in Clock, where: w.user_id == ^userID and is_nil(w.end), order_by: [desc: w.id], limit: 1)
   end
 
   def get_AllUserId(id) do
