@@ -49,7 +49,7 @@
     </v-row>
     <v-row align="center" justify="space-around" class="mx-5">
       <profile v-if="employee" class="profile" v-bind:user-id="employee.id" />
-      <team-dashboard v-if="team && !employee" class="profile" :team="team"/>
+      <team-dashboard v-if="team && !employee" class="profile" :team="team" />
     </v-row>
   </v-col>
 </template>
@@ -72,7 +72,7 @@ export default {
     teams: [],
     team: null,
     employee: null,
-    EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"],
+    EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"]
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -80,7 +80,7 @@ export default {
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId",
+      "setManagerId"
     ]),
     displayProfile() {
       this.$router.push("/profile");
@@ -90,18 +90,18 @@ export default {
       this.$router.push(`/team/${this.team.name}`);
     },
     getTeams() {
-      Team.getTeams().then((res) => {
+      Team.getTeams().then(res => {
         this.teams = res.data.data;
         if (this.id) {
-          this.team = this.teams.find((t) => t.id == this.id);
+          this.team = this.teams.find(t => t.id == this.id);
         }
       });
-    },
+    }
   },
 
   computed: {
     ...mapState("user", ["id", "email", "username"]),
-    ...mapState("team", ["id"]),
+    ...mapState("team", ["id"])
   },
   mounted() {
     setInterval(
@@ -116,8 +116,8 @@ export default {
   components: {
     Profile,
     TeamCreate,
-    TeamDashboard,
-  },
+    TeamDashboard
+  }
 };
 </script>
 

@@ -13,8 +13,7 @@ import { mapState } from "vuex";
 export default {
   name: "CoreView",
 
-  data: () => ({
-  }),
+  data: () => ({}),
 
   computed: {
     ...mapState("app", ["gradient"])

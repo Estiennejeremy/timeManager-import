@@ -32,15 +32,13 @@
             </v-list-item-avatar>
 
             <v-list-item-content v-if="isUserLoggedIn || username">
-              <v-list-item-title>{{
-                username
-              }}</v-list-item-title>
-              <v-list-item-subtitle>{{
-                email
-              }}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{
-                connections
-              }} {{ connections === 1 ? "user" : "users" }} connected</v-list-item-subtitle>
+              <v-list-item-title>{{ username }}</v-list-item-title>
+              <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                >{{ connections }}
+                {{ connections === 1 ? "user" : "users" }}
+                connected</v-list-item-subtitle
+              >
             </v-list-item-content>
 
             <v-list-item-content v-else>
@@ -52,7 +50,9 @@
                 @keyup.enter="setUsername(guest)"
                 :rules="[
                   v => !!v || 'Username required',
-                  v => (v && v.length > 1) || 'Username must be superior than 1 characters'
+                  v =>
+                    (v && v.length > 1) ||
+                    'Username must be superior than 1 characters'
                 ]"
               />
             </v-list-item-content>
@@ -70,7 +70,11 @@
 
         <v-divider></v-divider>
 
-        <v-container v-if="available && (isUserLoggedIn || username)" fluid style="height: 400px;overflow: auto;">
+        <v-container
+          v-if="available && (isUserLoggedIn || username)"
+          fluid
+          style="height: 400px;overflow: auto;"
+        >
           <v-row
             v-for="(item, index) in messages"
             :key="index"
@@ -81,7 +85,13 @@
             "
           >
             <v-col cols="10">
-              <v-row v-if="index === 0 || index > 0 && messages[index - 1].user !== username" align="center">
+              <v-row
+                v-if="
+                  index === 0 ||
+                    (index > 0 && messages[index - 1].user !== username)
+                "
+                align="center"
+              >
                 <v-avatar><v-icon>mdi-account-circle</v-icon></v-avatar>
                 <span>{{ username }}</span>
               </v-row>
@@ -95,13 +105,19 @@
         <v-container v-else fill-height fluid>
           <v-row justify="center" align="center">
             <v-avatar size="128">
-              <v-img :src="available
-                ? 'https://image.flaticon.com/icons/png/512/2115/2115958.png' :
-                'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f3ebcf88-7437-4c07-ac43-e6f2b50fb766/dbchihl-d82fbe86-c8a6-4ca9-a719-7eddd7583d11.png/v1/fill/w_319,h_351,strp/dinosaurio_de_google_chrome_en_png_by_kevin_millan_by_imagenes_en_png_dbchihl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0zNTEiLCJwYXRoIjoiXC9mXC9mM2ViY2Y4OC03NDM3LTRjMDctYWM0My1lNmYyYjUwZmI3NjZcL2RiY2hpaGwtZDgyZmJlODYtYzhhNi00Y2E5LWE3MTktN2VkZGQ3NTgzZDExLnBuZyIsIndpZHRoIjoiPD0zMTkifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.ymHhmQoCJYDS48FS03B6gLISbafdhOHWqwwT0WYFqDg' " />
+              <v-img
+                :src="
+                  available
+                    ? 'https://image.flaticon.com/icons/png/512/2115/2115958.png'
+                    : 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f3ebcf88-7437-4c07-ac43-e6f2b50fb766/dbchihl-d82fbe86-c8a6-4ca9-a719-7eddd7583d11.png/v1/fill/w_319,h_351,strp/dinosaurio_de_google_chrome_en_png_by_kevin_millan_by_imagenes_en_png_dbchihl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0zNTEiLCJwYXRoIjoiXC9mXC9mM2ViY2Y4OC03NDM3LTRjMDctYWM0My1lNmYyYjUwZmI3NjZcL2RiY2hpaGwtZDgyZmJlODYtYzhhNi00Y2E5LWE3MTktN2VkZGQ3NTgzZDExLnBuZyIsIndpZHRoIjoiPD0zMTkifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.ymHhmQoCJYDS48FS03B6gLISbafdhOHWqwwT0WYFqDg'
+                "
+              />
             </v-avatar>
           </v-row>
           <v-row justify="center" align="center">
-            <span class="display-2 font-weight-light">{{ available ? "Who are you ?" : "Server unavailable"}}</span>
+            <span class="display-2 font-weight-light">{{
+              available ? "Who are you ?" : "Server unavailable"
+            }}</span>
           </v-row>
         </v-container>
 
@@ -177,48 +193,48 @@ export default {
   mounted() {
     this.socket = io("http://localhost:8082");
 
-    this.socket.on('available', (data) => {
-      this.available = data
-    })
+    this.socket.on("available", data => {
+      this.available = data;
+    });
 
     window.onbeforeunload = () => {
-      this.socket.emit('leave', this.username);
-    }
+      this.socket.emit("leave", this.username);
+    };
 
-    this.joinChat()
+    this.joinChat();
 
-    this.socket.on('connections', (data) => {
-      this.connections = data
-    })
+    this.socket.on("connections", data => {
+      this.connections = data;
+    });
 
-    this.socket.on('chat-message', (data) => {
+    this.socket.on("chat-message", data => {
       this.messages.push({
         message: data.message,
         type: 1,
-        user: data.user,
+        user: data.user
       });
       if (!this.menu) {
-        this.unseen++
+        this.unseen++;
       }
     });
 
-    this.socket.on('joined', (data) => {
+    this.socket.on("joined", data => {
       this.info.push({
         username: data,
-        type: 'joined'
+        type: "joined"
       });
-      this.connections++
+      this.connections++;
       setTimeout(() => {
         this.info = [];
       }, 5000);
     });
 
-    this.socket.on('leave', (data) => {
+    this.socket.on("leave", data => {
       this.info.push({
         username: data,
-        type: 'left'
+        type: "left"
       });
-      this.connections--
+      this.connections--;
       setTimeout(() => {
         this.info = [];
       }, 5000);
@@ -226,17 +242,16 @@ export default {
   },
 
   methods: {
-
     ...mapMutations("user", ["setUsername"]),
 
     sendMessage() {
       this.messages.push({
         message: this.message,
         type: 0,
-        user: this.username,
+        user: this.username
       });
 
-      this.socket.emit('chat-message', {
+      this.socket.emit("chat-message", {
         message: this.message,
         user: this.username
       });
@@ -245,7 +260,7 @@ export default {
 
     joinChat() {
       this.ready = true;
-      this.socket.emit('joined', this.username)
+      this.socket.emit("joined", this.username);
     }
   },
 
@@ -256,7 +271,7 @@ export default {
   watch: {
     menu: function(state) {
       if (state) {
-        this.unseen = 0
+        this.unseen = 0;
       }
     }
   }

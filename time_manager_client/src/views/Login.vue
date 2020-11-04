@@ -56,7 +56,7 @@ export default {
             counter: 0,
             rules: [
               v => !!v || "Email required",
-              v => /.+@.+\.+./.test(v) || 'Invalid Email address',
+              v => /.+@.+\.+./.test(v) || "Invalid Email address",
               v =>
                 (v && v.length > 4) ||
                 "Email must be superior than 4 characters"
@@ -95,7 +95,14 @@ export default {
   }),
 
   methods: {
-    ...mapMutations("user", ["setToken", "setRefreshToken", "setEmail", "setUsername", "setId", "setRole"]),
+    ...mapMutations("user", [
+      "setToken",
+      "setRefreshToken",
+      "setEmail",
+      "setUsername",
+      "setId",
+      "setRole"
+    ]),
 
     async login() {
       try {
@@ -106,8 +113,8 @@ export default {
         this.setToken(res.data.data.token);
         this.setRefreshToken(res.data.data.renew_token);
         this.setEmail(this.getModel("email"));
-        this.setId(res.data.data.id)
-        this.getUserInfos()
+        this.setId(res.data.data.id);
+        this.getUserInfos();
 
         this.$router.push({
           name: "Home"
@@ -115,21 +122,25 @@ export default {
       } catch (err) {
         this.config.message.type = "error";
         this.config.message.text =
-          typeof err.response !== "undefined" ? err.response.data.error.message : err;
+          typeof err.response !== "undefined"
+            ? err.response.data.error.message
+            : err;
         console.log(
-          typeof err.response === "undefined" ? err : err.response.data.error.message
+          typeof err.response === "undefined"
+            ? err
+            : err.response.data.error.message
         );
       }
     },
 
     async getUserInfos() {
       try {
-        const res = await AccountService.getUser(this.id)
-        this.setUsername(res.data.data.username)
-        this.setRole(res.data.data.role)
-        console.log(res)
+        const res = await AccountService.getUser(this.id);
+        this.setUsername(res.data.data.username);
+        this.setRole(res.data.data.role);
+        console.log(res);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
 

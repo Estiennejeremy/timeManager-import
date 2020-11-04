@@ -5,5 +5,7 @@ export default {
   setEmail: set("email"),
   setUsername: set("username"),
   setToken: execute("token"),
+  setRole: execute("role"),
+  setRefreshToken: execute("refresh_token"),
   toggleLogged: set("isUserLoggedIn")
 };

@@ -94,7 +94,7 @@ export default {
     periode: "Weekly",
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: false
     },
     visualizeOptions: ["Line", "Bar"],
     periodeOptions: ["Weekly", "Monthly"],
@@ -110,8 +110,8 @@ export default {
       "September",
       "October",
       "November",
-      "December",
-    ],
+      "December"
+    ]
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -134,7 +134,7 @@ export default {
     setDailyWorkingtimeChart(currentWorkingTime, dailyClocks) {
       if (currentWorkingTime) {
         let lastClock = dailyClocks.find(
-          (clock) =>
+          clock =>
             (new Date(clock.start) >= new Date(currentWorkingTime.start) &&
               !clock.end) ||
             (clock.end &&
@@ -169,9 +169,9 @@ export default {
                   {
                     data: [late, work, (total - work).toFixed(2)],
                     backgroundColor: ["yellow", "green"],
-                    weight: 0.5,
-                  },
-                ],
+                    weight: 0.5
+                  }
+                ]
               }
             : {
                 labels: ["Start margin", "Workingtime", "End margin"],
@@ -179,9 +179,9 @@ export default {
                   {
                     data: [late, work, (total - work - late).toFixed(2)],
                     backgroundColor: ["yellow", "green", "yellow"],
-                    weight: 0.5,
-                  },
-                ],
+                    weight: 0.5
+                  }
+                ]
               };
         } else {
           let late = (
@@ -195,9 +195,9 @@ export default {
               {
                 data: [late, total - late],
                 backgroundColor: ["yellow"],
-                weight: 0.5,
-              },
-            ],
+                weight: 0.5
+              }
+            ]
           };
         }
       }
@@ -211,11 +211,11 @@ export default {
           "Thursday",
           "Friday",
           "Saturday",
-          "Sunday",
+          "Sunday"
         ],
         datasets: [
           {
-            data: sortClockByDay.map((dayClocks) =>
+            data: sortClockByDay.map(dayClocks =>
               dayClocks
                 .reduce((hours, clock) => {
                   if (clock.end) {
@@ -234,9 +234,9 @@ export default {
             ),
             label: "Workingtime",
             backgroundColor: "green",
-            weight: 0.5,
-          },
-        ],
+            weight: 0.5
+          }
+        ]
       };
     },
     setMonthWorkingtimeChart(sortClockByMonth) {
@@ -244,7 +244,7 @@ export default {
         labels: this.monthNames,
         datasets: [
           {
-            data: sortClockByMonth.map((monthocks) =>
+            data: sortClockByMonth.map(monthocks =>
               monthocks
                 .reduce((hours, clock) => {
                   if (clock.end) {
@@ -265,19 +265,19 @@ export default {
             ),
             label: "Workingtime",
             backgroundColor: "green",
-            weight: 0.5,
-          },
-        ],
+            weight: 0.5
+          }
+        ]
       };
-    },
+    }
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"]),
+    ...mapState("user", ["id", "email", "username"])
   },
   mounted() {
     AccountService.getUserInfos(this.userId ? this.userId : this.id).then(
-      (res) => {
+      res => {
         this.dailyWorkingtimes = res.dailyWorkingtimes;
         this.dailyClocks = res.dailyClocks;
         this.isInworkingtime = res.isInworkingtime;
@@ -310,13 +310,13 @@ export default {
       this.dailyWorkData = null;
       this.weeklyWorkData = null;
       this.init();
-    },
+    }
   },
   components: {
     LineChart,
     DoughnutChart,
-    BarChart,
-  },
+    BarChart
+  }
 };
 </script>
 

@@ -126,9 +126,10 @@ export default {
 
   methods: {
     createWorkingTime(workingtime) {
-      WorkingTimesService.createWorkingTime(workingtime);
-      this.dialog = false;
-      this.$emit("created");
+      WorkingTimesService.createWorkingTime(workingtime).then(() => {
+        this.dialog = false;
+        this.$emit("created");
+      });
     },
 
     getModel(name) {

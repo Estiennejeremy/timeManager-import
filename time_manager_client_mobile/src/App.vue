@@ -22,8 +22,28 @@ export default {
     CoreView
   },
 
-  data: () => ({
-    //
-  })
+  data: () => ({})
 };
 </script>
+
+<style>
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: lightgrey;
+}
+</style>

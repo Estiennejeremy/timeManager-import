@@ -16,18 +16,17 @@ sync(store, router);
 router.beforeEach((to, from, next) => {
   if (
     !store.state.user.isUserLoggedIn &&
-    Paths.filter(
-      path =>
-        path.name === to.name &&
-        path.public === false
-    ).length > 0
+    Paths.filter(path => path.name === to.name && path.public === false)
+      .length > 0
   ) {
     next("login");
-  } else if (store.state.user.isUserLoggedIn &&
+  } else if (
+    store.state.user.isUserLoggedIn &&
     Paths.filter(
       path =>
         path.name === to.name &&
-        (path.role.includes("default") || path.role.includes(store.state.user.role))
+        (path.role.includes("default") ||
+          path.role.includes(store.state.user.role))
     ).length === 0
   ) {
     next("home");

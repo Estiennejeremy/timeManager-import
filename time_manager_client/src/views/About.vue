@@ -1,52 +1,35 @@
 <template>
-    <span id="about" style="height: 100%;">
+  <span id="about" style="height: 100%;">
+    <v-parallax dark jumbotron :height="screenHeight">
+      <v-row align="center" justify="center">
+        <v-col class="text-center" :cols="responsive ? 12 : 4">
+          <about-card
+            title="Increase Productivity !"
+            subtitle="Save time and money with TimeManager"
+            image="https://cdn.iconscout.com/icon/premium/png-256-thumb/productivity-2075482-1751755.png"
+          />
+        </v-col>
 
-      <v-parallax
-        dark
-        jumbotron
-        :height="screenHeight"
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col
-            class="text-center"
-            :cols="responsive ? 12 : 4"
-          >
-            <about-card
-              title="Increase Productivity !"
-              subtitle="Save time and money with TimeManager"
-              image="https://cdn.iconscout.com/icon/premium/png-256-thumb/productivity-2075482-1751755.png"
-            />
-          </v-col>
+        <v-col class="text-center" :cols="responsive ? 12 : 4">
+          <about-card
+            title="Keep track of your employees"
+            subtitle="Save time and money with TimeManager"
+            image="https://h5p.org/sites/default/files/styles/medium-logo/public/logos/chart-icon-color.png?itok=kpLTYHHJ"
+            tile
+            button
+            @button="scrollTo('android')"
+          />
+        </v-col>
 
-          <v-col
-            class="text-center"
-            :cols="responsive ? 12 : 4"
-          >
-            <about-card
-              title="Keep track of your employees"
-              subtitle="Save time and money with TimeManager"
-              image="https://h5p.org/sites/default/files/styles/medium-logo/public/logos/chart-icon-color.png?itok=kpLTYHHJ"
-              tile
-              button
-              @button="scrollTo('android')"
-            />
-          </v-col>
-
-          <v-col
-            class="text-center"
-            :cols="responsive ? 12 : 4"
-          >
-            <about-card
-              title="Manage your teams"
-              subtitle="Save time and money with TimeManager"
-              image="https://png.pngtree.com/png-vector/20190412/ourlarge/pngtree-vector-team-icon-png-image_931080.jpg"
-            />
-          </v-col>
-        </v-row>
-      </v-parallax>
+        <v-col class="text-center" :cols="responsive ? 12 : 4">
+          <about-card
+            title="Manage your teams"
+            subtitle="Save time and money with TimeManager"
+            image="https://png.pngtree.com/png-vector/20190412/ourlarge/pngtree-vector-team-icon-png-image_931080.jpg"
+          />
+        </v-col>
+      </v-row>
+    </v-parallax>
 
     <v-parallax
       dark
@@ -57,11 +40,7 @@
     >
       <v-container fluid fill-height>
         <v-row justify="center">
-          <a
-          style="color: transparent;"
-          href="mobile/timemanager.apk"
-          download
-          >
+          <a style="color: transparent;" href="mobile/timemanager.apk" download>
             <v-btn rounded x-large dark color="primary">
               <v-icon dark large>mdi-download</v-icon>
               Download APK
@@ -84,12 +63,10 @@
                 <v-img src="@/assets/demo_clockin.png" height="100%"> </v-img>
               </div>
             </div>
-
           </v-flex>
         </v-row>
       </v-container>
     </v-parallax>
-
   </span>
 </template>
 
@@ -104,14 +81,14 @@ export default {
 
   computed: {
     screenHeight() {
-      return window.innerHeight - 64
+      return window.innerHeight - 64;
     }
   },
 
   methods: {
     scrollTo(name) {
       document.getElementById(name).scrollIntoView({
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     },
 

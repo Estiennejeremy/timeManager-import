@@ -27,18 +27,35 @@
       <v-col cols="12">
         <v-row justify="center" align="center">
           <v-col :cols="responsive ? 12 : 4">
-            <v-card color="#0FAFF8" class="home-card" min-height="300">
-            </v-card>
+            <home-card
+              icon="mdi-account-question"
+              :title="responsive ? 'About' : 'What is TimeManager'"
+              toPath="/about"
+            />
           </v-col>
 
           <v-col :cols="responsive ? 12 : 4">
-            <v-card color="#0FAFF8" class="home-card" min-height="300">
-            </v-card>
+            <home-card
+              icon="mdi-account-circle"
+              :title="
+                isUserLoggedIn
+                  ? responsive
+                    ? 'Profile'
+                    : 'Go to your profile'
+                  : responsive
+                  ? 'Login'
+                  : 'Login to your account'
+              "
+              toPath="/login"
+            />
           </v-col>
 
           <v-col :cols="responsive ? 12 : 4">
-            <v-card color="#0FAFF8" class="home-card" min-height="300">
-            </v-card>
+            <home-card
+              icon="mdi-settings"
+              title="Settings"
+              toPath="/settings"
+            />
           </v-col>
         </v-row>
       </v-col>
@@ -47,6 +64,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import HomeCard from "@/views/Home/HomeCard.vue";
 export default {
   name: "Home",
 
@@ -62,6 +81,14 @@ export default {
         this.responsive = false;
       }
     }
+  },
+
+  components: {
+    HomeCard
+  },
+
+  computed: {
+    ...mapState("user", ["isUserLoggedIn"])
   },
 
   mounted() {

@@ -24,7 +24,7 @@ export default {
     workingTime: {
       id: null,
       start: null,
-      end: null,
+      end: null
     },
     config: {
       title: "Create working time",
@@ -32,7 +32,7 @@ export default {
       message: {
         type: null,
         text: null,
-        duration: 5000,
+        duration: 5000
       },
       image: "",
       components: [
@@ -54,8 +54,8 @@ export default {
             required: true,
             label: "Start date",
             counter: 0,
-            rules: [(v) => !!v || "Start time is required"],
-          },
+            rules: [v => !!v || "Start time is required"]
+          }
         },
         {
           id: 1,
@@ -75,8 +75,8 @@ export default {
             required: true,
             label: "Start time",
             counter: 0,
-            rules: [(v) => !!v || "Start time is required"],
-          },
+            rules: [v => !!v || "Start time is required"]
+          }
         },
         {
           id: 2,
@@ -96,8 +96,8 @@ export default {
             required: true,
             label: "End date",
             counter: 0,
-            rules: [(v) => !!v || "End time is required"],
-          },
+            rules: [v => !!v || "End time is required"]
+          }
         },
         {
           id: 3,
@@ -117,11 +117,11 @@ export default {
             required: true,
             label: "End time",
             counter: 0,
-            rules: [(v) => !!v || "End time is required"],
-          },
-        },
-      ],
-    },
+            rules: [v => !!v || "End time is required"]
+          }
+        }
+      ]
+    }
   }),
 
   methods: {
@@ -134,7 +134,7 @@ export default {
 
     getModel(name) {
       let id = this.config.components.findIndex(
-        (item) => item.modelName === name
+        item => item.modelName === name
       );
       return this.config.components[id].model;
     },
@@ -143,19 +143,19 @@ export default {
       return {
         start: `${this.getModel("startDate")}T${this.getModel("startTime")}`,
         end: `${this.getModel("endDate")}T${this.getModel("endTime")}`,
-        team_id: this.teamId,
+        team_id: this.teamId
       };
-    },
+    }
   },
   watch: {
     teamId: function(newVal) {
       this.teamId = newVal;
-    },
+    }
   },
 
   components: {
-    MaterialForm,
-  },
+    MaterialForm
+  }
 };
 </script>
 
