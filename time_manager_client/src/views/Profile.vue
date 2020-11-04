@@ -21,7 +21,7 @@
             <h3 v-for="workingtime in dailyWorkingtimes" :key="workingtime.id">
               {{ getPlanning(workingtime) }}
             </h3>
-            <h3 v-if="dailyWorkingtimes.length == 0 || !dailyWorkingtimes">
+            <h3 v-if="dailyWorkingtimes && dailyWorkingtimes.length == 0">
               No current workingtime
             </h3>
           </section>
@@ -91,7 +91,7 @@ export default {
       maintainAspectRatio: false,
     },
     visualizeOptions: ["Line", "Doughnut", "Bar"],
-    periodeOptions: ["Daily", "Weekly", "Monthly"],
+    periodeOptions: ["Weekly", "Monthly"],
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -145,7 +145,7 @@ export default {
         /// GET DAILY CLOCKS
         let dailyClocks = res[1].data.data.filter((clock) => {
           let current = new Date();
-          let time = new Date(clock.time);
+          let time = new Date(clock.start);
           return time.toLocaleDateString() == current.toLocaleDateString();
         });
         this.dailyClocks = dailyClocks;
@@ -172,8 +172,7 @@ export default {
         if (currentWorkingTime) {
           let lastClock = dailyClocks.find(
             (clock) =>
-              new Date(clock.time) >= new Date(currentWorkingTime.start) &&
-              new Date(clock.time) <= new Date(currentWorkingTime.end)
+              new Date(clock.start) >= new Date(currentWorkingTime.start) && !clock.end
           );
           if (lastClock) {
             let total = (
@@ -182,15 +181,19 @@ export default {
               (1000 * 3600)
             ).toFixed(2);
             let work = (
-              (new Date().getTime() - new Date(lastClock.time).getTime()) /
+              (new Date().getTime() - new Date(lastClock.start).getTime()) /
+              (1000 * 3600)
+            ).toFixed(2);
+            let late = (
+              (new Date(lastClock.start).getTime() - new Date(currentWorkingTime.start).getTime()) /
               (1000 * 3600)
             ).toFixed(2);
             this.dailyWorkData = {
-              labels: ["Workingtime", "Less time"],
+              labels: ["Late time", "Workingtime", "Less time"],
               datasets: [
                 {
-                  data: [work, total - work],
-                  backgroundColor: ["green", "yellow"],
+                  data: [late, work, total - work],
+                  backgroundColor: ["yellow", "green"],
                   weight: 0.5,
                 },
               ],
