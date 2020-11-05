@@ -191,7 +191,9 @@ export default {
   }),
 
   mounted() {
-    this.socket = io("http://localhost:8082");
+    this.socket = io(process.env.NODE_ENV === "production"
+      ? "http://51.75.122.116:8082"
+      : "http://localhost:8082");
 
     this.socket.on("available", data => {
       this.available = data;
