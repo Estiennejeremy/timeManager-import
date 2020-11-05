@@ -38,26 +38,29 @@
             </v-list-item-action>
           </v-list-item>
         </v-row>
-        <v-row>
-          <v-row justify="center">
-            <v-col class="d-flex" cols="12" lg="8" md="8" sm="8">
-              <v-autocomplete
-                :items="getUsersNotInTeam()"
-                label="Select employee"
-                solo
-                v-model="employee"
-                item-text="email"
-                item-value="id"
-                no-data-text="No user found"
-                return-object
-              ></v-autocomplete>
-            </v-col>
-            <v-col class="d-flex" cols="12" lg="4" md="4" sm="4">
-              <v-btn block height="48" @click="addEmployee()">
-                Add employee
-              </v-btn>
-            </v-col>
-          </v-row>
+        <v-row justify="center" align="bottom" class="pt-0">
+          <v-col class="d-flex pb-0" justify="bottom" cols="12" lg="12" md="12" sm="12">
+            <v-autocomplete
+              :items="getUsersNotInTeam()"
+              label="Select employee"
+              solo
+              v-model="employee"
+              item-text="email"
+              item-value="id"
+              no-data-text="No user found"
+              return-object
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align="top" class="btnEmployee">
+          <v-col class="d-flex" cols="12" lg="6" md="6" sm="6">
+            <employee-create v-on:created="getUsers()" />
+          </v-col>
+          <v-col class="d-flex" cols="12" lg="6" md="6" sm="6">
+            <v-btn block height="48" :disabled="!employee" @click="addEmployee()">
+              Add employee
+            </v-btn>
+          </v-col>
         </v-row>
       </v-col>
 
@@ -69,7 +72,7 @@
         md="6"
       >
         <h2>Workingtimes</h2>
-        <v-row>
+        <v-row align-content="start">
           <v-list-item v-for="w in workingtimes" :key="w.id">
             <v-list-item-avatar>
               <v-icon class="grey lighten-1" dark>
@@ -111,6 +114,7 @@ import Account from "../services/AccountService.js";
 import WorkingTimesService from "../services/WorkingTimesService.js";
 import WorkingTimeCreate from "../components/WorkingTimeCreate.vue";
 import WorkingTimeUpdate from "../components/WorkingTimeUpdate.vue";
+import EmployeeCreate from "../components/EmployeeCreate.vue";
 export default {
   name: "Team",
   data: () => ({
@@ -119,28 +123,31 @@ export default {
     team: null,
     workingtimes: null,
     employee: null,
-    createDialog: false
+    createDialog: false,
   }),
   methods: {
     ...mapMutations("team", [
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId"
+      "setManagerId",
     ]),
     init() {
-      Promise.all([Team.getTeams(), Account.getUsers()]).then(res => {
+      Promise.all([Team.getTeams(), Account.getUsers()]).then((res) => {
         this.teams = res[0].data.data;
         if (this.id && !this.team) {
-          this.team = this.teams.find(t => t.id == this.id);
-        } else this.team = this.teams.find(t => t.id == this.team.id);
+          this.team = this.teams.find((t) => t.id == this.id);
+        } else this.team = this.teams.find((t) => t.id == this.team.id);
         if (this.team) this.getWorkingtimesTeam();
         this.users = res[1].data.data;
       });
     },
+    getUsers(){
+      Account.getUsers().then(res => this.users = res.data.data)
+    },
     getUsersNotInTeam() {
-      return this.users.filter(user =>
-        user.teams.every(t => t.id != this.team.id)
+      return this.users.filter((user) =>
+        user.teams.every((t) => t.id != this.team.id)
       );
     },
     addEmployee() {
@@ -158,7 +165,7 @@ export default {
       });
     },
     getWorkingtimesTeam() {
-      Team.getWorkingtimesTeam(this.team.id).then(res => {
+      Team.getWorkingtimesTeam(this.team.id).then((res) => {
         this.workingtimes = res.data.workingtimes;
       });
     },
@@ -184,7 +191,7 @@ export default {
     },
     openCreateDialog() {
       this.createDialog = true;
-    }
+    },
   },
   mounted() {
     this.init();
@@ -193,11 +200,12 @@ export default {
     this.setId(this.team.id);
   },
   computed: {
-    ...mapState("team", ["id"])
+    ...mapState("team", ["id"]),
   },
   components: {
     WorkingTimeCreate,
-    WorkingTimeUpdate
+    WorkingTimeUpdate,
+    EmployeeCreate
   }
 };
 </script>
@@ -227,5 +235,9 @@ export default {
 
 .test {
   border: 5px solid #2eb9ce;
+}
+
+.btnEmployee {
+  margin-top: -25px !important;
 }
 </style>
