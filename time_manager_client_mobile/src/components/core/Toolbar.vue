@@ -19,8 +19,6 @@
       <v-icon>mdi-home</v-icon>
     </v-btn>
 
-    <user />
-
     <chat />
 
     <v-btn href="https://github.com/" target="_blank" :fab="responsive" text>
@@ -32,7 +30,6 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import User from "@/components/User.vue";
 import Chat from "@/components/Chat.vue";
 export default {
   name: "CoreToolbar",
@@ -70,7 +67,6 @@ export default {
   },
 
   components: {
-    User,
     Chat
   },
 

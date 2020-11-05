@@ -20,27 +20,26 @@ export default {
 
   data: () => ({
     clockIn: false,
-    lastClock: null,
+    lastClock: null
   }),
 
   components: {
     MaterialSpa,
-    MaterialTimer,
+    MaterialTimer
   },
 
   computed: {
-    ...mapState("user", ["id"]),
+    ...mapState("user", ["id"])
   },
 
   methods: {
     refresh() {
-      ClockService.getLastClockUser(this.id).then(
-        (res) => {
-          this.lastClock = res.data.data.length == 1 ? res.data.data[0] : null;
-          if(this.lastClock && this.lastClock.start && !this.lastClock.end) this.clockIn = true;
-          else this.clockIn = false;
-        }
-      );
+      ClockService.getLastClockUser(this.id).then(res => {
+        this.lastClock = res.data.data.length == 1 ? res.data.data[0] : null;
+        if (this.lastClock && this.lastClock.start && !this.lastClock.end)
+          this.clockIn = true;
+        else this.clockIn = false;
+      });
     },
 
     clock() {
@@ -49,7 +48,7 @@ export default {
       if ((this.lastClock && this.lastClock.end) || !this.lastClock) {
         ClockService.createClock(
           {
-            start: now.toISOString(),
+            start: now.toISOString()
           },
           this.id
         )
@@ -58,17 +57,17 @@ export default {
       } else {
         ClockService.updateClock(
           {
-            end: now.toISOString(),
+            end: now.toISOString()
           },
           this.lastClock.id
         )
           .then(() => this.refresh())
           .catch(() => this.refresh());
       }
-    },
+    }
   },
   mounted() {
     this.refresh();
-  },
+  }
 };
 </script>

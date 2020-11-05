@@ -2,13 +2,17 @@ import Api from "@/services/Api";
 
 export default {
   register(user, credentials) {
-    return Api().post("/registration", {
-      user: user
-    }, {
-      headers: {
-        Authorization: `Bearer ${credentials}`
+    return Api().post(
+      "/registration",
+      {
+        user: user
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${credentials}`
+        }
       }
-    });
+    );
   },
   login(user) {
     return Api().post("/session", { user: user });
@@ -18,6 +22,6 @@ export default {
       headers: {
         Authorization: `Bearer ${credentials}`
       }
-    })
+    });
   }
 };

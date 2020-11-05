@@ -17,12 +17,8 @@ export default {
     return Api().get(`/workingtimes/${user_id}/${id}`);
   },
 
-  getWorkingTimesUser(userId, start, end) {
-    return Api().get(
-      `/workingtimes/${userId}?${start ? `start=${start}` : ""}${
-        end ? `&end=${end}` : ""
-      }`
-    );
+  getWorkingTimesUser(userId) {
+    return Api().get(`/workingtimesByUser/${userId}`);
   },
 
   getDailyWorkingTimesUser(userId) {

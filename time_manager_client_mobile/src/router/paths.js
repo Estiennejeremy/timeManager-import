@@ -27,10 +27,10 @@ export default [
     view: "Dashboard",
     icon: "mdi-monitor-dashboard",
     group: "top",
-    public: true,
+    public: false,
     show: true,
     parameters: [],
-    role: ["default", "manager"]
+    role: ["manager", "generalManager"]
   },
 
   // =========================================================================
@@ -43,10 +43,10 @@ export default [
     view: "Team",
     icon: "mdi-monitor-dashboard",
     group: "top",
-    public: true,
+    public: false,
     show: false,
     parameters: ["name"],
-    role: ["default", "manager"]
+    role: ["manager", "generalManager"]
   },
 
   // =========================================================================
@@ -62,7 +62,7 @@ export default [
     public: false,
     show: true,
     parameters: [],
-    role: ["default", "employee", "manager"]
+    role: ["employee", "manager", "generalManager"]
   },
 
   // =========================================================================
@@ -75,10 +75,10 @@ export default [
     view: "Clockin",
     icon: "mdi-clock",
     group: "top",
-    public: true,
+    public: false,
     show: true,
     parameters: [],
-    role: ["default", "employee", "manager"]
+    role: ["employee", "manager", "generalManager"]
   },
 
   // =========================================================================

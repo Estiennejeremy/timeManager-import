@@ -6,6 +6,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@mdi/font/css/materialdesignicons.css";
+import LogRocket from "logrocket";
 
 import { sync } from "vuex-router-sync";
 
@@ -13,17 +14,25 @@ import Paths from "@/router/paths.js";
 
 sync(store, router);
 
+LogRocket.init("timemanager/timemanager");
+
 router.beforeEach((to, from, next) => {
   if (
     !store.state.user.isUserLoggedIn &&
+    Paths.filter(path => path.name === to.name && path.public === false)
+      .length > 0
+  ) {
+    next("login");
+  } else if (
+    store.state.user.isUserLoggedIn &&
     Paths.filter(
       path =>
         path.name === to.name &&
-        path.public === false &&
-        path.role.includes(store.state.user.role)
-    ).length > 0
+        (path.role.includes("default") ||
+          path.role.includes(store.state.user.role))
+    ).length === 0
   ) {
-    next("login");
+    next("home");
   } else {
     next();
   }

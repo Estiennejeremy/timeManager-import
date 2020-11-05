@@ -30,7 +30,7 @@ export default [
     public: false,
     show: true,
     parameters: [],
-    role: ["default", "manager"]
+    role: ["manager", "generalManager"]
   },
 
   // =========================================================================
@@ -46,7 +46,7 @@ export default [
     public: false,
     show: false,
     parameters: ["name"],
-    role: ["default", "manager"]
+    role: ["manager", "generalManager"]
   },
 
   // =========================================================================
@@ -62,7 +62,7 @@ export default [
     public: false,
     show: true,
     parameters: [],
-    role: ["default", "employee", "manager"]
+    role: ["employee", "manager", "generalManager"]
   },
 
   // =========================================================================
@@ -78,7 +78,7 @@ export default [
     public: false,
     show: true,
     parameters: [],
-    role: ["default", "employee", "manager"]
+    role: ["employee", "manager", "generalManager"]
   },
 
   // =========================================================================

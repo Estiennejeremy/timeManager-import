@@ -29,7 +29,7 @@
           <v-col :cols="responsive ? 12 : 4">
             <home-card
               icon="mdi-account-question"
-              :title="responsive ? 'About' : 'What is TimeManager' "
+              :title="responsive ? 'About' : 'What is TimeManager'"
               toPath="/about"
             />
           </v-col>
@@ -37,9 +37,15 @@
           <v-col :cols="responsive ? 12 : 4">
             <home-card
               icon="mdi-account-circle"
-              :title="isUserLoggedIn
-                ? responsive ? 'Profile' : 'Go to your profile'
-                : responsive ? 'Login' : 'Login to your account' "
+              :title="
+                isUserLoggedIn
+                  ? responsive
+                    ? 'Profile'
+                    : 'Go to your profile'
+                  : responsive
+                  ? 'Login'
+                  : 'Login to your account'
+              "
               toPath="/login"
             />
           </v-col>
@@ -58,7 +64,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState } from "vuex";
 import HomeCard from "@/views/Home/HomeCard.vue";
 export default {
   name: "Home",

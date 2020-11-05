@@ -90,7 +90,7 @@
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
-          <v-list-item-content @click="logout()">
+          <v-list-item-content @click.stop="logout()">
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import AuthenticationService from "@/services/AuthenticationService"
+import AuthenticationService from "@/services/AuthenticationService";
 import { mapMutations, mapState } from "vuex";
 import Paths from "@/router/paths.js";
 export default {
@@ -117,7 +117,12 @@ export default {
 
   methods: {
     ...mapMutations("app", ["setDrawer", "toggleDrawer"]),
-    ...mapMutations("user", ["setUsername", "setEmail", "setToken", "setRefreshToken"]),
+    ...mapMutations("user", [
+      "setUsername",
+      "setEmail",
+      "setToken",
+      "setRefreshToken"
+    ]),
 
     onResponsiveInverted() {
       if (window.innerWidth < 991) {
@@ -142,33 +147,36 @@ export default {
 
     async logout() {
       try {
-        await AuthenticationService.logout(this.token)
+        await AuthenticationService.logout(this.token);
         if (this.isUserLoggedIn) {
           this.setToken(null);
           this.setRefreshToken(null);
           this.setEmail(null);
           this.setUsername(null);
-          this.$router.push({ path: "/home" });
+          this.$router.push({ name: "Home" });
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
   },
 
   computed: {
     ...mapState("app", ["image", "color"]),
-    ...mapState("user", ["id", "isUserLoggedIn", "token"]),
+    ...mapState("user", ["id", "isUserLoggedIn", "token", "role"]),
 
     topPaths() {
       return Paths.filter(path =>
         this.isUserLoggedIn
-          ? path.group === "top" && path.show === true
+          ? path.group === "top" &&
+            path.show === true &&
+            (path.role.includes("default") || path.role.includes(this.role))
           : path.public === true &&
             path.group === "top" &&
             path.show === true &&
             (path.parameters.length === 0 ||
-              (path.parameters.length > 0 && this.id !== null))
+              (path.parameters.length > 0 && this.id !== null)) &&
+            (path.role.includes("default") || path.role.includes(this.role))
       );
     },
 

@@ -69,11 +69,10 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import AccountService from "../services/AccountService";
 import LineChart from "../components/charts/Line.js";
 import BarChart from "../components/charts/Bar.js";
 import DoughnutChart from "../components/charts/Doughnut.js";
-import WorkingTimesService from "../services/WorkingTimesService.js";
-import ClockService from "../services/ClockService.js";
 export default {
   name: "Profile",
   props: ["userId"],
@@ -95,7 +94,7 @@ export default {
     periode: "Weekly",
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: false
     },
     visualizeOptions: ["Line", "Bar"],
     periodeOptions: ["Weekly", "Monthly"],
@@ -111,8 +110,8 @@ export default {
       "September",
       "October",
       "November",
-      "December",
-    ],
+      "December"
+    ]
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -125,63 +124,31 @@ export default {
         "0" + end.getMinutes()
       ).slice(-2)}`;
     },
-    getWeekNumber(d) {
-      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-      return weekNo;
-    },
-    getDailyWorkingtimes(workingtimes) {
-      return workingtimes.filter((workingTime) => {
-        let current = new Date();
-        let start = new Date(workingTime.start);
-        let end = new Date(workingTime.end);
-        return (
-          start.toLocaleDateString() == current.toLocaleDateString() &&
-          end.toLocaleDateString() == current.toLocaleDateString()
-        );
-      });
-    },
-    getDailyClocks(clocks) {
-      return clocks.filter((clock) => {
-        let current = new Date();
-        let time = new Date(clock.start);
-        return time.toLocaleDateString() == current.toLocaleDateString();
-      });
-    },
-    getIsInWorkingtime(dailyWorkingtimes) {
-      return dailyWorkingtimes.some(
-        (workingtime) =>
-          new Date() > new Date(workingtime.start) &&
-          new Date() < new Date(workingtime.end)
-      );
-    },
-    getCurrentWorkingtime(dailyWorkingtimes) {
-      return dailyWorkingtimes.find(
-        (workingtime) =>
-          new Date() > new Date(workingtime.start) &&
-          new Date() < new Date(workingtime.end)
-      );
+    changePeriode() {
+      if (this.periode == "Monthly") {
+        this.setMonthWorkingtimeChart(this.monthlyClocks);
+      } else if (this.periode == "Weekly") {
+        this.setWeeklyWorkingtimeChart(this.weeklyClocks);
+      }
     },
     setDailyWorkingtimeChart(currentWorkingTime, dailyClocks) {
       if (currentWorkingTime) {
         let lastClock = dailyClocks.find(
-          (clock) =>
+          clock =>
             (new Date(clock.start) >= new Date(currentWorkingTime.start) &&
               !clock.end) ||
             (clock.end &&
               new Date(clock.end) <= new Date(currentWorkingTime.end) &&
               new Date(clock.start) >= new Date(currentWorkingTime.start))
         );
+        let total = (
+          (new Date(currentWorkingTime.end).getTime() -
+            new Date(currentWorkingTime.start).getTime()) /
+          (1000 * 3600)
+        ).toFixed(2);
         if (lastClock) {
           let late = (
             (new Date(lastClock.start).getTime() -
-              new Date(currentWorkingTime.start).getTime()) /
-            (1000 * 3600)
-          ).toFixed(2);
-          let total = (
-            (new Date(currentWorkingTime.end).getTime() -
               new Date(currentWorkingTime.start).getTime()) /
             (1000 * 3600)
           ).toFixed(2);
@@ -202,9 +169,9 @@ export default {
                   {
                     data: [late, work, (total - work).toFixed(2)],
                     backgroundColor: ["yellow", "green"],
-                    weight: 0.5,
-                  },
-                ],
+                    weight: 0.5
+                  }
+                ]
               }
             : {
                 labels: ["Start margin", "Workingtime", "End margin"],
@@ -212,9 +179,9 @@ export default {
                   {
                     data: [late, work, (total - work - late).toFixed(2)],
                     backgroundColor: ["yellow", "green", "yellow"],
-                    weight: 0.5,
-                  },
-                ],
+                    weight: 0.5
+                  }
+                ]
               };
         } else {
           let late = (
@@ -228,100 +195,12 @@ export default {
               {
                 data: [late, total - late],
                 backgroundColor: ["yellow"],
-                weight: 0.5,
-              },
-            ],
+                weight: 0.5
+              }
+            ]
           };
         }
       }
-    },
-    getWeeklyWorkingtimes(workingTimes) {
-      return workingTimes.filter((workingTime) => {
-        let current = new Date();
-        let start = new Date(workingTime.start);
-        let end = new Date(workingTime.end);
-        return (
-          this.getWeekNumber(start) == this.getWeekNumber(current) &&
-          this.getWeekNumber(end) == this.getWeekNumber(current)
-        );
-      });
-    },
-    getWeeklyClocks(clocks) {
-      return clocks.filter((clock) => {
-        let current = new Date();
-        let time = new Date(clock.start);
-        return this.getWeekNumber(time) == this.getWeekNumber(current);
-      });
-    },
-    sortWorkingtimesByWeekDays(weeklyWorkingtimes) {
-      return weeklyWorkingtimes.reduce(
-        (sort, workingtime) => {
-          switch (
-            new Date(workingtime.start).toLocaleString("default", {
-              weekday: "long",
-            })
-          ) {
-            case "Monday":
-              sort[0].push(workingtime);
-              break;
-            case "Tuesday":
-              sort[1].push(workingtime);
-              break;
-            case "Wednesday":
-              sort[2].push(workingtime);
-              break;
-            case "Thursday":
-              sort[3].push(workingtime);
-              break;
-            case "Friday":
-              sort[4].push(workingtime);
-              break;
-            case "Saturday":
-              sort[5].push(workingtime);
-              break;
-            case "Sunday":
-              sort[6].push(workingtime);
-              break;
-          }
-          return sort;
-        },
-        [[], [], [], [], [], [], []]
-      );
-    },
-    sortClocksByWeekDays(weeklyClocks) {
-      return weeklyClocks.reduce(
-        (sort, clock) => {
-          switch (
-            new Date(clock.start).toLocaleString("default", {
-              weekday: "long",
-            })
-          ) {
-            case "Monday":
-              sort[0].push(clock);
-              break;
-            case "Tuesday":
-              sort[1].push(clock);
-              break;
-            case "Wednesday":
-              sort[2].push(clock);
-              break;
-            case "Thursday":
-              sort[3].push(clock);
-              break;
-            case "Friday":
-              sort[4].push(clock);
-              break;
-            case "Saturday":
-              sort[5].push(clock);
-              break;
-            case "Sunday":
-              sort[6].push(clock);
-              break;
-          }
-          return sort;
-        },
-        [[], [], [], [], [], [], []]
-      );
     },
     setWeeklyWorkingtimeChart(sortClockByDay) {
       this.weeklyWorkData = {
@@ -332,254 +211,91 @@ export default {
           "Thursday",
           "Friday",
           "Saturday",
-          "Sunday",
+          "Sunday"
         ],
         datasets: [
           {
-            data: sortClockByDay.map((dayClocks) =>
-              dayClocks.reduce((hours, clock) => {
-                if (clock.end) {
-                  hours =
-                    hours +
-                      (
-                        Math.abs(new Date(clock.start) - new Date(clock.end)) /
-                        36e5
-                      )
-                } else {
-                  hours =
-                    hours +
-                      (
-                        Math.abs(new Date(clock.start) - new Date()) / 36e5
-                      )
-                }
-                return hours;
-              }, 0.0).toFixed(2)
+            data: sortClockByDay.map(dayClocks =>
+              dayClocks
+                .reduce((hours, clock) => {
+                  if (clock.end) {
+                    hours =
+                      hours +
+                      Math.abs(new Date(clock.start) - new Date(clock.end)) /
+                        36e5;
+                  } else {
+                    hours =
+                      hours +
+                      Math.abs(new Date(clock.start) - new Date()) / 36e5;
+                  }
+                  return hours;
+                }, 0.0)
+                .toFixed(2)
             ),
             label: "Workingtime",
             backgroundColor: "green",
-            weight: 0.5,
-          },
-        ],
+            weight: 0.5
+          }
+        ]
       };
-    },
-    changePeriode() {
-      if (this.periode == "Monthly") {
-        this.setMonthWorkingtimeChart(this.monthlyClocks);
-      } else if (this.periode == "Weekly") {
-        this.setWeeklyWorkingtimeChart(this.weeklyClocks);
-      }
-    },
-    getMonthlyWorkingtimes(workingTimes) {
-      return workingTimes.filter((workingTime) => {
-        let current = new Date();
-        let start = new Date(workingTime.start);
-        let end = new Date(workingTime.end);
-        return (
-          start.getMonth() == current.getMonth() &&
-          start.getFullYear() == current.getFullYear()
-        );
-      });
-    },
-    getMonthlyClocks(clocks) {
-      return clocks.filter((clock) => {
-        let current = new Date();
-        let time = new Date(clock.start);
-        return (
-          time.getMonth() == current.getMonth() &&
-          time.getFullYear() == current.getFullYear()
-        );
-      });
-    },
-    sortWorkingtimesByMonthDays(monthlyWorkingtimes) {
-      return monthlyWorkingtimes.reduce(
-        (sort, workingtime) => {
-          switch (this.monthNames[new Date(workingtime.start).getMonth()]) {
-            case "January":
-              sort[0].push(workingtime);
-              break;
-            case "February":
-              sort[1].push(workingtime);
-              break;
-            case "March":
-              sort[2].push(workingtime);
-              break;
-            case "April":
-              sort[3].push(workingtime);
-              break;
-            case "May":
-              sort[4].push(workingtime);
-              break;
-            case "June":
-              sort[5].push(workingtime);
-              break;
-            case "July":
-              sort[6].push(workingtime);
-              break;
-            case "August":
-              sort[7].push(workingtime);
-              break;
-            case "September":
-              sort[8].push(workingtime);
-              break;
-            case "October":
-              sort[9].push(workingtime);
-              break;
-            case "November":
-              sort[10].push(workingtime);
-              break;
-            case "December":
-              sort[11].push(workingtime);
-              break;
-          }
-          return sort;
-        },
-        [[], [], [], [], [], [], [], [], [], [], [], []]
-      );
-    },
-    sortClocksByMonthDays(monthClocks) {
-      return monthClocks.reduce(
-        (sort, clock) => {
-          switch (this.monthNames[new Date(clock.start).getMonth()]) {
-            case "January":
-              sort[0].push(clock);
-              break;
-            case "February":
-              sort[1].push(clock);
-              break;
-            case "March":
-              sort[2].push(clock);
-              break;
-            case "April":
-              sort[3].push(clock);
-              break;
-            case "May":
-              sort[4].push(clock);
-              break;
-            case "June":
-              sort[5].push(clock);
-              break;
-            case "July":
-              sort[6].push(clock);
-              break;
-            case "August":
-              sort[7].push(clock);
-              break;
-            case "September":
-              sort[8].push(clock);
-              break;
-            case "October":
-              sort[9].push(clock);
-              break;
-            case "November":
-              sort[10].push(clock);
-              break;
-            case "December":
-              sort[11].push(clock);
-              break;
-          }
-          return sort;
-        },
-        [[], [], [], [], [], [], [], [], [], [], [], []]
-      );
     },
     setMonthWorkingtimeChart(sortClockByMonth) {
       this.weeklyWorkData = {
         labels: this.monthNames,
         datasets: [
           {
-            data: sortClockByMonth.map((monthocks) =>
-              monthocks.reduce((hours, clock) => {
-                if (clock.end) {
-                  hours =
-                    hours +
-                      (
-                        Math.abs(new Date(clock.start) - new Date(clock.end)) /
-                        36e5
-                    );
-                } else {
-                  hours =
-                    hours +
+            data: sortClockByMonth.map(monthocks =>
+              monthocks
+                .reduce((hours, clock) => {
+                  if (clock.end) {
+                    hours =
+                      hours +
+                      Math.abs(new Date(clock.start) - new Date(clock.end)) /
+                        36e5;
+                  } else {
+                    hours =
+                      hours +
                       (
                         Math.abs(new Date(clock.start) - new Date()) / 36e5
-                      ).toFixed(2)
-                }
-                return hours;
-              }, 0).toFixed(2)
+                      ).toFixed(2);
+                  }
+                  return hours;
+                }, 0)
+                .toFixed(2)
             ),
             label: "Workingtime",
             backgroundColor: "green",
-            weight: 0.5,
-          },
-        ],
+            weight: 0.5
+          }
+        ]
       };
-    },
-    init() {
-      Promise.all([
-        WorkingTimesService.getWorkingTimesUser(
-          this.userId ? this.userId : this.id
-        ),
-        ClockService.getClockUser(this.userId ? this.userId : this.id),
-      ]).then((res) => {
-        //////////// DAILY /////////////
-        let dailyWorkingtimes = this.getDailyWorkingtimes(
-          res[0].data.workingtimes
-        );
-        this.dailyWorkingtimes = dailyWorkingtimes;
-
-        let dailyClocks = this.getDailyClocks(res[1].data.data);
-        this.dailyClocks = dailyClocks;
-
-        this.isInworkingtime = this.getIsInWorkingtime(dailyWorkingtimes);
-
-        let currentWorkingTime = this.getCurrentWorkingtime(dailyWorkingtimes);
-        this.currentWorkingTime = currentWorkingTime;
-
-        this.setDailyWorkingtimeChart(currentWorkingTime, dailyClocks);
-
-        //////////// WEEKLY /////////////
-        let weeklyWorkingtimes = this.getWeeklyWorkingtimes(
-          res[0].data.workingtimes
-        );
-        this.weeklyWorkingtimes = weeklyWorkingtimes;
-
-        let weeklyClocks = this.getWeeklyClocks(res[1].data.data);
-        this.weeklyClocks = weeklyClocks;
-
-        let sortyWorkingtimeByWeekDay = this.sortWorkingtimesByWeekDays(
-          weeklyWorkingtimes
-        );
-        sortyWorkingtimeByWeekDay = sortyWorkingtimeByWeekDay;
-
-        let sortClockByWeekDay = this.sortClocksByWeekDays(weeklyClocks);
-        this.weeklyClocks = sortClockByWeekDay;
-
-        this.setWeeklyWorkingtimeChart(sortClockByWeekDay);
-
-        //////////// MONTHLY /////////////
-        let monthlyWorkingtimes = this.getMonthlyWorkingtimes(
-          res[0].data.workingtimes
-        );
-        this.monthlyWorkingtimes = monthlyWorkingtimes;
-
-        let monthlyClocks = this.getMonthlyClocks(res[1].data.data);
-        this.monthlyClocks = monthlyClocks;
-
-        let sortyWorkingtimeByMonthDay = this.sortWorkingtimesByMonthDays(
-          monthlyWorkingtimes
-        );
-
-        let sortClockByMonthDay = this.sortClocksByMonthDays(monthlyClocks);
-        this.monthlyClocks = sortClockByMonthDay;
-        console.log(sortClockByMonthDay);
-      });
-    },
+    }
   },
 
   computed: {
-    ...mapState("user", ["id", "email", "username"]),
+    ...mapState("user", ["id", "email", "username"])
   },
   mounted() {
-    this.init();
+    AccountService.getUserInfos(this.userId ? this.userId : this.id).then(
+      res => {
+        this.dailyWorkingtimes = res.dailyWorkingtimes;
+        this.dailyClocks = res.dailyClocks;
+        this.isInworkingtime = res.isInworkingtime;
+        this.currentWorkingTime = res.currentWorkingTime;
+        this.weeklyWorkingtimes = res.weeklyWorkingtimes;
+        this.weeklyClocks = res.weeklyClocks;
+        this.weeklyClocks = res.sortClockByWeekDay;
+        this.monthlyWorkingtimes = res.monthlyWorkingtimes;
+        this.monthlyClocks = res.monthlyClocks;
+        this.monthlyClocks = res.sortClockByMonthDay;
+
+        this.setDailyWorkingtimeChart(
+          this.currentWorkingTime,
+          this.dailyClocks
+        );
+        this.setWeeklyWorkingtimeChart(this.weeklyClocks);
+      }
+    );
   },
   watch: {
     userId: function(newVal) {
@@ -594,13 +310,13 @@ export default {
       this.dailyWorkData = null;
       this.weeklyWorkData = null;
       this.init();
-    },
+    }
   },
   components: {
     LineChart,
     DoughnutChart,
-    BarChart,
-  },
+    BarChart
+  }
 };
 </script>
 

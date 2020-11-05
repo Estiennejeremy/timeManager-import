@@ -26,7 +26,7 @@
         ></v-select>
       </v-col>
       <v-col class="d-flex" align="center" cols="12" lg="3" md="3" sm="3">
-        <team-create v-on:created="getTeams()"/>
+        <team-create v-on:created="getTeams()" />
       </v-col>
     </v-row>
     <v-row v-if="team" align="baseline" justify="end" class="mx-5">
@@ -48,11 +48,8 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="space-around" class="mx-5">
-      <profile
-        v-if="employee"
-        class="profile"
-        v-bind:user-id="employee.id"
-      />
+      <profile v-if="employee" class="profile" v-bind:user-id="employee.id" />
+      <team-dashboard v-if="team && !employee" class="profile" :team="team" />
     </v-row>
   </v-col>
 </template>
@@ -62,6 +59,7 @@ import { mapState, mapMutations } from "vuex";
 import Profile from "./Profile.vue";
 import Team from "../services/TeamService.js";
 import TeamCreate from "../components/TeamCreate.vue";
+import TeamDashboard from "../components/TeamDashboard.vue";
 export default {
   name: "Dashboard",
   data: () => ({
@@ -74,7 +72,7 @@ export default {
     teams: [],
     team: null,
     employee: null,
-    EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"],
+    EmployeeOption: ["Gregoire", "Jeremy", "Jules", "lucas"]
   }),
   methods: {
     ...mapMutations("user", ["setId", "setEmail", "setUsername"]),
@@ -82,7 +80,7 @@ export default {
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId",
+      "setManagerId"
     ]),
     displayProfile() {
       this.$router.push("/profile");
@@ -92,18 +90,18 @@ export default {
       this.$router.push(`/team/${this.team.name}`);
     },
     getTeams() {
-      Team.getTeams().then((res) => {
+      Team.getTeams().then(res => {
         this.teams = res.data.data;
         if (this.id) {
-          this.team = this.teams.find((t) => t.id == this.id);
+          this.team = this.teams.find(t => t.id == this.id);
         }
       });
-    },
+    }
   },
 
   computed: {
     ...mapState("user", ["id", "email", "username"]),
-    ...mapState("team", ["id"]),
+    ...mapState("team", ["id"])
   },
   mounted() {
     setInterval(
@@ -118,7 +116,8 @@ export default {
   components: {
     Profile,
     TeamCreate,
-  },
+    TeamDashboard
+  }
 };
 </script>
 

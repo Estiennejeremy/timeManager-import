@@ -4,10 +4,7 @@
       :titlePrimary="clockIn ? 'Work in progress' : 'Not clocked in yet'"
     >
       <template v-slot:header>
-        <material-timer
-          :glow="clockIn"
-          @clockin="(clockIn = $event.active), (startDateTime = $event.date)"
-        />
+        <material-timer :glow="clockIn" @clockin="clock()" />
       </template>
     </material-spa>
   </span>
@@ -22,8 +19,8 @@ export default {
   name: "ClockManager",
 
   data: () => ({
-    startDateTime: null,
-    clockIn: false
+    clockIn: false,
+    lastClock: null
   }),
 
   components: {
@@ -36,29 +33,41 @@ export default {
   },
 
   methods: {
-    async refresh() {
-      try {
-        const res = await ClockService.getClock(this.id);
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
+    refresh() {
+      ClockService.getLastClockUser(this.id).then(res => {
+        this.lastClock = res.data.data.length == 1 ? res.data.data[0] : null;
+        if (this.lastClock && this.lastClock.start && !this.lastClock.end)
+          this.clockIn = true;
+        else this.clockIn = false;
+      });
     },
 
-    async clock() {
-      try {
-        const res = await ClockService.updateClock(
+    clock() {
+      let now = new Date();
+      now.setHours(now.getHours() + 1); // Offset timezone
+      if ((this.lastClock && this.lastClock.end) || !this.lastClock) {
+        ClockService.createClock(
           {
-            time: this.startDateTime,
-            status: this.clockIn
+            start: now.toISOString()
           },
           this.id
-        );
-        console.log(res);
-      } catch (err) {
-        console.log(err);
+        )
+          .then(() => this.refresh())
+          .catch(() => this.refresh());
+      } else {
+        ClockService.updateClock(
+          {
+            end: now.toISOString()
+          },
+          this.lastClock.id
+        )
+          .then(() => this.refresh())
+          .catch(() => this.refresh());
       }
     }
+  },
+  mounted() {
+    this.refresh();
   }
 };
 </script>
