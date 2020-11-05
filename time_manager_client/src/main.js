@@ -6,12 +6,15 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@mdi/font/css/materialdesignicons.css";
+import LogRocket from "logrocket";
 
 import { sync } from "vuex-router-sync";
 
 import Paths from "@/router/paths.js";
 
 sync(store, router);
+
+LogRocket.init("timemanager/timemanager");
 
 router.beforeEach((to, from, next) => {
   if (

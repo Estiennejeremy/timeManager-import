@@ -14,6 +14,7 @@ import { mapState, mapMutations } from "vuex";
 import AuthenticationService from "@/services/AuthenticationService";
 import AccountService from "@/services/AccountService";
 import MaterialForm from "@/components/forms/Form.vue";
+import LogRocket from "logrocket";
 export default {
   name: "Login",
 
@@ -116,6 +117,12 @@ export default {
         this.setId(res.data.data.id);
         this.getUserInfos();
 
+        LogRocket.identify(this.id, {
+          name: this.username,
+          email: this.email,
+          role: this.role
+        });
+
         this.$router.push({
           name: "Home"
         });
@@ -161,7 +168,15 @@ export default {
   },
 
   computed: {
-    ...mapState("user", ["user", "isUserLoggedIn", "token", "id"])
+    ...mapState("user", [
+      "user",
+      "isUserLoggedIn",
+      "token",
+      "id",
+      "username",
+      "email",
+      "role"
+    ])
   },
 
   watch: {
