@@ -25,7 +25,7 @@ defmodule TimeManagerApiWeb.Router do
   end
 
   scope "/api", TimeManagerApiWeb do
-    pipe_through [:api, :api_protected]
+    pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
     resources "/workingtimes", WorkingtimeController, except: [:new, :edit]
     resources "/teams", TeamController, except: [:new, :edit]
