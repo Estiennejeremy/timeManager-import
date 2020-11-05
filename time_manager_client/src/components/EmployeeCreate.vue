@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog"         class="form">
+    <v-dialog v-model="dialog" class="form">
       <material-form
         :config="config"
         @update:config="config = $event"
@@ -28,7 +28,7 @@ export default {
       message: {
         type: null,
         text: null,
-        duration: 5000,
+        duration: 5000
       },
       image: "",
       components: [
@@ -50,8 +50,8 @@ export default {
             required: true,
             label: "Fisrtname and lastname",
             counter: 0,
-            rules: [(v) => !!v || "This field is required"],
-          },
+            rules: [v => !!v || "This field is required"]
+          }
         },
         {
           id: 1,
@@ -71,8 +71,8 @@ export default {
             required: true,
             label: "Email",
             counter: 0,
-            rules: [(v) => !!v || "Email is required"],
-          },
+            rules: [v => !!v || "Email is required"]
+          }
         },
         {
           id: 2,
@@ -92,8 +92,8 @@ export default {
             required: true,
             label: "Password",
             counter: 0,
-            rules: [(v) => !!v || "Password is required"],
-          },
+            rules: [v => !!v || "Password is required"]
+          }
         },
         {
           id: 3,
@@ -113,11 +113,11 @@ export default {
             required: true,
             label: "Confirm password",
             counter: 0,
-            rules: [(v) => !!v || "Confirmation of password is required"],
-          },
-        },
-      ],
-    },
+            rules: [v => !!v || "Confirmation of password is required"]
+          }
+        }
+      ]
+    }
   }),
 
   methods: {
@@ -130,7 +130,7 @@ export default {
 
     getModel(name) {
       let id = this.config.components.findIndex(
-        (item) => item.modelName === name
+        item => item.modelName === name
       );
       return this.config.components[id].model;
     },
@@ -140,13 +140,13 @@ export default {
         username: this.getModel("username"),
         email: this.getModel("email"),
         password: this.getModel("password"),
-        confirm_password: this.getModel("confirm_password"),
+        confirm_password: this.getModel("confirm_password")
       };
-    },
+    }
   },
   components: {
-    MaterialForm,
-  },
+    MaterialForm
+  }
 };
 </script>
 
@@ -155,6 +155,6 @@ export default {
   width: 100% !important;
 }
 .btn {
-  margin-top: -13px
+  margin-top: -13px;
 }
 </style>
