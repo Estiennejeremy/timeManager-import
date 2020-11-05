@@ -69,4 +69,3 @@ RUN jarsigner -verbose \
 # Idle to copy the build apk (temporary)
 # RUN chmod +x ./idle.sh
 # RUN ./idle.sh
-
