@@ -91,7 +91,8 @@ defmodule TimeManagerApi.Users do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.update_user(attrs)
+    |> User.changesetUpdateNoAuthen(attrs)
+    |> Repo.update()
   end
 
   @doc """

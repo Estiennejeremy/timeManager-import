@@ -45,10 +45,15 @@ defmodule TimeManagerApiWeb.Router do
     get "/UsersteamsByUser/:userID", UserTeamController, :getTeamsByUser
     get "/UsersteamsByTeam/:teamID", UserTeamController, :getUserByTeam
 
+
+  end
+
+  scope "/api", TimeManagerApiWeb do
+    pipe_through :api
+
     resources "/registration", RegistrationController, singleton: true, only: [:create]
     resources "/session", SessionController, singleton: true, only: [:create, :delete]
     post "/session/renew", SessionController, :renew
-
   end
 
   # Enables LiveDashboard only for development

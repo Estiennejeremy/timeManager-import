@@ -28,6 +28,13 @@ defmodule TimeManagerApi.Users.User do
     |> Ecto.Changeset.validate_required([:username])
   end
 
+  def changesetUpdateNoAuthen(user_or_changeset, attrs) do
+    user_or_changeset
+    |> Ecto.Changeset.cast(attrs, [:username, :email, :role])
+    |> Ecto.Changeset.validate_required([:username])
+    |> Ecto.Changeset.validate_inclusion(:role, ~w(employee manager generalManager))
+  end
+
   def changeset_update_teams(user, attrs, teams) do
     user
     |> cast(attrs, [:username, :email, :role])
@@ -58,6 +65,13 @@ defmodule TimeManagerApi.Users.User do
     |> Repo.insert()
   end
 
+  @spec update_user(Ecto.Schema.t() | Ecto.Changeset.t(), map()) :: Ecto.Changeset.t()
+  def update_user(user, params) do
+    user
+    |> User.changeset(params)
+    |> Repo.update()
+  end
+
   @spec set_employee_role(t()) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
   def set_employee_role(user) do
     user
@@ -72,6 +86,7 @@ defmodule TimeManagerApi.Users.User do
     |> User.changeset_role(%{role: "manager"})
     |> Repo.insert()
   end
+
 
   @spec set_manager_role(t()) :: {:ok, t()} | {:error, Ecto.Changeset.t()}
   def set_manager_role(user) do
