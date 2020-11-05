@@ -46,4 +46,8 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: lightgrey;
 }
+
+.v-dialog {
+  box-shadow: unset !important;
+}
 </style>
