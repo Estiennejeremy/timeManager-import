@@ -38,16 +38,16 @@ services:
   client_web:
     build: "./time_manager_client"
     ports:
-      - "8080:8080"
+      - "80:80"
     expose:
-      - 8080
+      - 80
     networks:
       - default
     depends_on:
       - server
       - client_mobile
     environment:
-      - PORT=8080
+      - PORT=80
     restart: on-failure
     tty: true
     volumes:
