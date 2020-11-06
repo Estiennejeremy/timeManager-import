@@ -54,7 +54,7 @@ export default {
     periode: "Daily",
     options1: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
     },
     options2: {
       responsive: true,
@@ -63,11 +63,11 @@ export default {
         yAxes: [
           {
             ticks: {
-              beginAtZero: true
-            }
-          }
-        ]
-      }
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
     },
     visualizeOptions: ["Doughnut", "Line", "Bar"],
     periodeOptions: ["Daily", "Weekly", "Monthly"],
@@ -83,32 +83,35 @@ export default {
       "September",
       "October",
       "November",
-      "December"
+      "December",
     ],
-    chartData: null
+    chartData: null,
   }),
 
   mounted() {
-    Promise.all(
-      this.team.employee.map(e => AccountService.getUserInfos(e.id))
-    ).then(res => {
-      this.employeeInfos = res;
-      this.setDailyWorkingtimeChart();
-    });
+    this.init();
   },
 
   methods: {
+    init() {
+      Promise.all(
+        this.team.employee.map((e) => AccountService.getUserInfos(e.id))
+      ).then((res) => {
+        this.employeeInfos = res;
+        this.setDailyWorkingtimeChart();
+      });
+    },
     changePeriode() {
       if (this.periode == "Monthly") {
         this.setMonthWorkingtimeChart();
       } else if (this.periode == "Weekly") {
         this.setWeeklyWorkingtimeChart();
       } else if (this.periode == "Daily") {
-        this.setWeeklyWorkingtimeChart();
+        this.setDailyWorkingtimeChart();
       }
     },
     setDailyWorkingtimeChart() {
-      let data = this.employeeInfos.map(empInfo => {
+      let data = this.employeeInfos.map((empInfo) => {
         return empInfo.dailyClocks
           .reduce((hours, clock) => {
             let work = !clock.end
@@ -122,7 +125,7 @@ export default {
           .toFixed(2);
       });
       this.chartData = {
-        labels: this.team.employee.map(e => e.username),
+        labels: this.team.employee.map((e) => e.username),
         datasets: [
           {
             data: data,
@@ -130,15 +133,15 @@ export default {
               this.getRandomColor()
             ),
             weight: 0.5,
-            label: "Workingtime"
-          }
-        ]
+            label: "Workingtime",
+          },
+        ],
       };
     },
     setWeeklyWorkingtimeChart() {
-      let data = this.employeeInfos.map(empInfo => {
+      let data = this.employeeInfos.map((empInfo) => {
         return empInfo.sortClockByWeekDay
-          .map(dayClocks =>
+          .map((dayClocks) =>
             dayClocks.reduce((hours, clock) => {
               if (clock.end) {
                 hours =
@@ -155,7 +158,7 @@ export default {
           .toFixed(2);
       });
       this.chartData = {
-        labels: this.team.employee.map(e => e.username),
+        labels: this.team.employee.map((e) => e.username),
         datasets: [
           {
             data: data,
@@ -163,15 +166,15 @@ export default {
             backgroundColor: this.team.employee.map(() =>
               this.getRandomColor()
             ),
-            weight: 0.5
-          }
-        ]
+            weight: 0.5,
+          },
+        ],
       };
     },
     setMonthWorkingtimeChart() {
-      let data = this.employeeInfos.map(empInfo => {
+      let data = this.employeeInfos.map((empInfo) => {
         return empInfo.sortClockByMonthDay
-          .map(monthocks =>
+          .map((monthocks) =>
             monthocks.reduce((hours, clock) => {
               if (clock.end) {
                 hours =
@@ -191,7 +194,7 @@ export default {
           .toFixed(2);
       });
       this.chartData = {
-        labels: this.team.employee.map(e => e.username),
+        labels: this.team.employee.map((e) => e.username),
         datasets: [
           {
             data: data,
@@ -199,9 +202,9 @@ export default {
             backgroundColor: this.team.employee.map(() =>
               this.getRandomColor()
             ),
-            weight: 0.5
-          }
-        ]
+            weight: 0.5,
+          },
+        ],
       };
     },
     getRandomColor() {
@@ -211,14 +214,20 @@ export default {
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
-    }
+    },
+  },
+  watch: {
+    team: function(newVal) {
+      this.team = newVal;
+      this.init();
+    },
   },
 
   components: {
     LineChart,
     DoughnutChart,
-    BarChart
-  }
+    BarChart,
+  },
 };
 </script>
 

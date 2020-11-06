@@ -21,7 +21,7 @@
           v-model="team"
           item-text="name"
           item-value="id"
-          v-on:change="employee = null"
+          v-on:change="changeTeam()"
           return-object
         ></v-select>
       </v-col>
@@ -96,6 +96,9 @@ export default {
           this.team = this.teams.find(t => t.id == this.id);
         }
       });
+    },
+    changeTeam(){
+      this.employee = null;
     }
   },
 

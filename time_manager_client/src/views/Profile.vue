@@ -53,13 +53,13 @@
           </v-col>
         </v-row>
         <line-chart
-          v-if="weeklyWorkData && visualize == 'Line'"
-          :chartdata="weeklyWorkData"
+          v-if="workdata && visualize == 'Line'"
+          :chartdata="workdata"
           :options="options"
         />
         <bar-chart
-          v-if="weeklyWorkData && visualize == 'Bar'"
-          :chartdata="weeklyWorkData"
+          v-if="workdata && visualize == 'Bar'"
+          :chartdata="workdata"
           :options="options"
         />
       </v-col>
@@ -88,7 +88,6 @@ export default {
     weeklyClocks: null,
     monthlyClocks: null,
     dailyWorkData: null,
-    weeklyWorkData: null,
     currentWorkingTime: null,
     visualize: "Line",
     periode: "Weekly",
@@ -96,6 +95,7 @@ export default {
       responsive: true,
       maintainAspectRatio: false,
     },
+    workdata: null,
     visualizeOptions: ["Line", "Bar"],
     periodeOptions: ["Weekly", "Monthly"],
     monthNames: [
@@ -126,6 +126,7 @@ export default {
           this.weeklyClocks = res.weeklyClocks;
           this.weeklyClocks = res.sortClockByWeekDay;
           this.monthlyWorkingtimes = res.monthlyWorkingtimes;
+          this.monthlyWorkingtimes = res.sortyWorkingtimeByMonthDay;
           this.monthlyClocks = res.monthlyClocks;
           this.monthlyClocks = res.sortClockByMonthDay;
 
@@ -225,7 +226,7 @@ export default {
       }
     },
     setWeeklyWorkingtimeChart(sortClockByDay) {
-      this.weeklyWorkData = {
+      this.workdata = {
         labels: [
           "Monday",
           "Tuesday",
@@ -262,7 +263,7 @@ export default {
       };
     },
     setMonthWorkingtimeChart(sortClockByMonth) {
-      this.weeklyWorkData = {
+      this.workdata = {
         labels: this.monthNames,
         datasets: [
           {
@@ -279,7 +280,7 @@ export default {
                       hours +
                       (
                         Math.abs(new Date(clock.start) - new Date()) / 36e5
-                      ).toFixed(2);
+                      )
                   }
                   return hours;
                 }, 0)
