@@ -112,7 +112,7 @@ export default {
     },
     setDailyWorkingtimeChart() {
       let data = this.employeeInfos.map((empInfo) => {
-        return empInfo.dailyClocks
+        return parseFloat(empInfo.dailyClocks
           .reduce((hours, clock) => {
             let work = !clock.end
               ? (new Date().getTime() - new Date(clock.start).getTime()) /
@@ -121,7 +121,7 @@ export default {
                   new Date(clock.start).getTime()) /
                 (1000 * 3600);
             return hours + work;
-          }, 0)
+          }, 0)).toFixed(2)
       });
       this.chartData = {
         labels: this.team.employee.map((e) => e.username),
@@ -139,7 +139,7 @@ export default {
     },
     setWeeklyWorkingtimeChart() {
       let data = this.employeeInfos.map((empInfo) => {
-        return empInfo.sortClockByWeekDay
+        return parseFloat(empInfo.sortClockByWeekDay
           .map((dayClocks) =>
             dayClocks.reduce((hours, clock) => {
               if (clock.end) {
@@ -153,7 +153,7 @@ export default {
               return hours;
             }, 0.0)
           )
-          .reduce((hours, d) => hours + d, 0)
+          .reduce((hours, d) => hours + d, 0)).toFixed(2)
       });
       this.chartData = {
         labels: this.team.employee.map((e) => e.username),
@@ -171,7 +171,7 @@ export default {
     },
     setMonthWorkingtimeChart() {
       let data = this.employeeInfos.map((empInfo) => {
-        return empInfo.sortClockByMonthDay
+        return parseFloat(empInfo.sortClockByMonthDay
           .map((monthocks) =>
             monthocks.reduce((hours, clock) => {
               if (clock.end) {
@@ -181,14 +181,12 @@ export default {
               } else {
                 hours =
                   hours +
-                  (Math.abs(new Date(clock.start) - new Date()) / 36e5).toFixed(
-                    2
-                  );
+                  (Math.abs(new Date(clock.start) - new Date()) / 36e5)
               }
               return hours;
             }, 0)
           )
-          .reduce((hours, d) => hours + d, 0)
+          .reduce((hours, d) => hours + d, 0)).toFixed(2)
       });
       this.chartData = {
         labels: this.team.employee.map((e) => e.username),
