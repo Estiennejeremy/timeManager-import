@@ -27,7 +27,7 @@ export default {
       message: {
         type: null,
         text: null,
-        duration: 5000,
+        duration: 5000
       },
       image: "",
       components: [
@@ -49,8 +49,8 @@ export default {
             required: true,
             label: "Username",
             counter: 0,
-            rules: [(v) => !!v || "Usernme is required"],
-          },
+            rules: [v => !!v || "Usernme is required"]
+          }
         },
         {
           id: 1,
@@ -70,8 +70,8 @@ export default {
             required: true,
             label: "Email",
             counter: 0,
-            rules: [(v) => !!v || "Email is required"],
-          },
+            rules: [v => !!v || "Email is required"]
+          }
         },
         {
           id: 2,
@@ -92,11 +92,11 @@ export default {
             label: "Role",
             items: ["employee", "manager", "generalManager"],
             counter: 0,
-            rules: [(v) => !!v || "Role is required"],
-          },
-        },
-      ],
-    },
+            rules: [v => !!v || "Role is required"]
+          }
+        }
+      ]
+    }
   }),
 
   methods: {
@@ -109,14 +109,14 @@ export default {
 
     getModel(name) {
       let id = this.config.components.findIndex(
-        (item) => item.modelName === name
+        item => item.modelName === name
       );
       return this.config.components[id].model;
     },
 
     setModel(name, value) {
       let id = this.config.components.findIndex(
-        (item) => item.modelName === name
+        item => item.modelName === name
       );
       this.config.components[id].model = value;
     },
@@ -125,17 +125,17 @@ export default {
       return {
         username: this.getModel("username"),
         email: this.getModel("email"),
-        role: this.getModel("role"),
+        role: this.getModel("role")
       };
     },
     init() {
       this.setModel("username", this.employee.username);
       this.setModel("email", this.employee.email);
       this.setModel("role", this.employee.role);
-    },
+    }
   },
   components: {
-    MaterialForm,
+    MaterialForm
   },
   mounted() {
     this.init();
@@ -145,8 +145,8 @@ export default {
     emmployee: function(newVal) {
       this.employee = newVal;
       this.init();
-    },
-  },
+    }
+  }
 };
 </script>
 
