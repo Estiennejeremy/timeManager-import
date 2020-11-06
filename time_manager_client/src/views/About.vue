@@ -47,7 +47,7 @@
           <a
             style="color: transparent;"
             download="timemanager.apk"
-            href="mobile/release/app-release-unsigned.apk"
+            href="mobile/app-release-unsigned.apk"
           >
             <v-btn rounded x-large dark color="primary">
               <v-icon dark large>mdi-download</v-icon>
