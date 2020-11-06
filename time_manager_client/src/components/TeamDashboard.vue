@@ -111,7 +111,6 @@ export default {
       }
     },
     setDailyWorkingtimeChart() {
-<<<<<<< HEAD
       let data = this.employeeInfos.map((empInfo) => {
         return parseFloat(empInfo.dailyClocks
           .reduce((hours, clock) => {
@@ -123,18 +122,6 @@ export default {
                 (1000 * 3600);
             return hours + work;
           }, 0)).toFixed(2)
-=======
-      let data = this.employeeInfos.map(empInfo => {
-        return empInfo.dailyClocks.reduce((hours, clock) => {
-          let work = !clock.end
-            ? (new Date().getTime() - new Date(clock.start).getTime()) /
-              (1000 * 3600)
-            : (new Date(clock.end).getTime() -
-                new Date(clock.start).getTime()) /
-              (1000 * 3600);
-          return hours + work;
-        }, 0);
->>>>>>> 7bdfc947bf52f209fb0a8327f965489a82d54abb
       });
       this.chartData = {
         labels: this.team.employee.map(e => e.username),
@@ -151,15 +138,9 @@ export default {
       };
     },
     setWeeklyWorkingtimeChart() {
-<<<<<<< HEAD
       let data = this.employeeInfos.map((empInfo) => {
         return parseFloat(empInfo.sortClockByWeekDay
           .map((dayClocks) =>
-=======
-      let data = this.employeeInfos.map(empInfo => {
-        return empInfo.sortClockByWeekDay
-          .map(dayClocks =>
->>>>>>> 7bdfc947bf52f209fb0a8327f965489a82d54abb
             dayClocks.reduce((hours, clock) => {
               if (clock.end) {
                 hours =
@@ -172,11 +153,7 @@ export default {
               return hours;
             }, 0.0)
           )
-<<<<<<< HEAD
           .reduce((hours, d) => hours + d, 0)).toFixed(2)
-=======
-          .reduce((hours, d) => hours + d, 0);
->>>>>>> 7bdfc947bf52f209fb0a8327f965489a82d54abb
       });
       this.chartData = {
         labels: this.team.employee.map(e => e.username),
