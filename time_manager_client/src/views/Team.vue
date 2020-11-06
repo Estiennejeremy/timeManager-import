@@ -83,8 +83,24 @@
         lg="6"
         md="6"
       >
-        <h2>Workingtimes</h2>
-        <v-row align-content="start">
+        <v-row align="baseline" class="workingtime">
+          <v-col cols="12" lg="8" md="8" sm="8">
+            <h2>Workingtimes</h2>
+          </v-col>
+          <v-col cols="12" lg="4" md="4" sm="4">
+            <v-select
+              :items="periodes"
+              label="Select team"
+              solo
+              v-model="periode"
+              item-text="name"
+              item-value="id"
+              v-on:change="changePeriode()"
+              return-object
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row align-content="start" class="wokingtimes">
           <v-list-item v-for="w in workingtimes" :key="w.id">
             <v-list-item-avatar>
               <v-icon class="grey lighten-1" dark>
@@ -121,8 +137,8 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import Team from "../services/TeamService.js";
 import Account from "../services/AccountService.js";
+import Team from "../services/TeamService.js";
 import WorkingTimesService from "../services/WorkingTimesService.js";
 import WorkingTimeCreate from "../components/WorkingTimeCreate.vue";
 import WorkingTimeUpdate from "../components/WorkingTimeUpdate.vue";
@@ -133,33 +149,40 @@ export default {
     users: null,
     teams: null,
     team: null,
-    workingtimes: null,
     employee: null,
-    createDialog: false
+    createDialog: false,
+    periodes: ["Daily", "Weekly", "Monthly", "All"],
+    periode: "All",
+    workingtimes: null,
+    allWorkingtimes: null,
+    dailyWorkingtimes: null,
+    currentWorkingTime: null,
+    weeklyWorkingtimes: null,
+    monthlyWorkingtimes: null,
   }),
   methods: {
     ...mapMutations("team", [
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId"
+      "setManagerId",
     ]),
     init() {
-      Promise.all([Team.getTeams(), Account.getUsers()]).then(res => {
+      Promise.all([Team.getTeams(), Account.getUsers()]).then((res) => {
         this.teams = res[0].data.data;
         if (this.id && !this.team) {
-          this.team = this.teams.find(t => t.id == this.id);
-        } else this.team = this.teams.find(t => t.id == this.team.id);
+          this.team = this.teams.find((t) => t.id == this.id);
+        } else this.team = this.teams.find((t) => t.id == this.team.id);
         if (this.team) this.getWorkingtimesTeam();
         this.users = res[1].data.data;
       });
     },
     getUsers() {
-      Account.getUsers().then(res => (this.users = res.data.data));
+      Account.getUsers().then((res) => (this.users = res.data.data));
     },
     getUsersNotInTeam() {
-      return this.users.filter(user =>
-        user.teams.every(t => t.id != this.team.id)
+      return this.users.filter((user) =>
+        user.teams.every((t) => t.id != this.team.id)
       );
     },
     addEmployee() {
@@ -177,8 +200,14 @@ export default {
       });
     },
     getWorkingtimesTeam() {
-      Team.getWorkingtimesTeam(this.team.id).then(res => {
-        this.workingtimes = res.data.workingtimes;
+      Team.getWorkingtimesTeam(this.team.id).then((res) => {
+        console.log(res);
+        this.workingtimes = res.workingtimes;
+        this.allWorkingtimes = res.workingtimes;
+        this.dailyWorkingtimes = res.dailyWorkingtimes;
+        this.currentWorkingTime = res.currentWorkingTime;
+        this.weeklyWorkingtimes = res.weeklyWorkingtimes;
+        this.monthlyWorkingtimes = res.monthlyWorkingtimes;
       });
     },
     removeWorkingtime(id) {
@@ -203,7 +232,29 @@ export default {
     },
     openCreateDialog() {
       this.createDialog = true;
-    }
+    },
+    changePeriode() {
+      switch (this.periode) {
+        case "Daily":
+          this.workingtimes = this.dailyWorkingtimes
+            ? this.dailyWorkingtimes
+            : [];
+          break;
+        case "Weekly":
+          this.workingtimes = this.weeklyWorkingtimes
+            ? this.weeklyWorkingtimes
+            : [];
+          break;
+        case "Monthly":
+          this.workingtimes = this.monthlyWorkingtimes
+            ? this.monthlyWorkingtimes
+            : [];
+          break;
+        case "All":
+          this.workingtimes = this.allWorkingtimes ? this.allWorkingtimes : [];
+          break;
+      }
+    },
   },
   mounted() {
     this.init();
@@ -212,13 +263,13 @@ export default {
     this.setId(this.team.id);
   },
   computed: {
-    ...mapState("team", ["id"])
+    ...mapState("team", ["id"]),
   },
   components: {
     WorkingTimeCreate,
     WorkingTimeUpdate,
-    EmployeeCreate
-  }
+    EmployeeCreate,
+  },
 };
 </script>
 
@@ -251,5 +302,11 @@ export default {
 
 .btnEmployee {
   margin-top: -25px !important;
+}
+.wokingtimes {
+  margin-top: -35px !important;
+}
+.workingtime {
+  margin-top: -18px !important;
 }
 </style>
