@@ -122,7 +122,6 @@ export default {
                 (1000 * 3600);
             return hours + work;
           }, 0)
-          .toFixed(2);
       });
       this.chartData = {
         labels: this.team.employee.map((e) => e.username),
@@ -155,7 +154,6 @@ export default {
             }, 0.0)
           )
           .reduce((hours, d) => hours + d, 0)
-          .toFixed(2);
       });
       this.chartData = {
         labels: this.team.employee.map((e) => e.username),
@@ -191,7 +189,6 @@ export default {
             }, 0)
           )
           .reduce((hours, d) => hours + d, 0)
-          .toFixed(2);
       });
       this.chartData = {
         labels: this.team.employee.map((e) => e.username),
