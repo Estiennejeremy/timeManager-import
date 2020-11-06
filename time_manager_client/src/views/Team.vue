@@ -15,9 +15,9 @@
       </v-col>
     </v-row>
     <v-row v-if="team">
-      <v-col class="d-flex flex-column pa-5" cols="12" lg="6" md="6">
+      <v-col class="d-flex flex-column pa-5 align-top" cols="12" lg="6" md="6">
         <h2 v-if="team">Team : {{ this.team.name }}</h2>
-        <v-row align-content="start">
+        <v-row align-content="start" class="flex-grow-0">
           <v-list-item v-for="e in team.employee" :key="e.id">
             <v-list-item-avatar>
               <v-icon class="grey lighten-1" dark>
@@ -43,7 +43,7 @@
             </v-list-item-action>
           </v-list-item>
         </v-row>
-        <v-row justify="center" align="bottom" class="pt-0">
+        <v-row justify="center" align="top" class="pt-0 flex-grow-0">
           <v-col
             class="d-flex pb-0"
             justify="bottom"
