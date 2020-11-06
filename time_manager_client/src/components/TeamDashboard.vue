@@ -170,15 +170,9 @@ export default {
       };
     },
     setMonthWorkingtimeChart() {
-<<<<<<< HEAD
       let data = this.employeeInfos.map((empInfo) => {
         return parseFloat(empInfo.sortClockByMonthDay
           .map((monthocks) =>
-=======
-      let data = this.employeeInfos.map(empInfo => {
-        return empInfo.sortClockByMonthDay
-          .map(monthocks =>
->>>>>>> 7bdfc947bf52f209fb0a8327f965489a82d54abb
             monthocks.reduce((hours, clock) => {
               if (clock.end) {
                 hours =
@@ -192,11 +186,7 @@ export default {
               return hours;
             }, 0)
           )
-<<<<<<< HEAD
           .reduce((hours, d) => hours + d, 0)).toFixed(2)
-=======
-          .reduce((hours, d) => hours + d, 0);
->>>>>>> 7bdfc947bf52f209fb0a8327f965489a82d54abb
       });
       this.chartData = {
         labels: this.team.employee.map(e => e.username),
