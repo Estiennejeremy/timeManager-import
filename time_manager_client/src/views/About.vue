@@ -44,7 +44,11 @@
     >
       <v-container fluid fill-height>
         <v-row justify="center">
-          <a style="color: transparent;" href="mobile/timemanager.apk" download>
+          <a
+            style="color: transparent;"
+            download="timemanager.apk"
+            href="mobile/release/app-release-unsigned.apk"
+          >
             <v-btn rounded x-large dark color="primary">
               <v-icon dark large>mdi-download</v-icon>
               Download APK
