@@ -97,7 +97,7 @@ export default {
         }
       });
     },
-    changeTeam(){
+    changeTeam() {
       this.employee = null;
     }
   },

@@ -164,31 +164,31 @@ export default {
     dailyWorkingtimes: null,
     currentWorkingTime: null,
     weeklyWorkingtimes: null,
-    monthlyWorkingtimes: null,
+    monthlyWorkingtimes: null
   }),
   methods: {
     ...mapMutations("team", [
       "setId",
       "setName",
       "setEmployee",
-      "setManagerId",
+      "setManagerId"
     ]),
     init() {
-      Promise.all([Team.getTeams(), Account.getUsers()]).then((res) => {
+      Promise.all([Team.getTeams(), Account.getUsers()]).then(res => {
         this.teams = res[0].data.data;
         if (this.id && !this.team) {
-          this.team = this.teams.find((t) => t.id == this.id);
-        } else this.team = this.teams.find((t) => t.id == this.team.id);
+          this.team = this.teams.find(t => t.id == this.id);
+        } else this.team = this.teams.find(t => t.id == this.team.id);
         if (this.team) this.getWorkingtimesTeam();
         this.users = res[1].data.data;
       });
     },
     getUsers() {
-      Account.getUsers().then((res) => (this.users = res.data.data));
+      Account.getUsers().then(res => (this.users = res.data.data));
     },
     getUsersNotInTeam() {
-      return this.users.filter((user) =>
-        user.teams.every((t) => t.id != this.team.id)
+      return this.users.filter(user =>
+        user.teams.every(t => t.id != this.team.id)
       );
     },
     addEmployee() {
@@ -206,7 +206,7 @@ export default {
       });
     },
     getWorkingtimesTeam() {
-      Team.getWorkingtimesTeam(this.team.id).then((res) => {
+      Team.getWorkingtimesTeam(this.team.id).then(res => {
         console.log(res);
         this.workingtimes = res.workingtimes;
         this.allWorkingtimes = res.workingtimes;
@@ -260,7 +260,7 @@ export default {
           this.workingtimes = this.allWorkingtimes ? this.allWorkingtimes : [];
           break;
       }
-    },
+    }
   },
   mounted() {
     this.init();
@@ -269,14 +269,14 @@ export default {
     this.setId(this.team.id);
   },
   computed: {
-    ...mapState("team", ["id"]),
+    ...mapState("team", ["id"])
   },
   components: {
     WorkingTimeCreate,
     WorkingTimeUpdate,
     EmployeeCreate,
-    EmployeeUpdate,
-  },
+    EmployeeUpdate
+  }
 };
 </script>
 
