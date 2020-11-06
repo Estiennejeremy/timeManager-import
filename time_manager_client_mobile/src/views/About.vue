@@ -1,7 +1,7 @@
 <template>
   <span id="about" style="height: 100%;">
-    <v-parallax dark jumbotron :height="screenHeight">
-      <v-row align="center" justify="center">
+    <v-parallax dark jumbotron :height="responsive ? screenHeight * 2 : screenHeight">
+      <v-row align="center" justify="center" style="height: 100%;">
         <v-col class="text-center" :cols="responsive ? 12 : 4">
           <about-card
             title="Increase Productivity !"
@@ -35,12 +35,12 @@
       dark
       jumbotron
       id="android"
-      :height="screenHeight"
+      :height="responsive ? screenHeight * 1.2 : screenHeight"
       src="@/assets/android.png"
     >
       <v-container fluid fill-height>
         <v-row justify="center">
-          <a style="color: transparent;" download="timemanager.apk" href="mobile/app-release-unsigned.apk.apk" download>
+          <a style="color: transparent;" href="mobile/timemanager.apk" download>
             <v-btn rounded x-large dark color="primary">
               <v-icon dark large>mdi-download</v-icon>
               Download APK

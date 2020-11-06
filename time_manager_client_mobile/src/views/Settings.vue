@@ -15,6 +15,7 @@
       :button="true"
       @button-before="page--"
       @button-after="page++"
+      @button-center="responsive ? page++ : page"
     />
 
     <component
