@@ -11,5 +11,5 @@ docker-compose up --build
 
 The application is hosted on a VPS
 
-* Client: http://51.75.122.116:8080/
+* Client: http://51.75.122.116:8080/ || https://timemanager.nuage.best
 * Api: http://51.75.122.116:4000/api/

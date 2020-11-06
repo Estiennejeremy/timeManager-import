@@ -22,7 +22,7 @@ export default {
   data: () => ({
     responsive: false,
     config: {
-      title: "Change drawer background",
+      title: "Change menu background",
       message: {
         type: null,
         text: null,
