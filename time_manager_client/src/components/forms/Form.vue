@@ -71,6 +71,7 @@ import InputsTextDate from "@/components/forms/inputs/TextDate.vue";
 import InputsTextTime from "@/components/forms/inputs/TextTime.vue";
 import ActionsButton from "@/components/forms/actions/Button.vue";
 import InputsDate from "@/components/forms/inputs/Date.vue";
+import InputsSelect from "@/components/forms/inputs/Select.vue";
 import { mapState } from "vuex";
 export default {
   name: "Form",
@@ -80,7 +81,8 @@ export default {
     InputsTextDate,
     InputsTextTime,
     ActionsButton,
-    InputsDate
+    InputsDate,
+    InputsSelect
   },
 
   props: {

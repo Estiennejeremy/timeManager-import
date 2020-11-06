@@ -31,7 +31,12 @@
               <v-list-item-subtitle v-text="e.email"></v-list-item-subtitle>
             </v-list-item-content>
 
-            <v-list-item-action>
+            <v-list-item-action class="d-flex flex-row align-center">
+              <employee-update
+                v-if="e"
+                v-bind:employee="e"
+                v-on:updated="init()"
+              />
               <v-btn icon @click="removeEmployee(e.id)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
@@ -143,6 +148,7 @@ import WorkingTimesService from "../services/WorkingTimesService.js";
 import WorkingTimeCreate from "../components/WorkingTimeCreate.vue";
 import WorkingTimeUpdate from "../components/WorkingTimeUpdate.vue";
 import EmployeeCreate from "../components/EmployeeCreate.vue";
+import EmployeeUpdate from "../components/EmployeeUpdate.vue";
 export default {
   name: "Team",
   data: () => ({
@@ -269,6 +275,7 @@ export default {
     WorkingTimeCreate,
     WorkingTimeUpdate,
     EmployeeCreate,
+    EmployeeUpdate,
   },
 };
 </script>
