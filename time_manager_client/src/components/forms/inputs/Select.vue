@@ -35,6 +35,10 @@ export default {
     config: {
       type: Object,
       default: () => {}
+    },
+    modelProps: {
+      type: String,
+      default: ""
     }
   },
 
@@ -58,6 +62,9 @@ export default {
   },
 
   mounted() {
+    if (this.modelProps !== null && this.modelProps !== "") {
+      this.modelValue = this.modelProps;
+    }
     this.onResponsiveInverted();
     window.addEventListener("resize", this.onResponsiveInverted);
   },
